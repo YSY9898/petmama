@@ -15,24 +15,24 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
-$(function(){
-	$('#login_form').submit(function(){
-		if($('#id').val().trim()==''){
-			alert('아이디를 입력하세요');
-			$('#id').val('').focus();
-			return false;
-		}
-		if($('#passwd').val().trim()==''){
-			alert('비밀번호를 입력하세요');
-			$('#passwd').val('').focus();
-			return false;
-		}
+	$(function() {
+		$('#login_form').submit(function() {
+			if ($('#id').val().trim() == '') {
+				alert('아이디를 입력하세요');
+				$('#id').val('').focus();
+				return false;
+			}
+			if ($('#passwd').val().trim() == '') {
+				alert('비밀번호를 입력하세요');
+				$('#passwd').val('').focus();
+				return false;
+			}
+		});
 	});
-});
 </script>
 </head>
 <body>
-	<div class="page-main">
+	<div>
 		<jsp:include page="/WEB-INF/views/common/header.jsp" />
 		<div class="content-main">
 			<h2>로그인</h2>
