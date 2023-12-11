@@ -1,16 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- header 시작 -->
 	<nav class="navbar navbar-expand-lg bg-body-tertiary">
 		<div class="container-fluid justify-content-end">
 			<button class="navbar-toggler justify-content-end" type="button"
@@ -56,5 +47,4 @@
 			</div>
 		</div>
 	</nav>
-</body>
-</html>
+<!-- header 끝 -->
