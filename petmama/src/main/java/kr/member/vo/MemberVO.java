@@ -7,7 +7,15 @@ public class MemberVO {
 	private String mem_id; 			//아이디
 	private int mem_auth;			//회원 등급
 	private String mem_name;		//이름
-	private String mem_nickname;	//닉네임
+	private String mem_nickname;		//닉네임
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
+	}
+
 	private String mem_pw;			//비밀번호
 	private String mem_cell;		//전화번호
 	private String mem_email;		//이메일
@@ -16,6 +24,11 @@ public class MemberVO {
 	private String mem_address2;	//상세주소
 	private Date mem_rdate;			//가입일
 	private Date mem_mdate;		    //수정일
+	private int pet_num; 			//펫 번호
+	private String pet_name;		//펫 이름
+	private int pet_age;			//펫 나이
+	private String filename;		//펫 사진
+	private String pet_note;  		//희망 반려생활
 	
 	//비밀번호 일치 여부 체크
 	public boolean isCheckedPassword(String userPasswd) {
@@ -56,14 +69,6 @@ public class MemberVO {
 
 	public void setMem_name(String mem_name) {
 		this.mem_name = mem_name;
-	}
-
-	public String getMem_nickname() {
-		return mem_nickname;
-	}
-
-	public void setMem_nickname(String mem_nickname) {
-		this.mem_nickname = mem_nickname;
 	}
 
 	public String getMem_pw() {
@@ -129,4 +134,43 @@ public class MemberVO {
 	public void setMem_mdate(Date mem_mdate) {
 		this.mem_mdate = mem_mdate;
 	}	
+public int getPet_num() {
+	return pet_num;
+}
+
+public void setPet_num(int pet_num) {
+	this.pet_num = pet_num;
+}
+
+public String getPet_name() {
+	return pet_name;
+}
+
+public void setPet_name(String pet_name) {
+	this.pet_name = pet_name;
+}
+
+public int getPet_age() {
+	return pet_age;
+}
+
+public void setPet_age(int pet_age) {
+	this.pet_age = pet_age;
+}
+
+public String getFilename() {
+	return filename;
+}
+
+public void setFilename(String filename) {
+	this.filename = filename;
+}
+
+public String getPet_note() {
+	return pet_note;
+}
+
+public void setPet_note(String pet_note) {
+	this.pet_note = pet_note;
+}
 }
