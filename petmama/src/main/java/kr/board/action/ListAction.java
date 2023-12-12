@@ -9,8 +9,10 @@ public class ListAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+		//JSP 경로 반환
+		return "/WEB-INF/views/board/list.jsp";
 	}
 
 }
