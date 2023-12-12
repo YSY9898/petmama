@@ -41,7 +41,7 @@
 					</ul></li>
 
 				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="/petmama/member/loginForm.do">Mypage</a></li>
+					aria-current="page" href="/petmama/member/myPage.do">myPage</a></li>
 			</ul>
 		</div>
 	</div>

@@ -120,7 +120,7 @@ public class MemberDAO {
 				member.setMem_auth(rs.getInt("mem_auth"));
 				member.setMem_pw(rs.getString("mem_pw"));
 				member.setMem_email(rs.getString("mem_email"));//회원탈퇴시 활용
-				member.setMem_nickname(rs.getString("mem_nickname"));
+				
 			}
 		}catch(Exception e) {
 			throw new Exception(e);
@@ -130,10 +130,9 @@ public class MemberDAO {
 		return member;
 	}
 	//회원 상세 정보
-	public MemberVO getMember(int mem_num, int pet_num)throws Exception{
+	public MemberVO getMember(int mem_num)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		//PreparedStatement pstmt4 = null;
 		ResultSet rs = null;
 		MemberVO member = null;
 		String sql = null;
@@ -147,7 +146,6 @@ public class MemberDAO {
 			
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			//pstmt4 = conn.prepareStatement(sql);
 			
 			//?에 데이터 바인딩
 			pstmt.setInt(1, mem_num);
@@ -186,7 +184,7 @@ public class MemberDAO {
 	}
 
 	
-	/*
+	
 	//회원 정보 수정
 	public void updateMember(MemberVO member)throws Exception{
 		Connection conn = null;
@@ -197,19 +195,20 @@ public class MemberDAO {
 			//커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 			//SQL문 작성
-			sql = "UPDATE zmember_detail SET name=?,phone=?,email=?,"
-				+ "zipcode=?,address1=?,address2=?,"
-				+ "modify_date=SYSDATE WHERE mem_num=?";
+			sql = "UPDATE member_detail SET mem_name=?,mem_nickname=?,mem_cell=?,mem_email=?,"
+				+ "mem_zipcode=?,mem_address1=?,mem_address2=?,"
+				+ "mem_mdate=SYSDATE WHERE mem_num=?";
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			//?에 데이터 바인딩
 			pstmt.setString(1, member.getMem_name());
-			pstmt.setString(2, member.getMem_cell());
-			pstmt.setString(3, member.getMem_email());
-			pstmt.setString(4, member.getMem_zipcode());
-			pstmt.setString(5, member.getMem_address1());
-			pstmt.setString(6, member.getMem_address2());
-			pstmt.setInt(7, member.getMem_num());
+			pstmt.setString(2, member.getMem_nickname());
+			pstmt.setString(3, member.getMem_cell());
+			pstmt.setString(4, member.getMem_email());
+			pstmt.setString(5, member.getMem_zipcode());
+			pstmt.setString(6, member.getMem_address1());
+			pstmt.setString(7, member.getMem_address2());
+			pstmt.setInt(8, member.getMem_num());
 			//SQL문 실행
 			pstmt.executeUpdate();
 		}catch(Exception e) {
@@ -218,35 +217,9 @@ public class MemberDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}		
 	}
-	//비밀번호 수정
-	public void updatePassword(String passwd,int mem_num)
-	                                          throws Exception{
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = null;
-		
-		try {
-			//커넥션풀로부터 커넥션을 할당
-			conn = DBUtil.getConnection();
-			//SQL문 작성
-			sql="UPDATE zmember_detail SET passwd=? WHERE mem_num=?";
-			//PreparedStatement 객체 생성
-			pstmt = conn.prepareStatement(sql);
-			//?에 데이터를 바인딩
-			pstmt.setString(1, passwd);
-			pstmt.setInt(2, mem_num);
-			//SQL문 실행
-			pstmt.executeUpdate();			
-		}catch(Exception e) {
-			throw new Exception(e);
-		}finally {
-			DBUtil.executeClose(null, pstmt, conn);
-		}
-	}
-	//펫 정보 수정
-	
+
 	//펫 프로필 사진 수정
-	public void updateMyPhoto(String photo,int mem_num)
+	public void updatePetPhoto(String filename,int mem_num)
 	                                    throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -256,11 +229,11 @@ public class MemberDAO {
 			//커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 			//SQL문 작성
-			sql = "UPDATE zmember_detail SET photo=? WHERE mem_num=?";
+			sql = "UPDATE pet_detail SET filename=? WHERE mem_num=?";
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			//?에 데이터 바인당
-			pstmt.setString(1, photo);
+			pstmt.setString(1, filename);
 			pstmt.setInt(2, mem_num);
 			//SQL문 실행
 			pstmt.executeUpdate();
@@ -270,6 +243,33 @@ public class MemberDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	//비밀번호 수정
+	public void updatePassword(String mem_pw,int mem_num)
+	                                          throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			//커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+			//SQL문 작성
+			sql="UPDATE member_detail SET mem_pw=? WHERE mem_num=?";
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			//?에 데이터를 바인딩
+			pstmt.setString(1, mem_pw);
+			pstmt.setInt(2, mem_num);
+			//SQL문 실행
+			pstmt.executeUpdate();			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	
 	//회원탈퇴(회원 정보 삭제)
 	public void deleteMember(int mem_num)throws Exception{
 		Connection conn = null;
@@ -283,14 +283,14 @@ public class MemberDAO {
 			//auto commit 해제
 			conn.setAutoCommit(false);
 			
-			//zmember의 auth값 변경
-			sql = "UPDATE zmember SET auth=0 WHERE mem_num=?";
+			//member의 auth값 변경
+			sql = "UPDATE member SET mem_auth=0 WHERE mem_num=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mem_num);
 			pstmt.executeUpdate();
 			
 			//zmember_detail의 레코드 삭제
-			sql = "DELETE FROM zmember_detail WHERE mem_num=?";
+			sql = "DELETE FROM member_detail WHERE mem_num=?";
 			pstmt2 = conn.prepareStatement(sql);
 			pstmt2.setInt(1, mem_num);
 			pstmt2.executeUpdate();
@@ -305,8 +305,8 @@ public class MemberDAO {
 			DBUtil.executeClose(null, pstmt2, conn);
 		}
 	}
-	//펫 정보 삭제
 	
+	/*
 	//관리자
 	//전체 내용 개수, 검색 내용 개수
 	public int getMemberCountByAdmin(String keyfield,
@@ -444,5 +444,11 @@ public class MemberDAO {
 		}
 	}	
 */
+	
+	
+	
+	
+	
+	
 }
 	
