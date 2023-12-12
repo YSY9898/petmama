@@ -21,7 +21,7 @@ public class CheckDuplicatedIdAction implements Action{
 		
 		String id = request.getParameter("id");
 		
-		MemberDAO dao = MemberDAO.getInstance();
+		MemberDAO dao = MemberDAO.getInstance(); 
 		MemberVO member = dao.checkMember(id);
 		
 		Map<String,String> mapAjax = new HashMap<String,String>();

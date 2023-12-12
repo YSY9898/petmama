@@ -16,7 +16,7 @@ public class MemberVO {
 		this.mem_nickname = mem_nickname;
 	}
 
-	private String mem_pw;			//비밀번호
+	private String mem_pw;			//비밀번호 
 	private String mem_cell;		//전화번호
 	private String mem_email;		//이메일
 	private String mem_zipcode;		//우편번호

@@ -152,7 +152,7 @@ public class MemberDAO {
 			//?에 데이터 바인딩
 			pstmt.setInt(1, mem_num);
 			
-			//SQL문 실행
+			//SQL문 실행 
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				member = new MemberVO();

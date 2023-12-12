@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>회원가입 완료</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-</head>
+</head> 
 <body>
 <div class="psge-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
