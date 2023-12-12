@@ -23,8 +23,8 @@
 					class="nav-link dropdown-toggle" href="#" role="button"
 					data-bs-toggle="dropdown" aria-expanded="false"> 커뮤니티 </a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
+						<li><a class="dropdown-item" href="${pageContext.request.contextPath}/board/list.do">자유게시판</a></li>
+						<li><a class="dropdown-item" href="#">후기게시판</a></li>
 					</ul></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" role="button"
