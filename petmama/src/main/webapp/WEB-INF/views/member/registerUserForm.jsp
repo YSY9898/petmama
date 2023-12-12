@@ -124,11 +124,11 @@
 					<input type="text" name="mem_email" id="mem_email" maxlength="15" class="input-check">
 				</li>
 				<li>
-					<label for="mem_zipcode">우편주소</label>
-					<input type="text" name="mem_zipcode" id="mem_zipcode" maxlength="5" 
-								autocomplete="off" class="input-check" >
-					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">			
-				</li>	
+					<label for="zipcode">우편번호</label>
+					<input type="text" name="mem_zipcode" id="mem_zipcode" 
+						maxlength="5" class="input-check">
+					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
+				</li>		
 				<li>
 					<label for="mem_address1">주소</label>
 					<input type="text" name="mem_address1" id="mem_address1" maxlength="30" class="input-check">
@@ -137,8 +137,8 @@
 					<label for="mem_address2">나머지 주소</label>
 					<input type="text" name="mem_address2" id="mem_address2" maxlength="30" class="input-check">
 				</li>	
-				<br>	
-				<br>
+			</ul>
+			<ul>		
 				<h4>펫 정보</h4>	
 				<li>
 					<label for="pet_name">펫 이름</label>
@@ -155,11 +155,11 @@
 				<li>
 					<label>희망 반려생활</label>
 					<input type="radio" name="pet_note" value="3" 
-							id="note3" <c:if test="${member.pet_note == 3}">checked</c:if>>산책
+							id="note3" <c:if test="${member.pet_note == 3}"></c:if>>산책
 					<input type="radio" name="pet_note" value="4" 
-							id="note4" <c:if test="${member.pet_note == 4}">checked</c:if>>돌봄
+							id="note4" <c:if test="${member.pet_note == 4}"></c:if>>돌봄
 					<input type="radio" name="pet_note" value="5" 
-							id="note5" <c:if test="${member.pet_note == 5}">checked</c:if>>둘 다
+							id="note5" <c:if test="${member.pet_note == 5}"></c:if>>둘 다
 				</li>	
 			</ul>
 			<div class="align-center">

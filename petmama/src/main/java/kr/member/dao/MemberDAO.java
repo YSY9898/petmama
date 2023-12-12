@@ -43,17 +43,17 @@ public class MemberDAO {
 			}
 			
 			//member 테이블에 데이터를 저장
-			sql = "INSERT INTO member (mem_num,mem_id,mem_auth) VALUES (?,?,?)";
+			sql = "INSERT INTO member (mem_num,mem_id) VALUES (?,?)";
 			pstmt2 = conn.prepareStatement(sql);
 			pstmt2.setInt(1, num);//회원 번호
 			pstmt2.setString(2, member.getMem_id());//아이디
-			pstmt2.setInt(3, member.getMem_auth());//아이디
 			pstmt2.executeUpdate();
 
 			//member_detail 테이블에 데이터를 저장
 			sql = "INSERT INTO member_detail (mem_num,mem_name,mem_nickname,mem_pw,mem_cell,"
 				+ "mem_email,mem_zipcode,mem_address1,mem_address2) VALUES (?,?,?,?,?,?,?,?,?)";
 			pstmt3 = conn.prepareStatement(sql);
+			
 			pstmt3.setInt(1, num);//회원 번호
 			pstmt3.setString(2, member.getMem_name());
 			pstmt3.setString(3, member.getMem_nickname());
@@ -69,6 +69,7 @@ public class MemberDAO {
 			sql="INSERT INTO pet_detail (mem_num,pet_num,pet_name,pet_age,filename,pet_note) "
 					+ "VALUES (?,?,?,?,?,?)";
 			pstmt4 = conn.prepareStatement(sql);
+			
 			pstmt4.setInt(1, num);//회원번호
 			pstmt4.setInt(2, member.getPet_num());
 			pstmt4.setString(3, member.getPet_name());
@@ -132,7 +133,7 @@ public class MemberDAO {
 	public MemberVO getMember(int mem_num, int pet_num)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt4 = null;
+		//PreparedStatement pstmt4 = null;
 		ResultSet rs = null;
 		MemberVO member = null;
 		String sql = null;
@@ -141,16 +142,16 @@ public class MemberDAO {
 			//커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 			//SQL문 작성
-			//이중 서브쿼리로 처리하기
-			sql = "SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_num=? "
-					+ " JOIN pet_detail USING(mem_num) WHERE pet_num=?";
+			sql = "SELECT * FROM member JOIN member_detail USING(mem_num) "
+					+ "LEFT OUTER JOIN pet_detail USING(mem_num) WHERE mem_num=?";
+			
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			pstmt4 = conn.prepareStatement(sql);
+			//pstmt4 = conn.prepareStatement(sql);
 			
 			//?에 데이터 바인딩
 			pstmt.setInt(1, mem_num);
-			pstmt4.setInt(2,pet_num);
+			
 			//SQL문 실행
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -178,7 +179,7 @@ public class MemberDAO {
 		}catch(Exception e) {
 			throw new Exception(e);
 		}finally {
-			DBUtil.executeClose(null, pstmt4, null);
+			//DBUtil.executeClose(null, pstmt4, null);
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		return member;
