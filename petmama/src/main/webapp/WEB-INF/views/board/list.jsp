@@ -70,7 +70,7 @@ window.onload=function(){
 			<tr>
 				<td>${board.board_num}</td>
 				<td><a href="detail.do?board_num=${board.board_num}">${board.title}</a></td>
-				<td>${board.id}</td>
+				<td>${board.mem_nickname}</td>
 				<td>${board.reg_date}</td>
 				<td>${board.hit}</td>
 			</tr>

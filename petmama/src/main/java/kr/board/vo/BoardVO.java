@@ -9,7 +9,7 @@ public class BoardVO {
 	private String title;
 	private String content;
 	private int hit;
-	private Date ref_date;
+	private Date reg_date;
 	private Date modify_date;
 	private String filename;
 	private String ip;
@@ -47,11 +47,11 @@ public class BoardVO {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	public Date getRef_date() {
-		return ref_date;
+	public Date getReg_date() {
+		return reg_date;
 	}
-	public void setRef_date(Date ref_date) {
-		this.ref_date = ref_date;
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
 	}
 	public Date getModify_date() {
 		return modify_date;

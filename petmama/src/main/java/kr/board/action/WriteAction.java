@@ -17,6 +17,7 @@ public class WriteAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer)session.getAttribute("user_num");
+		String user_nickname = (String)session.getAttribute("user_nickname");
 		if(user_num == null) {//로그인이 되지 않은 경우
 			return "redirect:/member/loginForm.do";
 		}
@@ -29,7 +30,7 @@ public class WriteAction implements Action{
 		board.setFilename(multi.getFilesystemName("filename"));
 		board.setIp(request.getRemoteAddr());
 		board.setMem_num(user_num);
-		board.setMem_nickname("user_nickname");
+		board.setMem_nickname(user_nickname);
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		dao.insertBoard(board);

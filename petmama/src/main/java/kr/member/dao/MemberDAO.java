@@ -120,7 +120,7 @@ public class MemberDAO {
 				member.setMem_auth(rs.getInt("mem_auth"));
 				member.setMem_pw(rs.getString("mem_pw"));
 				member.setMem_email(rs.getString("mem_email"));//회원탈퇴시 활용
-				
+				member.setMem_nickname(rs.getString("mem_nickname"));
 			}
 		}catch(Exception e) {
 			throw new Exception(e);
