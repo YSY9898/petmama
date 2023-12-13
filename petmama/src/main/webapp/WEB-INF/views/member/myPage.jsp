@@ -18,18 +18,18 @@ $(function(){
 	
 	//이미지 미리 보기
 	//처음 화면에 보여지는 이미지 읽기
-	let photo_path = $('.my-photo').attr('src');
+	let photo_path = $('.pet-photo').attr('src');
 	$('#photo').change(function(){
-		let my_photo = this.files[0];
-		if(!my_photo){
+		let pet_photo = this.files[0];
+		if(!pet_photo){
 			//선택을 취소하면 원래 처음 화면으로 되돌림
-			$('.my-photo').attr('src',photo_path);
+			$('.pet-photo').attr('src',photo_path);
 			return;
 		}
-		if(my_photo.size > 1024 * 1024){
-			alert(Math.round(my_photo.size/1024)
+		if(pet_photo.size > 1024 * 1024){
+			alert(Math.round(pet_photo.size/1024)
 					+ 'kbytes(1024kbytes까지만 업로드 가능)');
-			$('.my-photo').attr('src',photo_path);
+			$('.pet-photo').attr('src',photo_path);
 			$(this).val('');//선택한 파일 정보 지우기
 			return;
 		}
@@ -39,7 +39,7 @@ $(function(){
 		reader.readAsDataURL(my_photo);
 		
 		reader.onload=function(){
-			$('.my-photo').attr('src',reader.result);
+			$('.pet-photo').attr('src',reader.result);
 		};
 	});//end of change
 	
@@ -70,7 +70,7 @@ $(function(){
 				}else if(param.result == 'success'){
 					alert('프로필 사진이 수정 되었습니다');
 					//수정된 이미지 정보 저장
-					photo_path = $('.my-photo').attr('src');
+					photo_path = $('.pet-photo').attr('src');
 					$('#photo').val('');
 					$('#photo_choice').hide('');
 					$('#photo_btn').show('');//수정 버튼 표시
@@ -87,7 +87,7 @@ $(function(){
 	//이미지 미리보기 취소
 	$('#photo_reset').click(function(){
 		//초기 이미지 표시
-	$('.my-photo').attr('src',photo_path);//이미지 미리보기 전 이미지로 되돌리기
+	$('.pet-photo').attr('src',photo_path);//이미지 미리보기 전 이미지로 되돌리기
 	$('#photo').val('');
 	$('#photo_choice').hide();
 	$('#photo_btn').show();//수정 버튼 표시
@@ -109,7 +109,7 @@ $(function(){
 					                  width="200" height="200" class="pet-photo">
 					</c:if>
 					<c:if test="${!empty member.pet_photo}">
-					<img src="${pageContext.request.contextPath}/upload/${member.my-photo}"
+					<img src="${pageContext.request.contextPath}/upload/${member.pet-photo}"
 					                  width="200" height="200" class="pet-photo">
 					</c:if>
 				</li>

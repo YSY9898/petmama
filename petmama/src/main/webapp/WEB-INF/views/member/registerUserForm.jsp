@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -87,9 +90,13 @@
 
 </script> 
 </head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- header 시작 -->
+	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<!-- header 끝 -->
+</body>
 <body>  
 <div class="page-main">
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="content-main">
 		<h2>회원가입</h2>
 		<form id="register_form" action="registerUser.do" method="post">
