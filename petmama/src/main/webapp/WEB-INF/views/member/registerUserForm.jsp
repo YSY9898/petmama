@@ -94,7 +94,7 @@
 		<h2>회원가입</h2>
 		<form id="register_form" action="registerUser.do" method="post">
 			<ul>
-				<h4>회원 정보</h4>
+				<h4>회원정보</h4>
 				<li>
 					<label for="mem_id">ID</label>
 					<input type="text" name="mem_id" id="mem_id" maxlength="12" 
@@ -121,12 +121,12 @@
 				</li>	
 				<li>
 					<label for="mem_email">이메일</label>
-					<input type="text" name="mem_email" id="mem_email" maxlength="15" class="input-check">
+					<input type="text" name="mem_email" id="mem_email" maxlength="30" class="input-check">
 				</li>
 				<li>
-					<label for="zipcode">우편번호</label>
-					<input type="text" name="mem_zipcode" id="mem_zipcode" 
-						maxlength="5" class="input-check">
+					<label for="mem_zipcode">우편번호</label>
+					<input type="text" name="mem_zipcode" id="mem_zipcode" maxlength="5"  
+						 autocomplete="off" class="input-check">
 					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
 				</li>		
 				<li>
@@ -139,7 +139,7 @@
 				</li>	
 			</ul>
 			<ul>		
-				<h4>펫 정보</h4>	
+				<h4>펫정보</h4>	
 				<li>
 					<label for="pet_name">펫 이름</label>
 					<input type="text" name="pet_name" id="pet_name" maxlength="12" class="input-check">

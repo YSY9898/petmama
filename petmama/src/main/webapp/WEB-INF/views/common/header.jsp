@@ -42,6 +42,11 @@
 
 				<li class="nav-item"><a class="nav-link active"
 					aria-current="page" href="/petmama/member/myPage.do">MyPage</a></li>
+					
+				<c:if test="${!empty user_num && user_auth == 9}">
+				<li class="nav-item"><a class="nav-link active"
+					aria-current="page" href="/petmama/member/adminList.do">회원관리</a></li>
+				</c:if>		
 			</ul>
 		</div>
 	</div>

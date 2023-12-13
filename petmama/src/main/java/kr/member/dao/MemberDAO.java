@@ -221,7 +221,7 @@ public class MemberDAO {
 	}
 
 	//펫 프로필 사진 수정
-	public void updatePetPhoto(String filename,int mem_num)
+	public void updatePetPhoto(String pet_photo,int mem_num)
 	                                    throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -231,11 +231,11 @@ public class MemberDAO {
 			//커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 			//SQL문 작성
-			sql = "UPDATE pet_detail SET filename=? WHERE mem_num=?";
+			sql = "UPDATE pet_detail SET pet_photo=? WHERE mem_num=?";
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			//?에 데이터 바인당
-			pstmt.setString(1, filename);
+			pstmt.setString(1, pet_photo);
 			pstmt.setInt(2, mem_num);
 			//SQL문 실행
 			pstmt.executeUpdate();
