@@ -44,7 +44,7 @@ public class DeleteUserAction implements Action{
 			//회원정보 삭제 및 회원탈퇴
 			dao.deleteMember(user_num);
 			//프로필 사진 삭제
-			FileUtil.removeFile(request, db_member.getFilename());
+			FileUtil.removeFile(request, db_member.getPet_photo());
 			//로그아웃
 			session.invalidate();
 		}

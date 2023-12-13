@@ -27,7 +27,7 @@ public class MemberVO {
 	private int pet_num; 			//펫 번호
 	private String pet_name;		//펫 이름
 	private int pet_age;			//펫 나이
-	private String filename;		//펫 사진
+	private String pet_photo;		//펫 사진
 	private String pet_note;  		//희망 반려생활
 	
 	//비밀번호 일치 여부 체크
@@ -157,13 +157,12 @@ public int getPet_age() {
 public void setPet_age(int pet_age) {
 	this.pet_age = pet_age;
 }
-
-public String getFilename() {
-	return filename;
+public String getPet_photo() {
+	return pet_photo;
 }
 
-public void setFilename(String filename) {
-	this.filename = filename;
+public void setPet_photo(String pet_photo) {
+	this.pet_photo = pet_photo;
 }
 
 public String getPet_note() {

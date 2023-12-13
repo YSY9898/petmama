@@ -27,7 +27,7 @@ public class RegisterUserAction implements Action{
 		
 		vo.setPet_name(request.getParameter("pet_name"));
 		vo.setPet_age(Integer.parseInt(request.getParameter("pet_age")));
-		vo.setFilename(request.getParameter("filename"));
+		vo.setPet_photo(request.getParameter("pet_photo"));
 		vo.setPet_note(request.getParameter("pet_note"));
 		
 		MemberDAO dao = MemberDAO.getInstance();
