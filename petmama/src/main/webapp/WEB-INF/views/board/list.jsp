@@ -52,12 +52,12 @@ window.onload=function(){
 			<input type="button" value="목록" onclick="location.href='list.do'">
 			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</div>
-		<c:if test="${count ==0}">
+		<c:if test="${count == 0}">
 		<div class="result-display">
 			표시할 게시물이 없습니다.
 		</div>
 		</c:if>
-		<c:if test="${count >0}">
+		<c:if test="${count > 0}">
 		<table>
 			<tr>
 				<th>글번호</th>
@@ -70,7 +70,10 @@ window.onload=function(){
 			<tr>
 				<td>${board.board_num}</td>
 				<td><a href="detail.do?board_num=${board.board_num}">${board.title}</a></td>
-				<td>${board.mem_nickname}</td>
+				<td>
+					<c:if test="${empty board.mem_nickname}">${board.mem_id}</c:if>
+					<c:if test="${!empty board.mem_nickname}">${board.mem_nickname}</c:if>
+				</td>
 				<td>${board.reg_date}</td>
 				<td>${board.hit}</td>
 			</tr>
