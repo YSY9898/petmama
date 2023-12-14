@@ -69,7 +69,7 @@ window.onload=function(){
 			<c:forEach var="board1" items="${list}">
 			<tr>
 				<td>${board1.board_num}</td>
-				<td><a href="detail2.do?board2_num=${board1.board_num}">${board1.title}</a></td>
+				<td><a href="detail2.do?board_num=${board1.board_num}">${board1.title}</a></td>
 				<td>
 					<c:if test="${!empty board1.mem_nickname}">${board1.mem_nickname}</c:if>
 					<c:if test="${empty board1.mem_nickname}">${board1.mem_id}</c:if>

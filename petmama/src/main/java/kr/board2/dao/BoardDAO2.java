@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.board2.vo.BoardReplyVO2;
 import kr.board2.vo.BoardVO2;
 import kr.util.DBUtil;
 import kr.util.StringUtil;
@@ -252,10 +253,10 @@ public class BoardDAO2 {
 			
 			sql = "DELETE FROM board2_reply WHERE board_num=?";
 			pstmt2 = conn.prepareStatement(sql);
-			pstmt2.setInt(1, board_num);
+			pstmt2.setInt(2, board_num);
 			pstmt2.executeUpdate();
 			
-			sql = "DELETE FROM board2 WHRER board_num=?";
+			sql = "DELETE FROM board2 WHERE board_num=?";
 			pstmt3 = conn.prepareStatement(sql);
 			pstmt3.setInt(3, board_num);
 			pstmt.executeUpdate();
@@ -277,7 +278,55 @@ public class BoardDAO2 {
 	//내가 선택한 좋아요 목록
 
 	//댓글 등록
-	//댓글 개수
+	public void insertReplyBoard(BoardReplyVO2 boardreply)
+									throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();			
+			sql = "INSERT INTO board2_reply (re_num,re_content,"
+				+ "re_ip,mem_num,board_num) VALUES "
+				+ "(board2_reply_seq.nextval,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, boardreply.getRe_content());
+			pstmt.setString(2, boardreply.getRe_ip());
+			pstmt.setInt(3, boardreply.getMem_num());
+			pstmt.setInt(4, boardreply.getBoard_num());
+			
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	//댓글 개수 
+	public int getReplyBoardCount(int board_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT COUNT(*) FROM board2_reply JOIN member "
+				+ "USING(mem_num) WHERE board_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
 	//댓글 목록
 	//댓글 상세(댓글 수정,삭제시 작성자 회원번호 체크 용도로 사용)
 	//댓글 수정

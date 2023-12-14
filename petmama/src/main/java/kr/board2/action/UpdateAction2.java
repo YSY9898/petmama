@@ -46,7 +46,7 @@ public class UpdateAction2 implements Action{
 			FileUtil.removeFile(request, db_board.getFilename());
 		}
 
-		return "/redirect:/board/detail.do?board_num=" + board_num;
+		return "/redirect:/board2/detail2.do?board_num=" + board_num;
 	}
 
 }

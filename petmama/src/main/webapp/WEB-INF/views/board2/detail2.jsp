@@ -8,6 +8,7 @@
 <title>후기 상세 정보</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/board2.fav.js"></script>
 </head>
 <body>
 <div class="page-main">

@@ -13,7 +13,7 @@ public class DetailAction2 implements Action{
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		int board_num = Integer.parseInt(request.getParameter("board2_num"));
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
 		
 		BoardDAO2 dao = BoardDAO2.getInstance();
 		
