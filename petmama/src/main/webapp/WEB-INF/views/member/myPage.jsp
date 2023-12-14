@@ -153,7 +153,23 @@ $(function(){
 				      onclick="location.href='deleteUserForm.do'">
 			</h3>
 		</div>
-		
+		<div class="mypage-div">
+			<h3>저장한 게시물 목록</h3>
+			<table>
+				<tr>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>등록일</th>
+				</tr>
+				<c:forEach var="board" items="${boardList}">
+				<tr>
+					<td><a href="${pageContext.request.contextPath}/board/detail.do?board_num=${board.board_num}" target="_blank">${fn:substring(board.title,0,12)}</a></td>
+					<td>${board.mem_nickname}</td>
+					<td>${board.reg_date}</td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 </div>
 </body>

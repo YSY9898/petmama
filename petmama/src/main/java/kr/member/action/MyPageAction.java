@@ -27,7 +27,12 @@ public class MyPageAction implements Action{
 		MemberDAO dao = MemberDAO.getInstance();
 		MemberVO member = dao.getMember(user_num);
 		
+		//관심 게시물 정보
+		BoardDAO boardDao = BoardDAO.getInstance();
+		List<BoardVO> boardList = boardDao.getListBoardFav(1, 5, user_num);
+		
 		request.setAttribute("member", member);
+		request.setAttribute("boardList", boardList);
 		
 		//JSP 경로 반환
 		return "/WEB-INF/views/member/myPage.jsp";

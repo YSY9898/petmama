@@ -78,7 +78,6 @@ public class MemberDAO {
 			pstmt4.setString(6,member.getPet_note());
 			pstmt4.executeUpdate();
 
-			System.out.println("asdasdasd222222a");
 			
 			//SQL문 실행시 모두 성공하면 commit
 			conn.commit();			
