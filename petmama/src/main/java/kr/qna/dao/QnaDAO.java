@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.board.vo.BoardVO;
+import kr.qna.vo.QnaReplyVO;
 import kr.qna.vo.QnaVO;
 import kr.util.DBUtil;
 import kr.util.StringUtil;
@@ -178,7 +178,7 @@ public class QnaDAO {
 		return list;
 	}
 
-	public QnaVO getQNA(int q_num) throws Exception {
+	public QnaVO getQNA(int q_num, String mem_id) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -191,24 +191,22 @@ public class QnaDAO {
 			// SQL문 작성
 			// (주의)회원탈퇴하면 zmember_detail의 레코드가 존재하지 않기
 			// 때문에 외부 조인을 사용해서 데이터 누락 방지
-			sql = "SELECT * FROM qna JOIN member USING(mem_num) " + "WHERE q_num=?";
+			sql = "SELECT * FROM qna JOIN member USING(mem_num) " + "WHERE q_num=? AND member.mem_id=?";
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			// ?에 데이터 바인딩
 			pstmt.setInt(1, q_num);
+			pstmt.setString(2, mem_id);
 			// SQL문 실행
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				qna = new QnaVO();
-//				qna.setBoard_num(rs.getInt("board_num"));
-				qna.setTitle(rs.getString("title"));
 				qna.setContent(rs.getString("content"));
+				qna.setAnswer_yn(rs.getString("answer_yn"));
 				qna.setReg_date(rs.getDate("reg_date"));
 				qna.setModify_date(rs.getDate("modify_date"));
 				qna.setFilename(rs.getString("filename"));
 				qna.setMem_num(rs.getInt("mem_num"));
-//				qna.setId(rs.getString("id"));
-//				qna.setPhoto(rs.getString("photo"));
 			}
 		} catch (Exception e) {
 			throw new Exception(e);
@@ -218,9 +216,70 @@ public class QnaDAO {
 		return qna;
 	}
 
-	public int checkQNA(int q_num) throws Exception {
-		// 내가 작성한 게시글인지 확인
+	public QnaReplyVO getQnaReply(int q_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		QnaReplyVO qnaReply = null;
+		String sql = null;
 
-		return 1;
+		try {
+			// 커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			// (주의)회원탈퇴하면 zmember_detail의 레코드가 존재하지 않기
+			// 때문에 외부 조인을 사용해서 데이터 누락 방지
+			sql = "SELECT * FROM qna_reply WHERE qna_reply.q_num=? ";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, q_num);
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				qnaReply = new QnaReplyVO();
+				qnaReply.setQr_content(rs.getString("qr_content"));
+				qnaReply.setReg_date(rs.getDate("reg_date"));
+			}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return qnaReply;
+	}
+
+	public QnaVO checkQNA(int q_num, String mem_id) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		QnaVO qna = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			// member와 member_detail 조인시 member의 누락된 데이터가 보여야 id 중복 체크 가능
+			sql = "SELECT * FROM qna LEFT OUTER JOIN member USING(mem_num) WHERE q_num=? AND member.mem_id=?";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, q_num);
+			pstmt.setString(2, mem_id);
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				qna = new QnaVO();
+				qna.setMem_num(rs.getInt("mem_num")); 
+				qna.setMem_id(rs.getString("mem_id"));
+				qna.setHide_yn(rs.getString("hide_yn"));
+			}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return qna;
 	}
 }

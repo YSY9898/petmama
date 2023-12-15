@@ -1,33 +1,54 @@
-//package kr.customer.action;
-//
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//
-//import kr.controller.Action;
-//import kr.qna.dao.QnaDAO;
-//import kr.qna.vo.QnaVO;
-//import kr.util.StringUtil;
-//
-//public class QnaDetailAction implements Action{
-//
-//	@Override
-//	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		int q_num = Integer.parseInt(request.getParameter("q_num"));
-//		
-//		QnaDAO dao = QnaDAO.getInstance();
-//
-//		dao.checkQNA(q_num);
-//		
-//		QnaVO qna = dao.getQNA(q_num);
-//		
-//		
-//		//HTML를 허용하지 않음
-////		board.setTitle(StringUtil.useNoHtml(board.getTitle()));
-//		//HTML를 허용하지 않으면서 줄바꿈 처리
-////		board.setContent(StringUtil.useBrNoHtml(board.getContent()));
-//		
-////		request.setAttribute("board", board);
-//		
-//		return "/WEB-INF/views/board/detail.jsp";
-//	}
-//}
+package kr.customer.action;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.google.gson.Gson;
+
+import kr.controller.Action;
+import kr.qna.dao.QnaDAO;
+import kr.qna.vo.QnaReplyVO;
+import kr.qna.vo.QnaVO;
+
+public class QnaDetailAction implements Action{
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int q_num = Integer.parseInt(request.getParameter("q_num"));
+
+		Map<String, String> mapAjax = new HashMap<String, String>();
+		HttpSession session = request.getSession();
+		
+		String user_id = (String) session.getAttribute("user_id"); 
+		
+		QnaDAO dao = QnaDAO.getInstance();
+		QnaVO qna_chk = dao.checkQNA(q_num, user_id);
+		
+		if(qna_chk == null) {
+			mapAjax.put("result", "empty");
+		} else {
+			if(qna_chk.getHide_yn().equals("Y")) {
+				mapAjax.put("result", "password");
+			} else {
+				QnaVO qna = dao.getQNA(q_num, user_id);
+				QnaReplyVO qnaReply = dao.getQnaReply(q_num);
+				String json = new Gson().toJson(qna);
+				String json2 = new Gson().toJson(qnaReply);
+				mapAjax.put("result", "success");
+				mapAjax.put("list", json);
+				mapAjax.put("r_list", json2);
+			}
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		String ajaxData = mapper.writeValueAsString(mapAjax);
+		request.setAttribute("ajaxData", ajaxData);
+		
+		return "/WEB-INF/views/common/ajax_view.jsp";
+	}
+}

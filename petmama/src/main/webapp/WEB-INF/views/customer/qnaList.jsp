@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/customer/qna/style.css">
 <script type="text/javascript">
 	function searchQNA(kind, page_num) {
 		let keyfield = $("#keyfield").val();
@@ -19,15 +21,12 @@
 			url : '${pageContext.request.contextPath}/customer/search.do',
 			type : 'post',
 			data : {
-				//"kind" : kind,
 				"keyfield" : keyfield,
 				"keyword" : keyword,
 				"pageNum" : pageNum
 			},
 			dataType : 'json',
 			success : function(param) {
-				console.log(JSON.parse(param.page));
-				
 				$(".qnaListUnit").remove();
 				let qna_list = JSON.parse(param.list);
 				let qna_page = JSON.parse(param.page);
@@ -36,7 +35,11 @@
 				qna_list.forEach((data, index, array) => {
 				    new_html += "<tr class='qnaListUnit'>";
 				    new_html += "<td>" + data['q_num'] + "</td>";
-				    new_html += "<td>" + data['answer_yn'] + "</td>";
+				    if(data['answer_yn'] == 'Y') {		
+				    	new_html += "<td>답변완료</td>";
+				    } else {
+				    	new_html += "<td>답변대기중</td>";
+				    }
 				    if(data['hide_yn'] == 'Y') {				    	
 				    	new_html += "<td><a href='javascript:void(0)' onclick='showQNA(" + data['q_num'] + ", this)'>" + data['title'] + "<img src='/petmama/images/customer/qna_lock.png' width='25' height='25'></td>";
 				    } else {					    	
@@ -52,7 +55,6 @@
 				});
 				$(".qnaListSection").html(new_html);
 				$(".align-center").html(qna_page['page']);
-				console.log(qna_page['page']);
 			},
 			error : function() {
 				alert('네트워크 오류 발생');
@@ -64,11 +66,7 @@
 		searchQNA('keyword', page_num);
 	}
 	
-	function showQNA(q_num, obj) {
-		
-		// ajax 
-		// 1. 비밀글 처리
-		// 2. 답변 관련 처리
+	function showQNA(q_num, obj) {	
 		$.ajax({
 			url : '${pageContext.request.contextPath}/customer/detail.do',
 			type : 'post',
@@ -77,19 +75,33 @@
 			},
 			dataType : 'json',
 			success : function(param) {
-				
+				if(param.result == "password") {
+					$(".popup-container").hide();
+					$(obj).parent().append($(".popup-container")[0].outerHTML);
+					$(obj).parent().find(".popup-container").show();
+				} else if(param.result == "empty") {
+					alert("열람 권한이 없습니다.");
+				} else {
+					let qna_content = JSON.parse(param.list);
+					let qnaReply_content = JSON.parse(param.r_list);
+					if($(obj).parent().find(".qnaContent").length > 0) {
+						$(obj).parent().find(".qnaContent").remove();
+					} else {
+						$(obj).parent().append($(".qnaContent")[0].outerHTML);
+						$(obj).parent().find(".qnaContent p:eq(0)").html(qna_content.content);
+						if(qnaReply_content == null) {
+							$(obj).parent().find(".qnaContent p:eq(1)").html("");							
+						} else {
+							$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);							
+						}
+						$(obj).parent().find(".qnaContent").show();
+					}
+				}
 			},
 			error : function() {
 				alert('네트워크 오류 발생');
 			}
 		});
-		
-		// ajax return 값 붙이기
-		if($(obj).parent().find(".qnaContent").length > 0) {
-			$(obj).parent().find(".qnaContent").remove();
-		} else {
-			$(obj).parent().append($(".qnaContent")[0].outerHTML);
-		}
 	}
 </script>
 <div id="qontent-main">
@@ -122,22 +134,26 @@
 			<c:forEach var="qna" items="${list}">
 				<tr class="qnaListUnit">
 					<td>${qna.q_num}</td>
-					<td>${qna.answer_yn}</td>
+					<c:choose>
+						<c:when test="${qna.answer_yn == 'Y'}">
+							<td>답변완료</td>
+						</c:when>
+						<c:otherwise>
+							<td>답변대기중</td>
+						</c:otherwise>
+					</c:choose>
 					<c:choose>
 						<c:when test="${qna.hide_yn == 'Y'}">
 							<td><a href="javascript:void(0)"
-							onclick="showQNA(${qna.q_num}, this)">${qna.title}</a>
-							<img src="/petmama/images/customer/qna_lock.png" width="25" height="25" >
-							</td>
+								onclick="showQNA(${qna.q_num}, this)">${qna.title}</a> <img
+								src="/petmama/images/customer/qna_lock.png" width="25"
+								height="25"></td>
 						</c:when>
 						<c:otherwise>
 							<td><a href="javascript:void(0)"
-							onclick="showQNA(${qna.q_num}, this)">${qna.title}</a>
-							</td>
-						</c:otherwise> 
+								onclick="showQNA(${qna.q_num}, this)">${qna.title}</a></td>
+						</c:otherwise>
 					</c:choose>
-					<td><a href="javascript:void(0)"
-						onclick="showQNA(${qna.q_num}, this)">${qna.title}</a></td>
 					<td>${qna.mem_id}</td>
 					<td>${qna.reg_date}</td>
 				</tr>
@@ -148,6 +164,16 @@
 </div>
 
 <div class="qnaContent">
-	<p>제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목</p>
+	<b>내용 : </b>
+	<p>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</p>
+	<b>답변 : </b>
 	<p>답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변</p>
+</div>
+
+<div class="popup-container">
+	<label for="password" style="font-size: 18px;">비밀번호를 입력하세요:</label> <input
+		type="password" id="password" class="password-input" required>
+	<br>
+	<button class="submit-button" onclick="submitPassword()">확인</button>
+	<button class="submit-button" onclick="javascript:$('.popup-container').hide()">취소</button>
 </div>

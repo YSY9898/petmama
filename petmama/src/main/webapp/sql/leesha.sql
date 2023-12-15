@@ -47,8 +47,7 @@ create table qna_reply (
   reg_date date default sysdate not null,
   modify_date date,
   qr_ip varchar2(40) not null,
-  constraint qna_reply_pk primary key (q_num),
+  constraint qna_reply_pk primary key (qr_num),
   constraint qna_reply_member_fk foreign key (mem_num) references member (mem_num)  
 );
 create sequence qna_reply_seq;
-

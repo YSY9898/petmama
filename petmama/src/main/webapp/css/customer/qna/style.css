@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.qnaContent {
+	display: none;
+}
+
+.popup-container {
+	display : none;
+	position : absolute;
+	text-align: center;
+	padding: 20px;
+	background-color: #f4f4f4;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.password-input {
+	padding: 8px;
+	margin: 8px;
+}
+
+.submit-button {
+	padding: 10px 20px;
+	background-color: #3498db;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
