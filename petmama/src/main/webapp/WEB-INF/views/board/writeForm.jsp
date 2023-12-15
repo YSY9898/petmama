@@ -5,6 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판 글쓰기</title>
+<!-- 모바일 장치에서 웹사이트가 원하는 사이즈로 보여지게 처리 -->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
 <div>
@@ -12,7 +17,6 @@
 	<div>
 		<h2>게시판 글쓰기</h2>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(function(){
 			$('#write_form').submit(function(){
@@ -51,5 +55,6 @@
 		</form>
 	</div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 </body>
 </html>

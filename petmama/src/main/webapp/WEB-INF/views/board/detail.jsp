@@ -7,6 +7,7 @@
 <!-- 모바일 장치에서 웹사이트가 원하는 사이즈로 보여지게 처리 -->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>게시판 상세 정보</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -95,7 +96,7 @@
 		</div>
 		<!-- 댓글 목록 출력 시작 -->
 		<div id="output"></div>
-		<div style="display:none;">
+		<div class="paging-button" style="display:none;">
 			<input type="button" value="다음글 보기">
 		</div>
 		<div id="loading" style="display:none;">
