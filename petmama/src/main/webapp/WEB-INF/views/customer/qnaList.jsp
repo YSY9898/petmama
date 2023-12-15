@@ -123,12 +123,19 @@
 				<tr class="qnaListUnit">
 					<td>${qna.q_num}</td>
 					<td>${qna.answer_yn}</td>
-					<c:if test="${qna.hide_yn == 'Y'}">
-						<td><a href="javascript:void(0)"
-						onclick="showQNA(${qna.q_num}, this)">${qna.title}</a>
-						<img src="/petmama/images/customer/qna_lock.png" width="25" height="25" >
-						</td>
-					</c:if> 
+					<c:choose>
+						<c:when test="${qna.hide_yn == 'Y'}">
+							<td><a href="javascript:void(0)"
+							onclick="showQNA(${qna.q_num}, this)">${qna.title}</a>
+							<img src="/petmama/images/customer/qna_lock.png" width="25" height="25" >
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td><a href="javascript:void(0)"
+							onclick="showQNA(${qna.q_num}, this)">${qna.title}</a>
+							</td>
+						</c:otherwise> 
+					</c:choose>
 					<td><a href="javascript:void(0)"
 						onclick="showQNA(${qna.q_num}, this)">${qna.title}</a></td>
 					<td>${qna.mem_id}</td>
