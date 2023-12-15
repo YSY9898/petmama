@@ -94,7 +94,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!-- header 끝 -->
 <!-- sidebar 시작 -->
-	<jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
+	
 <!-- sidebar 끝 -->
 
 </body>
@@ -111,7 +111,7 @@
          
 			<form id="register_form" accept-charset="UTF-8" role="form" action="registerUser.do" method="post">
 			
-				<legend>회원정보</legend>
+				<li><p>회원정보</p></li>
 				
 				<br>
 				<br>
@@ -191,7 +191,7 @@
 					
 				<div class="form-group">
 				 	<div class="align-center">
-                <a href="${pageContext.request.contextPath}/views/memver/registerPetForm.do" 
+                <a href="${pageContext.request.contextPath}/views/member/registerPetForm.jsp" 
                 class="btn btn-primary btn-block m-t-md"> 다음 페이지</a> 
 					</div>
 	            </div>
