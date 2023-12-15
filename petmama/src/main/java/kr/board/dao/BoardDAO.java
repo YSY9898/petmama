@@ -8,6 +8,7 @@ import java.util.List;
 
 import kr.board.vo.BoardFavVO;
 import kr.board.vo.BoardReplyVO;
+import kr.board.vo.BoardScrapVO;
 import kr.board.vo.BoardVO;
 import kr.util.DBUtil;
 import kr.util.DurationFromNow;
@@ -266,6 +267,8 @@ public class BoardDAO {
 			pstmt.setInt(1, board_num);
 			pstmt.executeUpdate();
 			
+			//스크랩 삭제 
+			
 			//댓글 삭제
 			sql = "DELETE FROM board_reply WHERE board_num=?";
 			pstmt2 = conn.prepareStatement(sql);
@@ -308,6 +311,7 @@ public class BoardDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
 	//좋아요 개수
 	public int selectFavConut(int board_num)throws Exception{
 		Connection conn = null;
@@ -333,6 +337,7 @@ public class BoardDAO {
 		}
 		return count;
 	}
+	
 	//회원번호와 게시물 번호를 이용한 좋아요 정보 (좋아요 상세 정보)
 	public BoardFavVO selectFav(BoardFavVO favVO)throws Exception{
 		Connection conn = null;
@@ -392,6 +397,112 @@ public class BoardDAO {
 		try {
 			conn = DBUtil.getConnection();
 			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM board JOIN member USING(mem_num) JOIN member_detail USING(mem_num) JOIN board_fav f USING(board_num) WHERE f.mem_num=? ORDER BY board_num DESC)a)WHERE rnum >=? AND rnum <=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mem_num);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			
+			rs = pstmt.executeQuery();
+			list = new ArrayList<BoardVO>();
+			while(rs.next()) {
+				BoardVO board = new BoardVO();
+				board.setBoard_num(rs.getInt("board_num"));
+				board.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				board.setReg_date(rs.getDate("reg_date"));
+				board.setMem_nickname(rs.getString("mem_nickname"));
+				
+				list.add(board);
+				
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return list;
+	}
+	
+	
+	//스크랩 등록
+	public void insertScrap(BoardScrapVO scrapVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "INSERT INTO board_scrap (board_num,mem_num) VALUES (?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, scrapVO.getBoard_num());
+			pstmt.setInt(2, scrapVO.getMem_num());
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	//회원번호와 게시물 번호를 이용한 스크랩 정보 (스크랩 상세 정보)
+	public BoardScrapVO selectScrap(BoardScrapVO scrapVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardScrapVO scrap = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM board_scrap WHERE board_num=? AND mem_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, scrapVO.getBoard_num());
+			pstmt.setInt(2, scrapVO.getMem_num());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				scrap = new BoardScrapVO();
+				scrap.setBoard_num(rs.getInt("board_num"));
+				scrap.setMem_num(rs.getInt("mem_num"));
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return scrap;
+	}
+	//스크랩 삭제
+	public void deleteScrap(BoardScrapVO scrapVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "DELETE FROM board_Scrap WHERE board_num=? AND mem_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, scrapVO.getBoard_num());
+			pstmt.setInt(2, scrapVO.getMem_num());
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	//내가 선택한 스크랩 목록
+	public List<BoardVO> getListBoardScrap(int start,int end,int mem_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		List<BoardVO> list = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM board JOIN member USING(mem_num) JOIN member_detail USING(mem_num) JOIN board_scrap s USING(board_num) WHERE s.mem_num=? ORDER BY board_num DESC)a)WHERE rnum >=? AND rnum <=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mem_num);
 			pstmt.setInt(2, start);
@@ -567,4 +678,6 @@ public class BoardDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
+	
 }

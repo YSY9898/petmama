@@ -4,9 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- 모바일 장치에서 웹사이트가 원하는 사이즈로 보여지게 처리 -->
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>게시판 상세 정보</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board.fav.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/board.scrap.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board.reply.js"></script>
 </head>
 <body>
@@ -44,6 +49,11 @@
 				<img id="output_fav" data-num="${board.board_num}" src="${pageContext.request.contextPath}/images/fav01.gif" width="50">
 				좋아요
 				<span id="output_fcount"></span>
+			</li>
+			<li>
+				<%-- 스크랩 --%>
+				<img id="output_scrap" data-num="${board.board_num}" src="${pageContext.request.contextPath}/images/fav01.gif" width="50">
+				스크랩
 			</li>
 			<li>
 				<c:if test="${!empty board.modify_date}">
@@ -95,5 +105,6 @@
 		<!-- 댓글 끝 -->
 	</div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 </body>
 </html>
