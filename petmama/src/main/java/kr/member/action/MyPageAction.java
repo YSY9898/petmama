@@ -29,7 +29,8 @@ public class MyPageAction implements Action{
 		
 		//관심 게시물 정보
 		BoardDAO boardDao = BoardDAO.getInstance();
-		List<BoardVO> boardList = boardDao.getListBoardFav(1, 5, user_num);
+		List<BoardVO> boardList = boardDao.getListBoardScrap(1, 5, user_num);
+		//getListBoardFav -> getListBoardScrap 바꾸기
 		
 		request.setAttribute("member", member);
 		request.setAttribute("boardList", boardList);

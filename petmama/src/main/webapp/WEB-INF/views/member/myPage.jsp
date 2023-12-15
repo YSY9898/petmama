@@ -7,7 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>My페이지</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet"
+	href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -95,82 +96,129 @@ $(function(){
 });
 </script>
 </head>
+
+<!-- header 시작 -->
+	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<!-- header 끝 -->
 <body>
 <div class="page-main">
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="content-main">
-		<h2>회원정보</h2>
-		<div class="mypage-div">
+		<br><br>
+		<h2 class="text-center fw-bold">회원정보</h2>
+		<br>
+		<br>
+		<div class="mypage-div gird">
+		<div class="container-fluid bg-secondary text-white" style="padding:100px 20px;">
+			
 			<h3>펫 사진</h3>
 			<ul>
+			
 				<li>
 					<c:if test="${empty member.pet_photo}">
 					<img src="${pageContext.request.contextPath}/images/face.png" 
-					                  width="200" height="200" class="pet-photo">
+					                  width="150" height="150" class="pet-photo">
 					</c:if>
 					<c:if test="${!empty member.pet_photo}">
 					<img src="${pageContext.request.contextPath}/upload/${member.pet-photo}"
-					                  width="200" height="200" class="pet-photo">
+					                  width="150" height="150" class="pet-photo">
 					</c:if>
 				</li>
+				
+				
 				<li>
 					<div class="align-center">
-						<input type="button" value="수정" id="photo_btn">
+						<input type="button" value="수정" id="photo_btn"
+						 class="btn btn-dark btn-block btn-sm m-t-md">
 					</div>
 					<div id="photo_choice" style="display:none;">
 						<input type="file" id="pet_photo" 
 						  accept="image/gif,image/png,image/jpeg"><br>
-						<input type="button" value="전송" id="photo_submit">
-						<input type="button" value="취소" id="photo_reset">  
+						<input type="button" value="전송" id="photo_submit"
+						 class="btn btn-primary btn-block btn-sm m-t-md">
+						<input type="button" value="취소" id="photo_reset"
+						 class="btn btn-primary btn-block btn-sm m-t-md">  
 					</div>
 				</li>
 			</ul>
-			<h3>
-				상세정보
-				<input type="button" value="상세정보 수정"
+			
+			<hr>
+			<p>${member.pet_name}의 동반자</p>
+			<p>${member.mem_nickname}님!</p>
+			
+			</div>
+			
+			<br><br><br><br>
+			
+			<h4 class="fw-bold text-center" style="font-family: sans-serif;">
+				회원 상세정보
+				<input type="button" value="상세정보 수정"  class="btn btn-dark btn-block btn-sm m-t-md"
 				 onclick="location.href='modifyUserForm.do'">
-			</h3>
-			<ul>
-				<li>이름 : ${member.mem_name}</li>
-				<li>닉네임 : ${member.mem_nickname}</li>				
-				<li>전화번호 : ${member.mem_cell}</li>
-				<li>이메일 : ${member.mem_email}</li>
-				<li>우편번호 : ${member.mem_zipcode}</li>
-				<li>주소 : ${member.mem_address1} ${member.mem_address2}</li>
-				<li>가입일 : ${member.mem_rdate}</li>
+			</h4>
+			<div class="card mx-auto" style="width:50rem;">
+			<ul class="list-group">
+				<li class="list-group-item">이름 : ${member.mem_name}</li>
+				<li class="list-group-item">닉네임 : ${member.mem_nickname}</li>				
+				<li class="list-group-item">전화번호 : ${member.mem_cell}</li>
+				<li class="list-group-item">이메일 : ${member.mem_email}</li>
+				<li class="list-group-item">우편번호 : ${member.mem_zipcode}</li>
+				<li class="list-group-item">주소 : ${member.mem_address1} ${member.mem_address2}</li>
+				<li class="list-group-item">가입일 : ${member.mem_rdate}</li>
+				<li class="list-group-item">
+					<p class="fw-bold">
+					비밀번호 수정
+					<input type="button" value="비밀번호 수정"  class="btn btn-primary btn-block btn-sm m-t-md"
+					       onclick="location.href='modifyPasswordForm.do'">
+					</p></li>	
 				<c:if test="${!empty member.mem_mdate}">
 				<li>최근 정보 수정일 : ${member.mem_mdate}</li>
 				</c:if>
-			</ul>
-			<h3>
-				비밀번호 수정
-				<input type="button" value="비밀번호 수정"
-				       onclick="location.href='modifyPasswordForm.do'">
-			</h3>
-			<h3>
-				회원탈퇴
-				<input type="button" value="회원탈퇴"
-				      onclick="location.href='deleteUserForm.do'">
-			</h3>
-		</div>
+				</ul>
+				</div>
+								
+			
+			
+		<br>
+		<br>
+		<br>
+		<br>
+		
+		
 		<div class="mypage-div">
-			<h3>저장한 게시물 목록</h3>
-			<table>
+			<h4 class="fw-bold">스크랩한 게시물 목록</h4>
+			<table class="table table-striped">
+				<thead class="thead-dark">
 				<tr>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>등록일</th>
+					<th class="text-center" scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">등록일</th>
 				</tr>
+				</thead>
+				<tbody>
 				<c:forEach var="board" items="${boardList}">
 				<tr>
-					<td><a href="${pageContext.request.contextPath}/board/detail.do?board_num=${board.board_num}" target="_blank">${fn:substring(board.title,0,12)}</a></td>
+					<td class="text-center">
+					<a href="${pageContext.request.contextPath}/board/detail.do?board_num=${board.board_num}" 
+					target="_blank">${fn:substring(board.title,0,12)}</a></td>
 					<td>${board.mem_nickname}</td>
 					<td>${board.reg_date}</td>
 				</tr>
 				</c:forEach>
+				</tbody>
 			</table>
 		</div>
+		
+		
+		<br><br><br><br>
+		
+		<p>
+		회원탈퇴
+		<input type="button" value="회원탈퇴"
+				  onclick="location.href='deleteUserForm.do'">    
+		</p>
+		
+		
 	</div>
+</div>
 </div>
 </body>
 </html>

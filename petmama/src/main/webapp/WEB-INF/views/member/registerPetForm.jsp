@@ -14,8 +14,6 @@
 <!-- header 시작 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!-- header 끝 -->
-<!-- sidebar 시작 -->
-<!-- sidebar 끝 -->
 
 </body>
 <body>  
@@ -31,13 +29,12 @@
          
 			<form id="register_form" accept-charset="UTF-8" role="form" action="registerUser.do" method="post">
 			
-				<li><p>펫정보</p></li>
+				<p>펫정보</p>
 				
 				<br>
 				<br>
 				
 				<div class="form-group">
-				
 				<div class="form-floating mb-3">
 					<input type="text" name="pet_name" id="pet_name" maxlength="12" 
 						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="펫 이름">

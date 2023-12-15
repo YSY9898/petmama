@@ -25,10 +25,6 @@ public class RegisterUserAction implements Action{
 		vo.setMem_address1(request.getParameter("mem_address1"));
 		vo.setMem_address2(request.getParameter("mem_address2"));
 		
-		vo.setPet_name(request.getParameter("pet_name"));
-		vo.setPet_age(Integer.parseInt(request.getParameter("pet_age")));
-		vo.setPet_photo(request.getParameter("pet_photo"));
-		vo.setPet_note(request.getParameter("pet_note"));
 		
 		MemberDAO dao = MemberDAO.getInstance();
 		dao.insertMember(vo);

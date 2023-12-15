@@ -111,7 +111,7 @@
          
 			<form id="register_form" accept-charset="UTF-8" role="form" action="registerUser.do" method="post">
 			
-				<li><p>회원정보</p></li>
+				<p>회원정보</p>
 				
 				<br>
 				<br>
@@ -191,8 +191,8 @@
 					
 				<div class="form-group">
 				 	<div class="align-center">
-                <a href="${pageContext.request.contextPath}/views/member/registerPetForm.jsp" 
-                class="btn btn-primary btn-block m-t-md"> 다음 페이지</a> 
+                <a href="${pageContext.request.contextPath}/views/member/registerPetForm.do" 
+                class="btn btn-primary btn-block btn-lg m-t-md"> 다음 페이지</a> 
 					</div>
 	            </div>
 	           
@@ -297,6 +297,8 @@
 </script>
 <!-- 우편번호 검색 끝 -->			
 	</div>
+</div>
+</div>
 </div>
 </body>
 </html>
