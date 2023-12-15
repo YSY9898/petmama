@@ -93,7 +93,7 @@
 <!-- header 시작 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!-- header 끝 -->
-<!-- sidebar 시작 -->
+<!-- sidebar 시작 --> 
 	 
 <!-- sidebar 끝 -->
 
