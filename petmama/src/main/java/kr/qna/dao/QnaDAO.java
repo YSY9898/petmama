@@ -65,7 +65,7 @@ public class QnaDAO {
 		String sql = null;
 		String sub_sql = "";
 		int count = 0;
-		
+
 		System.out.println("keyfield : " + keyfield);
 		System.out.println("keyword : " + keyword);
 
@@ -88,7 +88,7 @@ public class QnaDAO {
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			if (keyword != null && !"".equals(keyword)) { // 객체가 생성되었는데 비어있을 수도 있어서 조건 검사
-				if(keyfield.equals("3")) { 
+				if (keyfield.equals("3")) {
 					pstmt.setString(1, keyword);
 				} else {
 					pstmt.setString(1, "%" + keyword + "%");
@@ -122,7 +122,7 @@ public class QnaDAO {
 		try {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-			
+
 			if (keyword != null && !"".equals(keyword)) {
 				// 검색 처리
 				if (keyfield.equals("1"))
@@ -138,7 +138,7 @@ public class QnaDAO {
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			if (keyword != null && !"".equals(keyword)) { // 객체가 생성되었는데 비어있을 수도 있어서 조건 검사
-				if(keyfield.equals("3")) { 
+				if (keyfield.equals("3")) {
 					pstmt.setString(++cnt, keyword);
 				} else {
 					pstmt.setString(++cnt, "%" + keyword + "%");
@@ -154,6 +154,7 @@ public class QnaDAO {
 			while (rs.next()) {
 				QnaVO qna = new QnaVO();
 				qna.setQ_num(rs.getInt("q_num"));
+				qna.setHide_yn(rs.getString("hide_yn"));
 				qna.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				qna.setAnswer_yn(rs.getString("answer_yn"));
 				qna.setMem_id(rs.getString("mem_id"));
@@ -175,5 +176,51 @@ public class QnaDAO {
 		}
 
 		return list;
+	}
+
+	public QnaVO getQNA(int q_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		QnaVO qna = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			// (주의)회원탈퇴하면 zmember_detail의 레코드가 존재하지 않기
+			// 때문에 외부 조인을 사용해서 데이터 누락 방지
+			sql = "SELECT * FROM qna JOIN member USING(mem_num) " + "WHERE q_num=?";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, q_num);
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				qna = new QnaVO();
+//				qna.setBoard_num(rs.getInt("board_num"));
+				qna.setTitle(rs.getString("title"));
+				qna.setContent(rs.getString("content"));
+				qna.setReg_date(rs.getDate("reg_date"));
+				qna.setModify_date(rs.getDate("modify_date"));
+				qna.setFilename(rs.getString("filename"));
+				qna.setMem_num(rs.getInt("mem_num"));
+//				qna.setId(rs.getString("id"));
+//				qna.setPhoto(rs.getString("photo"));
+			}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return qna;
+	}
+
+	public int checkQNA(int q_num) throws Exception {
+		// 내가 작성한 게시글인지 확인
+
+		return 1;
 	}
 }

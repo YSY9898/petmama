@@ -37,7 +37,11 @@
 				    new_html += "<tr class='qnaListUnit'>";
 				    new_html += "<td>" + data['q_num'] + "</td>";
 				    new_html += "<td>" + data['answer_yn'] + "</td>";
-				    new_html += "<td><a href='javascript:void(0)' onclick='showQNA(" + data['q_num'] + ", this)'>" + data['title'] + "</td>";
+				    if(data['hide_yn'] == 'Y') {				    	
+				    	new_html += "<td><a href='javascript:void(0)' onclick='showQNA(" + data['q_num'] + ", this)'>" + data['title'] + "<img src='/petmama/images/customer/qna_lock.png' width='25' height='25'></td>";
+				    } else {					    	
+				    	new_html += "<td><a href='javascript:void(0)' onclick='showQNA(" + data['q_num'] + ", this)'>" + data['title'] + "</td>";
+				    }
 				    if(data['mem_id']) {
 				    	new_html += "<td>" + data['mem_id'] + "</td>";
 				    } else {
@@ -61,9 +65,24 @@
 	}
 	
 	function showQNA(q_num, obj) {
+		
 		// ajax 
 		// 1. 비밀글 처리
 		// 2. 답변 관련 처리
+		$.ajax({
+			url : '${pageContext.request.contextPath}/customer/detail.do',
+			type : 'post',
+			data : {
+				"q_num" : q_num,
+			},
+			dataType : 'json',
+			success : function(param) {
+				
+			},
+			error : function() {
+				alert('네트워크 오류 발생');
+			}
+		});
 		
 		// ajax return 값 붙이기
 		if($(obj).parent().find(".qnaContent").length > 0) {
@@ -104,6 +123,12 @@
 				<tr class="qnaListUnit">
 					<td>${qna.q_num}</td>
 					<td>${qna.answer_yn}</td>
+					<c:if test="${qna.hide_yn == 'Y'}">
+						<td><a href="javascript:void(0)"
+						onclick="showQNA(${qna.q_num}, this)">${qna.title}</a>
+						<img src="/petmama/images/customer/qna_lock.png" width="25" height="25" >
+						</td>
+					</c:if> 
 					<td><a href="javascript:void(0)"
 						onclick="showQNA(${qna.q_num}, this)">${qna.title}</a></td>
 					<td>${qna.mem_id}</td>
