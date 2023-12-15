@@ -282,4 +282,39 @@ public class QnaDAO {
 		}
 		return qna;
 	}
+	
+	public QnaVO checkQnaPassword(int q_num, String password, String mem_id) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		QnaVO qna = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			// member와 member_detail 조인시 member의 누락된 데이터가 보여야 id 중복 체크 가능
+			sql = "SELECT * FROM qna LEFT OUTER JOIN member USING(mem_num) WHERE q_num=? AND passwd=? AND member.mem_id=?";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, q_num);
+			pstmt.setString(2, password);
+			pstmt.setString(3, mem_id);
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				qna = new QnaVO();
+				qna.setMem_num(rs.getInt("mem_num")); 
+				qna.setMem_id(rs.getString("mem_id"));
+				qna.setHide_yn(rs.getString("hide_yn"));
+			}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return qna;
+	}
 }
