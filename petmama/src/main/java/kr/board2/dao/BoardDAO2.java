@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.board2.vo.BoardFavVO2;
 import kr.board2.vo.BoardReplyVO2;
 import kr.board2.vo.BoardVO2;
 import kr.util.DBUtil;
+import kr.util.DurationFromNow;
 import kr.util.StringUtil;
 
 public class BoardDAO2 {
@@ -57,6 +59,11 @@ public class BoardDAO2 {
 
 		try {
 			conn = DBUtil.getConnection();
+			if(keyword != null && !"".equals(keyword)) {
+				if(keyfield.equals("1")) sub_sql += "WHERE title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql += "WHERE mem_nickname LIKE ?";
+				else if(keyfield.equals("3")) sub_sql += "WHERE content LIKE ?";
+			}
 			sql = "SELECT COUNT (*) FROM board2 JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) " + sub_sql;
 			pstmt = conn.prepareStatement(sql);
 			if(keyword != null && !"".equals(keyword)) {
@@ -243,7 +250,6 @@ public class BoardDAO2 {
 		
 		try {
 			conn = DBUtil.getConnection();
-			
 			conn.setAutoCommit(false);
 			
 			sql = "DELETE FROM board2_fav WHERE board_num=?";
@@ -253,13 +259,13 @@ public class BoardDAO2 {
 			
 			sql = "DELETE FROM board2_reply WHERE board_num=?";
 			pstmt2 = conn.prepareStatement(sql);
-			pstmt2.setInt(2, board_num);
+			pstmt2.setInt(1, board_num);
 			pstmt2.executeUpdate();
 			
 			sql = "DELETE FROM board2 WHERE board_num=?";
 			pstmt3 = conn.prepareStatement(sql);
-			pstmt3.setInt(3, board_num);
-			pstmt.executeUpdate();
+			pstmt3.setInt(1, board_num);
+			pstmt3.executeUpdate();
 			
 			conn.commit();
 		}catch(Exception e) {
@@ -272,10 +278,135 @@ public class BoardDAO2 {
 		}
 	}
 	//좋아요 등록
+	public void insertFav(BoardFavVO2 favVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "INSERT INTO board2_fav (board_num,mem_num ) "
+				+ "VALUES (?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, favVO.getBoard_num());
+			pstmt.setInt(2, favVO.getMem_num());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 	//좋아요 개수
+	public int selectFavCount(int board_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT COUNT (*) FROM board2_fav WHERE board_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return count;
+	}
 	//회원번호와 게시물 번호를 이용한 좋아요 정보 (좋아요 상세 정보)
+	public BoardFavVO2 selectFav(BoardFavVO2 favVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardFavVO2 fav = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM board2_fav WHERE board_num=? AND mem_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, favVO.getBoard_num());
+			pstmt.setInt(2, favVO.getMem_num());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				fav = new BoardFavVO2();
+				fav.setBoard_num(rs.getInt("board_num"));
+				fav.setMem_num(rs.getInt("mem_num"));
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return fav;
+	}
 	//좋아요 삭제
+	public void deleteFav(BoardFavVO2 favVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "DELETE FROM board2_fav WHERE board_num=? AND mem_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, favVO.getBoard_num());
+			pstmt.setInt(2, favVO.getMem_num());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 	//내가 선택한 좋아요 목록
+	public List<BoardVO2> getListBoardFav(int start,int end,
+								int mem_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardVO2> list = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
+				+ "(SELECT * FROM board2 JOIN member USING(mem_num) "
+				+ "JOIN board2_fav f USING(board_num) WHERE f.mem_num=? "
+				+ "ORDER BY board_num DESC)a) WHERE rnum >= ? AND rnum <=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mem_num);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<BoardVO2>();
+			while(rs.next()) {
+				BoardVO2 board = new BoardVO2();
+				board.setBoard_num(rs.getInt("board_num"));
+				board.setTitle(StringUtil.useNoHtml(
+						rs.getString("title")));
+				board.setReg_date(rs.getDate("reg_date"));
+				board.setMem_nickname(rs.getString("mem_nickname"));
+				board.setMem_id(rs.getString("mem_id"));
+						
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return list;
+	}
 
 	//댓글 등록
 	public void insertReplyBoard(BoardReplyVO2 boardreply)
@@ -328,7 +459,109 @@ public class BoardDAO2 {
 		return count;
 	}
 	//댓글 목록
+	public List<BoardReplyVO2> getListReplyBoard(int start, int end, int board_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardReplyVO2> list = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
+				+ "(SELECT * FROM board2_reply JOIN member "
+				+ "USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) WHERE board_num=? "
+				+ "ORDER BY re_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<BoardReplyVO2>();
+			while(rs.next()) {
+				BoardReplyVO2 reply = new BoardReplyVO2();
+				reply.setRe_num(rs.getInt("re_num"));
+				reply.setRe_date(DurationFromNow.getTimeDiffLabel(rs.getString("re_date")));
+				if(rs.getString("re_modifydate")!=null) {
+					reply.setRe_modifydate(DurationFromNow.getTimeDiffLabel(rs.getString("re_modifydate")));
+				}
+				reply.setRe_content(StringUtil.useBrNoHtml(rs.getString("re_content")));
+				reply.setBoard_num(rs.getInt("board_num"));
+				reply.setMem_num(rs.getInt("mem_num"));
+				reply.setMem_nickname(rs.getString("mem_nickname"));
+				reply.setMem_id(rs.getString("mem_id"));
+				
+				list.add(reply);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
+	}
 	//댓글 상세(댓글 수정,삭제시 작성자 회원번호 체크 용도로 사용)
+	public BoardReplyVO2 getReplyBoard(int re_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardReplyVO2 reply = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM board2_reply WHERE re_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, re_num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				reply = new BoardReplyVO2();
+				reply.setRe_num(rs.getInt("re_num"));
+				reply.setMem_num(rs.getInt("mem_num"));
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return reply;
+	}
 	//댓글 수정
+	public void updateReplyBoard(BoardReplyVO2 reply)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "UPDATE board2_reply SET re_content=?,re_modifydate=SYSDATE,re_ip=? WHERE re_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, reply.getRe_content());
+			pstmt.setString(2, reply.getRe_ip());
+			pstmt.setInt(3, reply.getRe_num());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 	//댓글 삭제
+	public void deleteReplyBoard(int re_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "DELETE FROM board2_reply WHERE re_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, re_num);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 }

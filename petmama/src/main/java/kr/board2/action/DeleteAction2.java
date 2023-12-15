@@ -21,16 +21,15 @@ public class DeleteAction2 implements Action{
 
 		int board_num = Integer.parseInt(
                 request.getParameter("board_num"));
+		
 		BoardDAO2 dao = BoardDAO2.getInstance();
 		BoardVO2 db_board = dao.getBoard(board_num);
 		if(user_num != db_board.getMem_num()) {
-			//로그인한 회원번호와 작성자 회원번호가 불일치
 			return "/WEB-INF/views/common/notice.jsp";
 		}
 		
-		//로그인한 회원번호와 작성자 회원번호가 일치
 		dao.deleteBoard(board_num);
-		//파일 삭제
+		
 		FileUtil.removeFile(request, db_board.getFilename());
 				
 		return "redirect:/board2/list2.do";
