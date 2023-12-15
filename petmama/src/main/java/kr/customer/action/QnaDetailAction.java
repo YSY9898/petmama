@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -14,8 +13,8 @@ import com.google.gson.Gson;
 
 import kr.controller.Action;
 import kr.qna.dao.QnaDAO;
+import kr.qna.vo.QnaReplyVO;
 import kr.qna.vo.QnaVO;
-import kr.util.StringUtil;
 
 public class QnaDetailAction implements Action{
 
@@ -38,9 +37,12 @@ public class QnaDetailAction implements Action{
 				mapAjax.put("result", "password");
 			} else {
 				QnaVO qna = dao.getQNA(q_num, user_id);
+				QnaReplyVO qnaReply = dao.getQnaReply(q_num);
 				String json = new Gson().toJson(qna);
+				String json2 = new Gson().toJson(qnaReply);
 				mapAjax.put("result", "success");
 				mapAjax.put("list", json);
+				mapAjax.put("r_list", json2);
 			}
 		}
 		ObjectMapper mapper = new ObjectMapper();

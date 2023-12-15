@@ -59,7 +59,7 @@
 			<button class="tab-btn" onclick="openTab('tab4')">펫시터 문의</button>
 
 			<div id="tab1" class="tab-content">
-			<%--  <jsp:include page="/WEB-INF/views/customer/qnaList.jsp" /> --%>
+			<jsp:include page="/WEB-INF/views/customer/qnaList.jsp" />
 				<div class="toggle-btn" onclick="toggleContent(this);">
 					<p>기본돌봄 이란?</p>
 					<img
@@ -98,7 +98,7 @@
 					<p>별도의 요청사항이 없는 경우 기본돌봄 내용대로 진행됩니다.(물티슈 발세척)</p>
 				</div>
 			</div>
-
+			
 			<div id="tab2" class="tab-content">
 				<div class="toggle-btn" onclick="toggleContent(this);">
 					<p>기본 돌봄이란2?</p>
@@ -147,7 +147,6 @@
 				</div>
 			</div>
 			<div id="tab4" class="tab-content">
-				<jsp:include page="/WEB-INF/views/customer/qnaList.jsp" />
 			</div>
 		</div>
 	</div>

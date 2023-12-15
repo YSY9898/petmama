@@ -83,12 +83,17 @@
 					alert("열람 권한이 없습니다.");
 				} else {
 					let qna_content = JSON.parse(param.list);
-					$(".qnaContent").find('p').eq(0).html(qna_content.content);
-					$(".qnaContent").find('p').eq(1).html("답변 잠시 비워둠");
+					let qnaReply_content = JSON.parse(param.r_list);
 					if($(obj).parent().find(".qnaContent").length > 0) {
 						$(obj).parent().find(".qnaContent").remove();
 					} else {
 						$(obj).parent().append($(".qnaContent")[0].outerHTML);
+						$(obj).parent().find(".qnaContent p:eq(0)").html(qna_content.content);
+						if(qnaReply_content == null) {
+							$(obj).parent().find(".qnaContent p:eq(1)").html("");							
+						} else {
+							$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);							
+						}
 						$(obj).parent().find(".qnaContent").show();
 					}
 				}
@@ -159,7 +164,9 @@
 </div>
 
 <div class="qnaContent">
+	<b>내용 : </b>
 	<p>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</p>
+	<b>답변 : </b>
 	<p>답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변</p>
 </div>
 
