@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.slide_msg {
+	text-align: center;
+}
+
+.tab-container {
+	text-align: center;
+}
+
+.tab-content:not(:first-of-type) {
+	display: none;
+}
+
+.toggle-btn {
+	display: flex;
+}
+
+.content {
+	display: none;
+	margin-top: 20px;
+}
+
+.content.active {
+	display: block;
+}

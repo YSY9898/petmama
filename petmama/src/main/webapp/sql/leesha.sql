@@ -21,3 +21,34 @@ create table member_detail(
  constraint member_detail_fk foreign key (mem_num) references member (mem_num)
 );
 create sequence member_seq;
+
+create table qna (
+  q_num number not null,
+  mem_num number not null,
+  sis_num number null,
+  passwd varchar2(12) not null,
+  title varchar2(150) not null,
+  content clob not null,
+  filename varchar2(150),
+  reg_date date default sysdate not null,
+  modify_date date,
+  answer_yn varchar2(1) default 'N' not null, 
+  hide_yn varchar2(1) default 'N' not null,
+  constraint qna_pk primary key (q_num),
+  constraint qna_member_fk foreign key (mem_num) references member (mem_num)  
+);
+create sequence qna_seq;
+
+create table qna_reply (
+  qr_num number not null,
+  q_num number not null,
+  mem_num number not null,
+  qr_content varchar2(500) not null,
+  reg_date date default sysdate not null,
+  modify_date date,
+  qr_ip varchar2(40) not null,
+  constraint qna_reply_pk primary key (q_num),
+  constraint qna_reply_member_fk foreign key (mem_num) references member (mem_num)  
+);
+create sequence qna_reply_seq;
+
