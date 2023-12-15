@@ -133,7 +133,7 @@
 				<div class="tab3 content">
 					<h2>여기에 내용이 들어갑니다</h2>
 					<p>이 부분은 버튼을 누르면 나타나거나 사라집니다.</p>
-				</div>
+				</div> 
 
 				<div class="toggle-btn" onclick="toggleContent(this);">
 					<p>기본 산책이란3?</p>
