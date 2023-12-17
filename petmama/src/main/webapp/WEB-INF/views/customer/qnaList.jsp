@@ -86,6 +86,10 @@
 				} else {
 					let qna_content = JSON.parse(param.list);
 					let qnaReply_content = JSON.parse(param.r_list);
+					console.log("param.r_list");
+					console.log(param.r_list);
+					console.log("qnaReply_content");
+					console.log(qnaReply_content);
 					if($(obj).parent().find(".qnaContent").length > 0) {
 						$(obj).parent().find(".qnaContent").remove();
 					} else {
@@ -93,8 +97,11 @@
 						$(obj).parent().find(".qnaContent p:eq(0)").html(qna_content.content);
 						if(qnaReply_content == null) {
 							$(obj).parent().find(".qnaContent p:eq(1)").html("");	
-							if(param.auth == '9') {
+							console.log($(obj));
+							if(param.auth == 9) {
 								$(obj).parent().find(".qnaContent .answerContent").show();
+							} else {
+								$(obj).parent().find(".qnaContent .answerContent").hide();
 							}
 						} else {
 							$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);	
@@ -123,29 +130,33 @@
 			},
 			dataType : 'json',
 			success : function(param) {
-				if(param.result == "empty") {
-					alert("열람 권한이 없습니다.");
+				if(param.result == "mismatch") {
+					alert("비밀번호를 확인해주세요.");
 				} else {
 					obj = $(obj).parents(".qnaListUnit").find("a");
 					let qna_content = JSON.parse(param.list);
 					let qnaReply_content = JSON.parse(param.r_list);
+					
 					console.log(qnaReply_content);
-					if($(obj).parent().find(".qnaContent").length > 0) {
-						$(obj).parent().find(".qnaContent").remove();
-					} else {
-						$(obj).parent().append($(".qnaContent")[0].outerHTML);
-						$(obj).parent().find(".qnaContent p:eq(0)").html(qna_content.content);
-						if(qnaReply_content == null) {
-							$(obj).parent().find(".qnaContent p:eq(1)").html("");	
-							if(param.auth == '9') {
-								$(obj).parent().find(".qnaContent .answerContent").show();
-							}
+					console.log(param.auth);
+					
+					$(obj).parent().append($(".qnaContent")[0].outerHTML);
+					$(obj).parent().find(".qnaContent p:eq(0)").html(qna_content.content);
+					if(qnaReply_content == null) {
+						console.log($(obj));
+						console.log("qnaReply_content is null");
+						$(obj).parent().find(".qnaContent p:eq(1)").html("");	
+						if(param.auth == 9) {
+							$(obj).parent().find(".qnaContent .answerContent").show();
 						} else {
-							$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);	
 							$(obj).parent().find(".qnaContent .answerContent").hide();
 						}
-						$(obj).parent().find(".qnaContent").show();
+					} else {
+						$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);	
+						$(obj).parent().find(".qnaContent .answerContent").hide();
 					}
+					$(".popup-container").hide();
+					$(obj).parent().find(".qnaContent").show();
 				}
 			},
 			error : function() {

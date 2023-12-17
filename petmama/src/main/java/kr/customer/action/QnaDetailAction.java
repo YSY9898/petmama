@@ -36,10 +36,10 @@ public class QnaDetailAction implements Action {
 			QnaVO qna_chk = dao.checkQnaPassword(q_num, password, user_id);
 
 			if (qna_chk == null) {
-				mapAjax.put("result", "empty");
+				mapAjax.put("result", "mismatch");
 			} else {
-				QnaVO qna = dao.getQNA(q_num, user_id);
-				QnaReplyVO qnaReply = dao.getQnaReply(q_num);
+				QnaVO qna = dao.getQNA(q_num, user_id, user_auth);
+				QnaReplyVO qnaReply = dao.getQnaReply(q_num, user_auth);
 				String json = new Gson().toJson(qna);
 				String json2 = new Gson().toJson(qnaReply);
 				mapAjax.put("result", "success");
@@ -49,16 +49,16 @@ public class QnaDetailAction implements Action {
 			}
 
 		} else {
-			QnaVO qna_chk = dao.checkQNA(q_num, user_id);
+			QnaVO qna_chk = dao.checkQNA(q_num, user_id, user_auth);
 
 			if (qna_chk == null) {
 				mapAjax.put("result", "empty");
 			} else {
-				if (qna_chk.getHide_yn().equals("Y")) {
+				if (qna_chk.getHide_yn().equals("Y") && user_auth != 9) {
 					mapAjax.put("result", "password");
 				} else {
-					QnaVO qna = dao.getQNA(q_num, user_id);
-					QnaReplyVO qnaReply = dao.getQnaReply(q_num);
+					QnaVO qna = dao.getQNA(q_num, user_id, user_auth);
+					QnaReplyVO qnaReply = dao.getQnaReply(q_num, user_auth);
 					String json = new Gson().toJson(qna);
 					String json2 = new Gson().toJson(qnaReply);
 					mapAjax.put("result", "success");
