@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board2.fav.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/board2.reply.js"></script>
 </head>
 <body>
 <div class="page-main">
@@ -69,7 +70,7 @@
 					delete_btn.onclick=function(){
 						let choice = confirm('삭제하시겠습니까?');
 						if(choice){
-							location.replace('delete2.do?board_num=${board.board_num}');
+							location.replace('delete.do?board_num=${board.board_num}');
 						}
 					};
 				</script>

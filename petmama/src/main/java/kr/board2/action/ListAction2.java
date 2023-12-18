@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.board.dao.BoardDAO;
 import kr.board2.dao.BoardDAO2;
 import kr.board2.vo.BoardVO2;
 import kr.controller.Action;
@@ -24,7 +23,7 @@ public class ListAction2 implements Action{
 		BoardDAO2 dao = BoardDAO2.getInstance();
 		int count = dao.getBoardCount(keyfield, keyword);
 		
-		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,20,10,"list2.do");
+		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,10,10,"list2.do");
 		
 		List<BoardVO2> list = null;
 		if(count > 0) {

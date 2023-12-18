@@ -31,6 +31,7 @@ public class WriteReplyAction implements Action{
 			reply.setRe_content(request.getParameter("re_content"));
 			reply.setRe_ip(request.getRemoteAddr());
 			reply.setBoard_num(Integer.parseInt(request.getParameter("board_num")));
+			reply.setMem_nickname(request.getParameter("mem_nickname"));
 		
 			BoardDAO dao = BoardDAO.getInstance();
 			dao.insertReplyBoard(reply);

@@ -178,7 +178,7 @@ public class QnaDAO {
 		return list;
 	}
 
-	public QnaVO getQNA(int q_num, String mem_id) throws Exception {
+	public QnaVO getQNA(int q_num, String mem_id, int auth) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -191,12 +191,20 @@ public class QnaDAO {
 			// SQL문 작성
 			// (주의)회원탈퇴하면 zmember_detail의 레코드가 존재하지 않기
 			// 때문에 외부 조인을 사용해서 데이터 누락 방지
-			sql = "SELECT * FROM qna JOIN member USING(mem_num) " + "WHERE q_num=? AND member.mem_id=?";
-			// PreparedStatement 객체 생성
-			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터 바인딩
-			pstmt.setInt(1, q_num);
-			pstmt.setString(2, mem_id);
+			if(auth == 9) {
+				sql = "SELECT * FROM qna JOIN member USING(mem_num) " + "WHERE q_num=? ";
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				// ?에 데이터 바인딩
+				pstmt.setInt(1, q_num);
+			} else {
+				sql = "SELECT * FROM qna JOIN member USING(mem_num) " + "WHERE q_num=? AND member.mem_id=?";
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				// ?에 데이터 바인딩
+				pstmt.setInt(1, q_num);
+				pstmt.setString(2, mem_id);	
+			}
 			// SQL문 실행
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -216,7 +224,7 @@ public class QnaDAO {
 		return qna;
 	}
 
-	public QnaReplyVO getQnaReply(int q_num) throws Exception {
+	public QnaReplyVO getQnaReply(int q_num, int auth) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -249,7 +257,7 @@ public class QnaDAO {
 		return qnaReply;
 	}
 
-	public QnaVO checkQNA(int q_num, String mem_id) throws Exception {
+	public QnaVO checkQNA(int q_num, String mem_id, int auth) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -261,12 +269,54 @@ public class QnaDAO {
 			conn = DBUtil.getConnection();
 			// SQL문 작성
 			// member와 member_detail 조인시 member의 누락된 데이터가 보여야 id 중복 체크 가능
-			sql = "SELECT * FROM qna LEFT OUTER JOIN member USING(mem_num) WHERE q_num=? AND member.mem_id=?";
+			if(auth == 9) { 
+				sql = "SELECT * FROM qna LEFT OUTER JOIN member USING(mem_num) WHERE q_num=? ";	
+				pstmt = conn.prepareStatement(sql);
+				// ?에 데이터 바인딩
+				pstmt.setInt(1, q_num);
+			} else {
+				sql = "SELECT * FROM qna LEFT OUTER JOIN member USING(mem_num) WHERE q_num=? AND member.mem_id=?";
+				pstmt = conn.prepareStatement(sql);
+				// ?에 데이터 바인딩
+				pstmt.setInt(1, q_num);
+				pstmt.setString(2, mem_id);
+			} // PreparedStatement 객체 생성
+			
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				qna = new QnaVO();
+				qna.setMem_num(rs.getInt("mem_num")); 
+				qna.setMem_id(rs.getString("mem_id"));
+				qna.setHide_yn(rs.getString("hide_yn"));
+			}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return qna;
+	}
+	
+	public QnaVO checkQnaPassword(int q_num, String password, String mem_id) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		QnaVO qna = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			// member와 member_detail 조인시 member의 누락된 데이터가 보여야 id 중복 체크 가능
+			sql = "SELECT * FROM qna LEFT OUTER JOIN member USING(mem_num) WHERE q_num=? AND passwd=? AND member.mem_id=?";
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			// ?에 데이터 바인딩
 			pstmt.setInt(1, q_num);
-			pstmt.setString(2, mem_id);
+			pstmt.setString(2, password);
+			pstmt.setString(3, mem_id);
 			// SQL문 실행
 			rs = pstmt.executeQuery();
 			if (rs.next()) {

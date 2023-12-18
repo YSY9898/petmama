@@ -72,30 +72,91 @@
 			type : 'post',
 			data : {
 				"q_num" : q_num,
+				'pwd_chk' : 'N'
 			},
 			dataType : 'json',
 			success : function(param) {
 				if(param.result == "password") {
 					$(".popup-container").hide();
 					$(obj).parent().append($(".popup-container")[0].outerHTML);
+					$(obj).parent().find(".popup-container .submit-button:eq(0)").attr("onclick","showSecretQNA(" + q_num + ", this)");
 					$(obj).parent().find(".popup-container").show();
 				} else if(param.result == "empty") {
 					alert("열람 권한이 없습니다.");
 				} else {
 					let qna_content = JSON.parse(param.list);
 					let qnaReply_content = JSON.parse(param.r_list);
+					console.log("param.r_list");
+					console.log(param.r_list);
+					console.log("qnaReply_content");
+					console.log(qnaReply_content);
 					if($(obj).parent().find(".qnaContent").length > 0) {
 						$(obj).parent().find(".qnaContent").remove();
 					} else {
 						$(obj).parent().append($(".qnaContent")[0].outerHTML);
 						$(obj).parent().find(".qnaContent p:eq(0)").html(qna_content.content);
 						if(qnaReply_content == null) {
-							$(obj).parent().find(".qnaContent p:eq(1)").html("");							
+							$(obj).parent().find(".qnaContent p:eq(1)").html("");	
+							console.log($(obj));
+							if(param.auth == 9) {
+								$(obj).parent().find(".qnaContent .answerContent").show();
+							} else {
+								$(obj).parent().find(".qnaContent .answerContent").hide();
+							}
 						} else {
-							$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);							
+							$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);	
+							$(obj).parent().find(".qnaContent .answerContent").hide();
 						}
 						$(obj).parent().find(".qnaContent").show();
 					}
+				}
+			},
+			error : function() {
+				alert('네트워크 오류 발생');
+			}
+		});
+	}
+	
+	function showSecretQNA(q_num, obj) {	
+		let password = $(obj).parent().find(".password-input").val();
+		console.log(password);
+		$.ajax({
+			url : '${pageContext.request.contextPath}/customer/detail.do',
+			type : 'post',
+			data : {
+				"q_num" : q_num,
+				"pwd_chk" : 'Y',
+				'password' : password
+			},
+			dataType : 'json',
+			success : function(param) {
+				if(param.result == "mismatch") {
+					alert("비밀번호를 확인해주세요.");
+				} else {
+					obj = $(obj).parents(".qnaListUnit").find("a");
+					let qna_content = JSON.parse(param.list);
+					let qnaReply_content = JSON.parse(param.r_list);
+					
+					console.log(qnaReply_content);
+					console.log(param.auth);
+					
+					$(obj).parent().append($(".qnaContent")[0].outerHTML);
+					$(obj).parent().find(".qnaContent p:eq(0)").html(qna_content.content);
+					if(qnaReply_content == null) {
+						console.log($(obj));
+						console.log("qnaReply_content is null");
+						$(obj).parent().find(".qnaContent p:eq(1)").html("");	
+						if(param.auth == 9) {
+							$(obj).parent().find(".qnaContent .answerContent").show();
+						} else {
+							$(obj).parent().find(".qnaContent .answerContent").hide();
+						}
+					} else {
+						$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);	
+						$(obj).parent().find(".qnaContent .answerContent").hide();
+					}
+					$(".popup-container").hide();
+					$(obj).parent().find(".qnaContent").show();
 				}
 			},
 			error : function() {
@@ -168,12 +229,17 @@
 	<p>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</p>
 	<b>답변 : </b>
 	<p>답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변</p>
+	<div class="answerContent">
+		<textarea rows="" cols=""></textarea>
+		<button>확인</button>
+	</div>
 </div>
 
 <div class="popup-container">
 	<label for="password" style="font-size: 18px;">비밀번호를 입력하세요:</label> <input
 		type="password" id="password" class="password-input" required>
 	<br>
-	<button class="submit-button" onclick="submitPassword()">확인</button>
-	<button class="submit-button" onclick="javascript:$('.popup-container').hide()">취소</button>
+	<button class="submit-button" onclick="showSecretQNA()">확인</button>
+	<button class="submit-button"
+		onclick="javascript:$('.popup-container').hide()">취소</button>
 </div>

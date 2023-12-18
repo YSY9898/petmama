@@ -10,36 +10,37 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import kr.board2.dao.BoardDAO2;
-import kr.board2.vo.BoardReplyVO2;
+import kr.board2.vo.BoardFavVO2;
 import kr.controller.Action;
 
-public class WriteReplyAction2 implements Action{
+public class GetFavAction2 implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Map<String,String> mapAjax = new HashMap<String,String>();
+		
+		request.setCharacterEncoding("utf-8");
+		
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		
+		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer)session.getAttribute("user_num");
 		
+		BoardDAO2 dao = BoardDAO2.getInstance();
 		if(user_num == null) {
-			mapAjax.put("result", "logout");
+			mapAjax.put("status", "noFav");
 		}else {
-			request.setCharacterEncoding("utf-8");
+			BoardFavVO2 boardFav =
+					dao.selectFav(new BoardFavVO2(board_num,user_num));
 			
-			BoardReplyVO2 reply = new BoardReplyVO2();
-			reply.setMem_num(user_num);
-			reply.setRe_content(request.getParameter("re_content"));
-			reply.setRe_ip(request.getRemoteAddr());
-			reply.setBoard_num(Integer.parseInt(
-					request.getParameter("board_num")));
-			
-			BoardDAO2 dao = BoardDAO2.getInstance();
-			
-			dao.insertReplyBoard(reply);
-			
-			mapAjax.put("result", "success");
+			if(boardFav!=null) {
+				mapAjax.put("status","yesFav");
+			}else {
+				mapAjax.put("status", "noFav");
+			}
 		}
+		mapAjax.put("count", dao.selectFavCount(board_num));
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String ajaxData = mapper.writeValueAsString(mapAjax);

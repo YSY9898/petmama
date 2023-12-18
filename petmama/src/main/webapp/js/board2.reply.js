@@ -28,7 +28,11 @@ $(function(){
 				
 				$(param.list).each(function(index,item){
 					let output = '<div class="item">';
-					output += '<h4>' + item.id + '</h4>';
+					if(item.mem_nickname){
+						output += '<h4>' + item.mem_nickname + '</h4>';
+					}else{
+						output += '<h4>' + item.mem_id + '</h4>';
+					}
 					output += '<div class="sub-item">';
 					output += '<p>' + item.re_content + '</p>';
 					
