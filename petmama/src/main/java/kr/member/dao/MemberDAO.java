@@ -243,6 +243,7 @@ public class MemberDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
 	//비밀번호 수정
 	public void updatePassword(String mem_pw,int mem_num)
 	                                          throws Exception{

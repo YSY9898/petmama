@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원목록</title>
+<link rel="stylesheet"
+	href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script type="text/javascript">
 window.onload=function(){
