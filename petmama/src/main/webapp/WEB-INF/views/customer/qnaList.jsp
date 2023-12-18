@@ -158,7 +158,7 @@
 	function updateAnswer(q_num, obj) {
 		let content = $(obj).prev().val();
 		if(content == "") {
-			alert("댓글 내용을 작성해주세요.");
+			alert("답변 내용을 작성해주세요.");
 			return false;
 		}
 		
@@ -172,9 +172,9 @@
 			dataType : 'json',
 			success : function(param) {
 				if(param.result == "success") {
-					alert("댓글 작성 성공");
+					alert("답변을 작성했습니다.");
 				} else {
-					alert("댓글 작성 실패");
+					alert("답변 작성에 실패했습니다.");
 				}
 			},
 			error : function() {
@@ -244,9 +244,9 @@
 
 <div class="qnaContent">
 	<b>내용 : </b>
-	<p>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</p>
+	<p>내용</p>
 	<b>답변 : </b>
-	<p>답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변</p>
+	<p>답변</p>
 	<div class="answerContent">
 		<textarea id="answer" rows="" cols=""></textarea>
 		<button onclick="updateAnswer()">확인</button>

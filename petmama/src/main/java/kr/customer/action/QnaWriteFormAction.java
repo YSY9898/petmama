@@ -18,5 +18,4 @@ public class QnaWriteFormAction implements Action{
 		//로그인이 된 경우
 		return "/WEB-INF/views/customer/qnaWriteForm.jsp";
 	}
-
 }

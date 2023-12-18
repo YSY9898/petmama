@@ -49,12 +49,6 @@ public class QnaWriteAction implements Action {
 			passwd = Integer.parseInt(request.getParameter("passwd"));
 		}
 
-		System.out.println(sis_num);
-		System.out.println(title);
-		System.out.println(content);
-		System.out.println(passwd);
-		System.out.println(hide_yn);
-
 		QnaVO qna = new QnaVO();
 		qna.setMem_num(user_num);
 		qna.setMem_id(user_id);
