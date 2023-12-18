@@ -17,7 +17,6 @@
 					data-bs-toggle="dropdown" aria-expanded="false"> 펫시터 </a>
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" href="${pageContext.request.contextPath}/PSboard/petsitterList.do">펫시터 프로필</a></li>
-						<li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/applyPetsitterForm.do">펫시터 지원하기</a></li>
 					</ul></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" role="button"
@@ -30,8 +29,7 @@
 					class="nav-link dropdown-toggle" href="#" role="button"
 					data-bs-toggle="dropdown" aria-expanded="false"> 지원 </a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
+						<li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/applyPetsitterForm.do">펫시터 지원하기</a></li>
 					</ul></li>
 				<li class="nav-item"><a class="nav-link active"
 					aria-current="page" href="/petmama/customer/questions.do">고객센터</a></li>
