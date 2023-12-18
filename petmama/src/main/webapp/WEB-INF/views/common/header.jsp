@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- header 시작 -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-white">
 	<div class="container-fluid justify-content-end">
 		<button class="navbar-toggler justify-content-end" type="button"
 			data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
