@@ -7,12 +7,12 @@
 	padding: 8px 19px 8px 76px;
 }
 
-.rightmenu.logout, .rightmenu.login {
+.rightmenu.header_logout, .rightmenu.header_login {
 	width : 109px;
 	list-style: none;	
 	padding: 8px 19px 8px 12px;
 }
-.rightmenu.profile {
+.rightmenu.header_profile {
 	list-style: none;	
 }
 .rightmenu a { 
@@ -76,24 +76,24 @@ a:hover {
 	</div>
 
 	<c:if test="${!empty user_num && !empty user_photo}">
-		<li class="rightmenu profile"><img
+		<li class="rightmenu header_profile"><img
 			src="${pageContext.request.contextPath}/upload/${user_photo}"
 			width="25" height="25" class="my-photo"></li>
 	</c:if>
 	<c:if test="${!empty user_num && empty user_photo}">
-		<li class="rightmenu profile"><img
+		<li class="rightmenu header_profile"><img
 			src="${pageContext.request.contextPath}/images/face.png" width="25"
 			height="25" class="my-photo"></li>
 	</c:if>
 	<c:if test="${!empty user_num}">
-		<li class="rightmenu logout">[<span>${user_id}</span>] <br><a
+		<li class="rightmenu header_logout">[<span>${user_id}</span>] <br><a
 			href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
 		</li>
 	</c:if>
 	<c:if test="${empty user_num}">
-		<li class="rightmenu login"><a
+		<li class="rightmenu header_login"><a
 			href="${pageContext.request.contextPath}/member/registerUserForm.do">회원가입</a></li>
-		<li class="rightmenu login"><a
+		<li class="rightmenu header_login"><a
 			href="${pageContext.request.contextPath}/member/loginForm.do">로그인</a></li>
 	</c:if>
 </nav>
