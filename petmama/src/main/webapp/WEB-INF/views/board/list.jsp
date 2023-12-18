@@ -5,14 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- 모바일 장치에서 웹사이트가 원하는 사이즈로 보여지게 처리 -->
-<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>게시판 목록</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/board/style.css">
 <script type="text/javascript">
 window.onload=function(){
 	let myForm = document.getElementById("search_form");
@@ -33,8 +27,9 @@ window.onload=function(){
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="content-main">
-		<div class="list-space align-right">
-		<form id="search_form" action="list.do" method="get"> <!-- 검색을 제외하고 데이터베이스를 전송할땐 post방식 써야함 -->
+		<h2>게시판 목록</h2>
+		<div class="align-center">
+		<form id="search_form" action="list.do" method="get">
 				<ul class="search">
 					<li>
 						<select name="keyfield">
@@ -44,21 +39,13 @@ window.onload=function(){
 						</select>
 					</li>
 					<li>
-						<input type="search" size="16" name="keyword" id="keyword" value="${param.keyword}">
+						<input type="search" size="20" name="keyword" id="keyword" value="${param.keyword}">
 					</li>
 					<li>
-						<input type="submit" value="검색">
+						<input type="submit" value="검색" class="btn">
 					</li>
 				</ul>
 			</form>
-			</div>
-		<h2>게시판 목록</h2>
-		<div class="list-space align-right">
-			<input type="button" value="글쓰기" onclick="location.href='writeForm.do'"
-				<c:if test="${empty user_num}">disabled="disabled"</c:if>			
-			> <!-- 경로가 같기 떄문에 writeForm.do라고 명시 -->
-			<input type="button" value="목록" onclick="location.href='list.do'">
-			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</div>
 		<c:if test="${count == 0}">
 		<div class="result-display">
@@ -66,13 +53,13 @@ window.onload=function(){
 		</div>
 		</c:if>
 		<c:if test="${count > 0}">
-		<table class="table">
-			<tr>
-				<th>글번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회</th>
+		<table>
+			<tr class="color">
+				<th style="width:10%">글번호</th>
+				<th style="width:50%">제목</th>
+				<th style="width:10%">작성자</th>
+				<th style="width:10%">작성일</th>
+				<th style="width:10%">조회</th>
 			</tr>
 			<c:forEach var="board" items="${list}">
 			<tr>
@@ -87,40 +74,15 @@ window.onload=function(){
 			</tr>
 			</c:forEach>
 		</table>
-		
-		   <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
+		<div class="list-space align-right" style="margin-top:20px;">
+			<input type="button" value="글쓰기" class="btn" onclick="location.href='writeForm.do'"
+				<c:if test="${empty user_num}">disabled="disabled"</c:if>>
+			<input type="button" value="목록" class="btn" onclick="location.href='list.do'">
+			<input type="button" value="홈으로" class="btn" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+		</div>
 		<div class="align-center">${page}</div>
 		</c:if>
 	</div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 </body>
 </html>

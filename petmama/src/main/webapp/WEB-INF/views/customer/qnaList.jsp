@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <link rel="stylesheet"
@@ -86,10 +85,6 @@
 				} else {
 					let qna_content = JSON.parse(param.list);
 					let qnaReply_content = JSON.parse(param.r_list);
-					console.log("param.r_list");
-					console.log(param.r_list);
-					console.log("qnaReply_content");
-					console.log(qnaReply_content);
 					if($(obj).parent().find(".qnaContent").length > 0) {
 						$(obj).parent().find(".qnaContent").remove();
 					} else {
@@ -97,14 +92,14 @@
 						$(obj).parent().find(".qnaContent p:eq(0)").html(qna_content.content);
 						if(qnaReply_content == null) {
 							$(obj).parent().find(".qnaContent p:eq(1)").html("");	
-							console.log($(obj));
-							if(param.auth == 9) {
-								$(obj).parent().find(".qnaContent .answerContent").show();
-							} else {
-								$(obj).parent().find(".qnaContent .answerContent").hide();
-							}
 						} else {
 							$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);	
+							$(obj).parent().find(".qnaContent .answerContent textarea").val(qnaReply_content.qr_content);
+						}
+						if(param.auth == 9) {
+							$(obj).parent().find(".qnaContent .answerContent").show();
+							$(obj).parent().find(".qnaContent .answerContent button").attr("onclick","updateAnswer(" + q_num + ", this)");
+						} else {
 							$(obj).parent().find(".qnaContent .answerContent").hide();
 						}
 						$(obj).parent().find(".qnaContent").show();
@@ -119,7 +114,6 @@
 	
 	function showSecretQNA(q_num, obj) {	
 		let password = $(obj).parent().find(".password-input").val();
-		console.log(password);
 		$.ajax({
 			url : '${pageContext.request.contextPath}/customer/detail.do',
 			type : 'post',
@@ -137,26 +131,50 @@
 					let qna_content = JSON.parse(param.list);
 					let qnaReply_content = JSON.parse(param.r_list);
 					
-					console.log(qnaReply_content);
-					console.log(param.auth);
-					
 					$(obj).parent().append($(".qnaContent")[0].outerHTML);
 					$(obj).parent().find(".qnaContent p:eq(0)").html(qna_content.content);
 					if(qnaReply_content == null) {
-						console.log($(obj));
-						console.log("qnaReply_content is null");
 						$(obj).parent().find(".qnaContent p:eq(1)").html("");	
-						if(param.auth == 9) {
-							$(obj).parent().find(".qnaContent .answerContent").show();
-						} else {
-							$(obj).parent().find(".qnaContent .answerContent").hide();
-						}
 					} else {
 						$(obj).parent().find(".qnaContent p:eq(1)").html(qnaReply_content.qr_content);	
+						$(obj).parent().find(".qnaContent .answerContent textarea").val(qnaReply_content.qr_content);
+					}
+					if(param.auth == 9) {
+						$(obj).parent().find(".qnaContent .answerContent").show();
+						$(obj).parent().find(".qnaContent .answerContent button").attr("onclick","updateAnswer(" + q_num + ", this)");
+					} else {
 						$(obj).parent().find(".qnaContent .answerContent").hide();
 					}
 					$(".popup-container").hide();
 					$(obj).parent().find(".qnaContent").show();
+				}
+			},
+			error : function() {
+				alert('네트워크 오류 발생');
+			}
+		});
+	}
+	
+	function updateAnswer(q_num, obj) {
+		let content = $(obj).prev().val();
+		if(content == "") {
+			alert("답변 내용을 작성해주세요.");
+			return false;
+		}
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/customer/writeReply.do',
+			type : 'post',
+			data : {
+				"qr_content" : content,
+				"q_num" : q_num
+			},
+			dataType : 'json',
+			success : function(param) {
+				if(param.result == "success") {
+					alert("답변을 작성했습니다.");
+				} else {
+					alert("답변 작성에 실패했습니다.");
 				}
 			},
 			error : function() {
@@ -226,12 +244,12 @@
 
 <div class="qnaContent">
 	<b>내용 : </b>
-	<p>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</p>
+	<p>내용</p>
 	<b>답변 : </b>
-	<p>답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변답변</p>
+	<p>답변</p>
 	<div class="answerContent">
-		<textarea rows="" cols=""></textarea>
-		<button>확인</button>
+		<textarea id="answer" rows="" cols=""></textarea>
+		<button onclick="updateAnswer()">확인</button>
 	</div>
 </div>
 

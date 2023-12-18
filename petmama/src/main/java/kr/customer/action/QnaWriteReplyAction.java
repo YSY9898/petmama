@@ -9,24 +9,22 @@ import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.oreilly.servlet.MultipartRequest;
-
-import kr.board.dao.BoardDAO;
-import kr.board.vo.BoardVO;
 import kr.controller.Action;
 import kr.qna.dao.QnaDAO;
-import kr.qna.vo.QnaVO;
-import kr.util.FileUtil;
+import kr.qna.vo.QnaReplyVO;
+import kr.qnareply.dao.QnaReplyDAO;
 
-public class QnaWriteAction implements Action {
+public class QnaWriteReplyAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		Map<String, String> mapAjax = new HashMap<String, String>();
 
+		int q_num = Integer.parseInt(request.getParameter("q_num")); 
+		String content = request.getParameter("qr_content");
 		Integer user_num = (Integer) session.getAttribute("user_num");
-		String user_id = (String) session.getAttribute("user_id");
+		
 		if (user_num == null) {// 로그인이 되지 않은 경우
 			mapAjax.put("result", "logout");
 			ObjectMapper mapper = new ObjectMapper();
@@ -35,33 +33,19 @@ public class QnaWriteAction implements Action {
 
 			return "/WEB-INF/views/common/ajax_view.jsp";
 		}
+		
+		QnaReplyVO qnaReply = new QnaReplyVO();
+		qnaReply.setQ_num(q_num);
+		qnaReply.setMem_num(user_num);
+		qnaReply.setQr_content(content);
+		qnaReply.setQr_ip(request.getRemoteAddr());
 
-		// 로그인이 된 경우
-		int sis_num = 0;
-		if (request.getParameter("sis_num") != null) {
-			sis_num = Integer.parseInt(request.getParameter("sis_num"));
-		}
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String hide_yn = request.getParameter("hideYN");
-		int passwd = 0;
-		if (hide_yn.equals("Y") && request.getParameter("passwd") != null) {
-			passwd = Integer.parseInt(request.getParameter("passwd"));
-		}
-
-		QnaVO qna = new QnaVO();
-		qna.setMem_num(user_num);
-		qna.setMem_id(user_id);
-		qna.setSis_num(sis_num);
-		qna.setTitle(title);
-		qna.setContent(content);
-		qna.setPasswd(passwd);
-		qna.setHide_yn(hide_yn);
-
-		QnaDAO dao = QnaDAO.getInstance();
-		boolean insertChk = dao.insertQna(qna);
+		QnaReplyDAO dao = QnaReplyDAO.getInstance();
+		boolean insertChk = dao.insertQnaReply(qnaReply);
 
 		if (insertChk) {
+			QnaDAO qna_dao = QnaDAO.getInstance();
+			qna_dao.updateQnaAnawer(q_num);
 			mapAjax.put("result", "success");
 		} else {
 			mapAjax.put("result", "error");

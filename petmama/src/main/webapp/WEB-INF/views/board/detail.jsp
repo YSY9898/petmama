@@ -6,10 +6,10 @@
 <meta charset="UTF-8">
 <!-- 모바일 장치에서 웹사이트가 원하는 사이즈로 보여지게 처리 -->
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>게시판 상세 정보</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<title>게시판 상세 정보</title>	
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/board/style.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board.fav.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board.scrap.js"></script>
@@ -45,18 +45,18 @@
 		</p>
 		<hr size="1" noshade="noshade" width="100%">
 		<ul>
-			<li>
+			<li style="float:left" style="margin:10px">
+				<%-- 스크랩 --%>
+				<img id="output_scrap" data-num="${board.board_num}" src="${pageContext.request.contextPath}/images/scrap1.png" width="20">
+				스크랩
+			</li>
+			<li style="float:left" style="margin:10px">
 				<%-- 좋아요 --%>
-				<img id="output_fav" data-num="${board.board_num}" src="${pageContext.request.contextPath}/images/fav01.gif" width="50">
+				<img id="output_fav" data-num="${board.board_num}" src="${pageContext.request.contextPath}/images/like1.png" width="20">
 				좋아요
 				<span id="output_fcount"></span>
 			</li>
-			<li>
-				<%-- 스크랩 --%>
-				<img id="output_scrap" data-num="${board.board_num}" src="${pageContext.request.contextPath}/images/fav01.gif" width="50">
-				스크랩
-			</li>
-			<li>
+			<li style="float:right">
 				<c:if test="${!empty board.modify_date}">
 					최근 수정일 : ${board.modify_date}
 				</c:if>
@@ -78,12 +78,21 @@
 			</c:if>
 			</li>
 		</ul>
+		<hr size="1" noshade="noshade" width="100%">
 		<!-- 댓글 시작 -->
+		<!-- 댓글 목록 출력 시작 -->
+		<div id="output"></div>
+		<div class="paging-button" style="display:none;">
+			<input type="button" value="다음글 보기">
+		</div>
+		<div id="loading" style="display:none;">
+			<img src="${pageContext.request.contextPath}/images/loading.gif" width="50" height="50">
+		</div>
+		<!-- 댓글 목록 출력 끝 -->
 		<div id="reply_div">
-			<span class="re-title">댓글 달기</span>
 			<form id="re_form">
 				<input type="hidden" name="board_num" value="${board.board_num}" id="board_num">
-				<textarea rows="3" cols="50" name="re_content" id="re_content" class="rep-content" <c:if test="${empty user_num}">disabled="disabled"</c:if>>
+				<textarea style="width:100%" name="re_content" id="re_content" class="rep-content" <c:if test="${empty user_num}">disabled="disabled"</c:if>>
 				<c:if test="${empty user_num}">로그인해야 작성할 수 있습니다.</c:if>
 				</textarea>
 				<c:if test="${!empty user_num}">
@@ -94,15 +103,6 @@
 				</c:if>
 			</form>
 		</div>
-		<!-- 댓글 목록 출력 시작 -->
-		<div id="output"></div>
-		<div class="paging-button" style="display:none;">
-			<input type="button" value="다음글 보기">
-		</div>
-		<div id="loading" style="display:none;">
-			<img src="${pageContext.request.contextPath}/images/loading.gif" width="50" height="50">
-		</div>
-		<!-- 댓글 목록 출력 끝 -->
 		<!-- 댓글 끝 -->
 	</div>
 </div>

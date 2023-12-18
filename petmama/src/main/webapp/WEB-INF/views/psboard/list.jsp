@@ -7,13 +7,13 @@
 <meta charset="UTF-8">
 <title>펫시터 프로필 리스트</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<!--  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"> -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/petsitter/style.css">
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-<div class="page_list">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<div class="page_list">
 	<div>
 		<h4>펫시터 목록</h4>
 			<table>
@@ -33,12 +33,12 @@
 									<span>${PSlist.tag} </span>
 								</div>
 								<div class="profile_foot">
-									<div class="rating_box">
-   										 <div class="rating">
-     										★★★★★ 
-   										 </div>
-   										 ${PSlist.rating}
- 									</div>
+ 									<div class="rating_box">
+   										 <div class="star-rating">
+									        <span style="width:${(PSlist.rating/5*100)/2}%"></span>
+								         </div>
+									     <p class="rating_number">${PSlist.rating}</p>
+								    </div>   
 									<div class="rate_reviewNum">
 										<p>후기</p>
 									</div>
