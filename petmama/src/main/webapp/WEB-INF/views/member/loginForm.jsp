@@ -7,8 +7,8 @@
 <title>로그인</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
+<%-- <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css"> --%>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script
