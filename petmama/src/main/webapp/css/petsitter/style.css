@@ -24,6 +24,10 @@
 	margin-top: 55px;
 }
 
+.content-top:last-of-type {
+	margin-bottom: 55px;
+}
+
 .content {
 	width: 1000px;
 	height: 274px;
@@ -96,7 +100,6 @@
 	flex-direction: column;
 	width: 100%;
 	justify-content: flex-end;
-	padding-bottom: 28px;
 }
 
 .rate_reviewNum {
