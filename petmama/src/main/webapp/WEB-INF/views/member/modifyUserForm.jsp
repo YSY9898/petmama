@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보 수정</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet"
+	href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -35,57 +36,75 @@
 
 </script>
 </head>
-<body>  
-<div class="page-main">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- header 시작 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<!-- header 끝 -->
+<!-- side bar 시작 -->
+	<jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
+<!-- side bar 끝 -->
+</body>
+<body>  
+<div class="page-main">	
 	<div class="content-main">
-		<h2>회원가입</h2>
+	<div class="container d-flex justify-content-center">
+	<br>
+	
+	<div class="col-8 col8md-4">
+	
 		<form id="modify_form" action="modifyUser.do" method="post">
-			<ul>
-				<li>
+			<br><br>
+			<h4 class="fw-bold">회원 정보 수정</h4>
+			<br><br>
+
+				<div class="form-floating mb-3">
+					<input type="text" name="mem_name" id="mem_name" maxlength="12"  value="${member.mem_name}"
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="이름">
 					<label for="mem_name">이름</label>
-					<input type="text" name="mem_name" id="mem_name" maxlength="10" 
-					 		value="${member.mem_name}" class="input-check">
-				</li>	
-				<li>
+				</div>	
+				<div class="form-floating mb-3">
+					<input type="text" name="mem_nickname" id="mem_nickname" maxlength="12"  value="${member.mem_nickname}"
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="닉네임">
 					<label for="mem_nickname">닉네임</label>
-					<input type="text" name="mem_nickname" id="mem_nickname" maxlength="10" 
-					 		value="${member.mem_nickname}" class="input-check">
-				</li>
-				<li>
+				</div>
+				<div class="form-floating mb-3">
+					<input type="text" name="mem_cell" id="mem_cell" maxlength="15"  value="${member.mem_cell}"
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="전화번호 ">
 					<label for="mem_cell">전화번호</label>
-					<input type="text" name="mem_cell" id="mem_cell" maxlength="15" 
-							value="${member.mem_cell}" class="input-check">
-				</li>	
-				<li>
+				</div>
+				
+				<div class="form-floating mb-3">
+					<input type="text" name="mem_email" id="mem_email" maxlength="30" value="${member.mem_email}"
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="name@example.com">
 					<label for="mem_email">이메일</label>
-					<input type="text" name="mem_email" id="mem_email" 
-							value="${member.mem_email}" maxlength="30" class="input-check">
-				</li>
-				<li>
-					<label for="mem_zipcode">우편주소</label>
-					<input type="text" name="mem_zipcode" id="mem_zipcode" value="${member.mem_zipcode}" 
-							maxlength="5" autocomplete="off" class="input-check" >
-					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">			
-				</li>	
-				<li>
-					<label for="mem_address1">주소</label>
-					<input type="text" name="mem_address1" id="mem_address1" 
-							value="${member.mem_address1}" maxlength="30" class="input-check">
-				</li>	
-			<li>
-					<label for="mem_address2">나머지 주소</label>
-					<input type="text" name="mem_address2" id="mem_address2" 
-							value="${member.mem_address2}" maxlength="30" class="input-check">
-				</li>	
-			</ul>
+				</div>
+				
+				<div class="form-floating mb-3">
+					<input type="text" name="mem_zipcode" id="zipcode" maxlength="5" autocomplete="off"  value="${member.mem_zipcode}"
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="우편번호">
+					<label for="zipcode">우편번호</label>
+					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" class="btn btn-primary">
+				</div>
+				
+				<div class="form-floating mb-3">
+					<input type="text" name="mem_address1" id="address1" maxlength="30"  value="${member.mem_address1}"
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="주소">
+					<label for="address1">주소</label>
+				</div>
+				<div class="form-floating mb-3">
+					<input type="text" name="mem_address2" id="address2" maxlength="30"  value="${member.mem_address2}"
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="주소">
+					<label for="address2">주소</label>
+				</div>
+				
+			
 			<div class="align-center">
-				<input type="submit" value="수정">
-				<input type="button" value="홈으로" onclick="${pageContext.request.contextPath}/main/main.do">
+				<input type="submit" value="수정" class="btn btn-primary">
+				<input type="button" value="홈으로" onclick="${pageContext.request.contextPath}/main/main.do" class="btn btn-primary">
 			</div>
 		</form>
 	</div>
-</div>
+
 <!-- 우편번호 검색 시작 -->
 	<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
@@ -184,5 +203,8 @@
     }
 </script>
 <!-- 우편번호 검색 끝 -->
+</div>
+</div>
+</div>
 </body>
 </html>

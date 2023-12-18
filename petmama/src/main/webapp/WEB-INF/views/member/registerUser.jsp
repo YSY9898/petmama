@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입 완료</title>
+<link rel="stylesheet"
+	href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head> 
 <body>
@@ -12,7 +14,6 @@
 <div class="psge-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="content-main">
-		<h2>회원가입 완료</h2>
 		<div class="result-display">
 			<div class="align-center">
 				회원가입이 완료되었습니다.

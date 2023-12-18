@@ -17,7 +17,7 @@ public class MemberDAO {
 	}
 	private MemberDAO() {}
 	
-	//일반회원 회원가입
+	//일반회원 회원가입 
 	public void insertMember(MemberVO member)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -77,7 +77,6 @@ public class MemberDAO {
 			pstmt4.setString(5,member.getPet_photo());
 			pstmt4.setString(6,member.getPet_note());
 			pstmt4.executeUpdate();
-
 			
 			//SQL문 실행시 모두 성공하면 commit
 			conn.commit();			
@@ -93,7 +92,7 @@ public class MemberDAO {
 		}
 	}
 	
-	
+		
 	//ID 중복 체크 및 로그인 처리
 	public MemberVO checkMember(String mem_id)throws Exception{
 		Connection conn = null;
@@ -108,7 +107,7 @@ public class MemberDAO {
 			//SQL문 작성
 			//member와 member_detail 조인시 member의 누락된 데이터가 보여야 id 중복 체크 가능
 			sql="SELECT * FROM member LEFT OUTER JOIN member_detail USING(mem_num) WHERE mem_id=?";
-			//PreparedStatement 객체 생성
+			//PreparedStatement 객체
 			pstmt = conn.prepareStatement(sql);
 			//?에 데이터 바인딩
 			pstmt.setString(1, mem_id);

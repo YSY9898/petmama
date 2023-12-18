@@ -100,8 +100,11 @@ $(function(){
 <!-- header 시작 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!-- header 끝 -->
+<!-- side bar 시작 -->
+	<jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
+<!-- side bar 끝 -->
 <body>
-<div class="page-main">
+<div class="page-main d-flex justify-content-around">
 	<div class="content-main">
 		<br><br>
 		<h2 class="text-center fw-bold">회원정보</h2>
@@ -110,10 +113,10 @@ $(function(){
 		<div class="mypage-div gird">
 		<div class="container-fluid bg-secondary text-white" style="padding:100px 20px;">
 			
-			<h3>펫 사진</h3>
+			<h3 class="fw-bold">${member.pet_name}의 동반자, ${member.mem_nickname}님!</h3>
+			<br>
 			<ul>
-			
-				<li>
+				<li class="d-none d-lg-inline">
 					<c:if test="${empty member.pet_photo}">
 					<img src="${pageContext.request.contextPath}/images/face.png" 
 					                  width="150" height="150" class="pet-photo">
@@ -124,9 +127,8 @@ $(function(){
 					</c:if>
 				</li>
 				
-				
 				<li>
-					<div class="align-center">
+					<div>
 						<input type="button" value="수정" id="photo_btn"
 						 class="btn btn-dark btn-block btn-sm m-t-md">
 					</div>
@@ -142,8 +144,6 @@ $(function(){
 			</ul>
 			
 			<hr>
-			<p>${member.pet_name}의 동반자</p>
-			<p>${member.mem_nickname}님!</p>
 			
 			</div>
 			
@@ -210,7 +210,7 @@ $(function(){
 		
 		<br><br><br><br>
 		
-		<p>
+		<p class="btn btn-sm">
 		회원탈퇴
 		<input type="button" value="회원탈퇴"
 				  onclick="location.href='deleteUserForm.do'">    

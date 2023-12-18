@@ -93,15 +93,11 @@
 <!-- header 시작 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!-- header 끝 -->
-<!-- sidebar 시작 --> 
-	 
-<!-- sidebar 끝 -->
-
 </body>
 <body>  
 <div class="page-main">
 	<div class="content-main">
-	<div class="container">
+	<div class="container d-flex justify-content-center">
 	<br>
 
 		 <h2>회원가입</h2>
@@ -151,6 +147,8 @@
 					<label for="mem_pw">비밀번호</label>
 				</div>	
 				
+				<br><hr><br>
+				
 				<div class="form-floating mb-3">
 					<input type="text" name="mem_cell" id="mem_cell" maxlength="15" 
 						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="phone">
@@ -162,6 +160,8 @@
 						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="name@example.com">
 					<label for="mem_email">이메일</label>
 				</div>
+				
+				<br><hr><br>
 				
 				<div class="form-floating mb-3">
 					<input type="text" name="mem_zipcode" id="zipcode" maxlength="5" autocomplete="off" 
@@ -182,22 +182,72 @@
 					<label for="address2">나머지 주소</label>
 				</div>	
 				
+				<br>
 				
 				<div class="alert alert-secondary">
 					※위 방법으로 인증이 불가능할 경우, 고객센터로 연락 주시면 회원가입을 도와드리겠습니다.<br>
 					*메일 문의 및 전화 문의는 하단에 명시된 고객센터 정보를 확인해 주세요.
 				</div>
 				</div>	
+				
+				<br><br><br>
+				<hr>
+				<br><br><br>
 					
+				<p>펫정보</p>
+				
+				<br><br>
+				
+				<div class="form-group">
+				<div class="form-floating mb-3">
+					<input type="text" name="pet_name" id="pet_name" maxlength="12" 
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="펫 이름">
+					<label for="pet_name">펫 이름</label>
+				</div>	
+						
+				<div class="form-floating mb-3">
+					<input type="text" name="pet_age" id="pet_age" maxlength="10" 
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="펫 나이">
+					<label for="pet_age">펫 나이</label>
+				</div>	
+				
+				<div class="form-floating mb-3">
+					<input type="file" name="pet_photo" id="pet_photo" 
+					accept="image/gif,image/png,image/jpeg" class="input-check form-control rounded-3 bg-body-tertiary border-0"
+					placeholder="image">
+					<label for="pet_photo">펫 사진</label>
+				</div>	
+				
+				<br>
+				
+				<div>
+					<label for="mem_email">희망 반려생활</label>
+					<br>
+						<input type="radio" name="pet_note" value="3" 
+							id="note3" <c:if test="${member.pet_note == 3}"></c:if>>산책
+					<input type="radio" name="pet_note" value="4" 
+							id="note4" <c:if test="${member.pet_note == 4}"></c:if>>돌봄
+					<input type="radio" name="pet_note" value="5" 
+							id="note5" <c:if test="${member.pet_note == 5}"></c:if>>둘 다
+				</div>
+			
+				</div>	
+					
+					<br><br><br>
+				
 				<div class="form-group">
 				 	<div class="align-center">
-                <a href="${pageContext.request.contextPath}/views/member/registerPetForm.do" 
-                class="btn btn-primary btn-block btn-lg m-t-md"> 다음 페이지</a> 
+				<input type="submit" value="등록">
+				<input type="button" value="홈으로" onclick="${pageContext.request.contextPath}/main/main.do">
+				<br><br><br>
+					</div>
+	            </div>	
+					
+					</form>
+			
 					</div>
 	            </div>
-	           
-			
-			</form>
+		
 <!-- 우편번호 검색 시작 -->
 	<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
@@ -295,10 +345,9 @@
         element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
     }
 </script>
-<!-- 우편번호 검색 끝 -->			
+<!-- 우편번호 검색 끝 -->	
+				
 	</div>
-</div>
-</div>
 </div>
 </body>
 </html>
