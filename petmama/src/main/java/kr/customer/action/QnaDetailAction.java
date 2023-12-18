@@ -30,32 +30,16 @@ public class QnaDetailAction implements Action {
 		Integer user_auth = (Integer) session.getAttribute("user_auth");
 
 		QnaDAO dao = QnaDAO.getInstance();
-
-		if (pwd_chk.equals("Y")) {
-			String password = request.getParameter("password");
-			QnaVO qna_chk = dao.checkQnaPassword(q_num, password, user_id);
-
-			if (qna_chk == null) {
-				mapAjax.put("result", "mismatch");
-			} else {
-				QnaVO qna = dao.getQNA(q_num, user_id, user_auth);
-				QnaReplyVO qnaReply = dao.getQnaReply(q_num, user_auth);
-				String json = new Gson().toJson(qna);
-				String json2 = new Gson().toJson(qnaReply);
-				mapAjax.put("result", "success");
-				mapAjax.put("auth", String.valueOf(user_auth));
-				mapAjax.put("list", json);
-				mapAjax.put("r_list", json2);
-			}
-
+		
+		if(user_id == null) {
+			mapAjax.put("result", "empty");
 		} else {
-			QnaVO qna_chk = dao.checkQNA(q_num, user_id, user_auth);
-
-			if (qna_chk == null) {
-				mapAjax.put("result", "empty");
-			} else {
-				if (qna_chk.getHide_yn().equals("Y") && user_auth != 9) {
-					mapAjax.put("result", "password");
+			if (pwd_chk.equals("Y")) {
+				String password = request.getParameter("password");
+				QnaVO qna_chk = dao.checkQnaPassword(q_num, password, user_id);
+	
+				if (qna_chk == null) {
+					mapAjax.put("result", "mismatch");
 				} else {
 					QnaVO qna = dao.getQNA(q_num, user_id, user_auth);
 					QnaReplyVO qnaReply = dao.getQnaReply(q_num, user_auth);
@@ -66,9 +50,29 @@ public class QnaDetailAction implements Action {
 					mapAjax.put("list", json);
 					mapAjax.put("r_list", json2);
 				}
+	
+			} else {
+				QnaVO qna_chk = dao.checkQNA(q_num, user_id, user_auth);
+	
+				if (qna_chk == null) {
+					mapAjax.put("result", "empty");
+				} else {
+					if (qna_chk.getHide_yn().equals("Y") && user_auth != 9) {
+						mapAjax.put("result", "password");
+					} else {
+						QnaVO qna = dao.getQNA(q_num, user_id, user_auth);
+						QnaReplyVO qnaReply = dao.getQnaReply(q_num, user_auth);
+						String json = new Gson().toJson(qna);
+						String json2 = new Gson().toJson(qnaReply);
+						mapAjax.put("result", "success");
+						mapAjax.put("auth", String.valueOf(user_auth));
+						mapAjax.put("list", json);
+						mapAjax.put("r_list", json2);
+					}
+				}
 			}
 		}
-
+		
 		ObjectMapper mapper = new ObjectMapper();
 		String ajaxData = mapper.writeValueAsString(mapAjax);
 		request.setAttribute("ajaxData", ajaxData);
