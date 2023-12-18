@@ -56,10 +56,9 @@
 			<button class="tab-btn" onclick="openTab('tab1')">방문 서비스</button>
 			<button class="tab-btn" onclick="openTab('tab2')">이용요금</button>
 			<button class="tab-btn" onclick="openTab('tab3')">변경 및 취소</button>
-			<button class="tab-btn" onclick="openTab('tab4')">펫시터 문의</button>
+			<button class="tab-btn" onclick="openTab('tab4')">고객센터 문의</button>
 
 			<div id="tab1" class="tab-content">
-			<jsp:include page="/WEB-INF/views/customer/qnaList.jsp" />
 				<div class="toggle-btn" onclick="toggleContent(this);">
 					<p>기본돌봄 이란?</p>
 					<img
@@ -147,6 +146,7 @@
 				</div>
 			</div>
 			<div id="tab4" class="tab-content">
+				<jsp:include page="/WEB-INF/views/customer/qnaList.jsp" />
 			</div>
 		</div>
 	</div>

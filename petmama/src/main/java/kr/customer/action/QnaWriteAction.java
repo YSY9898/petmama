@@ -62,7 +62,6 @@ public class QnaWriteAction implements Action {
 		qna.setTitle(title);
 		qna.setContent(content);
 		qna.setPasswd(passwd);
-//		qna.setFilename(null);
 		qna.setHide_yn(hide_yn);
 
 		QnaDAO dao = QnaDAO.getInstance();

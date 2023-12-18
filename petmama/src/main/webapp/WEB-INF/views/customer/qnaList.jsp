@@ -127,7 +127,6 @@
 				if(param.result == "mismatch") {
 					alert("비밀번호를 확인해주세요.");
 				} else {
-					//$(".qnaListUnit .qnaContent").remove();
 					obj = $(obj).parents(".qnaListUnit").find("a");
 					let qna_content = JSON.parse(param.list);
 					let qnaReply_content = JSON.parse(param.r_list);
