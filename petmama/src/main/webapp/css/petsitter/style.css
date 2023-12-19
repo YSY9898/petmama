@@ -173,3 +173,156 @@ a:hover {
 
 /*---------별점 끝----------*/
 /*--------펫시터 리스트 끝-----------*/
+
+/*시간 swiper*/
+h1, p {
+	text-align: center;
+}
+
+.input-wrapper {
+	text-align: center;
+}
+
+input {
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+#datepicker {
+	margin:17px 175px;
+	margin-bottom: 50px;
+}
+
+.picker {
+	box-sizing: border-box;
+	position: relative;
+	width: 300px;
+	overflow: hidden;
+	margin: 1rem auto 0;
+	outline: 1px solid #ccc;
+	padding: 0 30px;
+	background-color: #fff;
+	color: #252525;
+}
+
+.swiper-container {
+	width: 80px;
+	height: 210px;
+	float: left;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 2rem;
+	/* Center slide text vertically */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+	opacity: 0.25;
+	transition: opacity 0.3s ease;
+	cursor: default;
+	font-weight: bold;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.swiper-slide-prev, .swiper-slide-next {
+	cursor: pointer;
+}
+
+.swiper-slide-active {
+	opacity: 1;
+}
+
+.vizor {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	height: 70px;
+	position: absolute;
+	top: 50%;
+	left: 1rem;
+	right: 1rem;
+	transform: translateY(-50%);
+	font-size: 2rem;
+	line-height: 62px;
+}
+
+.vizor:before, .vizor:after {
+	content: ':';
+	display: inline-block;
+	line-height: inherit;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	transform: translateX(-50%);
+}
+
+.vizor:before {
+	left: 95px;
+}
+
+.vizor:after {
+	left: 175px;
+}
+
+.arrows .swiper-container:after, .arrows .swiper-container:before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 4px;
+	border-color: transparent;
+	opacity: 0.5;
+}
+
+.arrows .swiper-container:before {
+	top: 0.5rem;
+	border-top-width: 0;
+	border-bottom-color: currentColor;
+}
+
+.arrows .swiper-container:after {
+	bottom: 0.5rem;
+	border-bottom-width: 0;
+	border-top-color: currentColor;
+}
+
+.circle {
+	margin-left:7;
+	width: 80px;
+	height:80px;
+	border-radius: 50%;
+	color:darkgray;
+	text-align:center;
+	line-height:5;
+	border:1px solid darkgray;
+	background-color: white;
+	margin-bottom:50px;
+}
+
+.circle.active {
+	color:white;
+	border:1px solid white;
+	background-color: #6A92FE;
+}
+
+.circle p {
+	font-size:13px;
+	margin: -18px;
+	color:darkgray;
+}
+
+.time_fee {
+	display: flex;
+	justify-content: center;
+	margin-top:50px;
+	margin-bottom:30px;
+	gap:7px;
+}
+
+.time-picker {
+	margin-bottom:50px;
+}
