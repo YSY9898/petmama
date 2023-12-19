@@ -188,6 +188,11 @@ input {
 	text-align: center;
 }
 
+#datepicker {
+	margin:17px 175px;
+	margin-bottom: 50px;
+}
+
 .picker {
 	box-sizing: border-box;
 	position: relative;
@@ -283,4 +288,41 @@ input {
 	bottom: 0.5rem;
 	border-bottom-width: 0;
 	border-top-color: currentColor;
+}
+
+.circle {
+	margin-left:7;
+	width: 80px;
+	height:80px;
+	border-radius: 50%;
+	color:darkgray;
+	text-align:center;
+	line-height:5;
+	border:1px solid darkgray;
+	background-color: white;
+	margin-bottom:50px;
+}
+
+.circle.active {
+	color:white;
+	border:1px solid white;
+	background-color: #6A92FE;
+}
+
+.circle p {
+	font-size:13px;
+	margin: -18px;
+	color:darkgray;
+}
+
+.time_fee {
+	display: flex;
+	justify-content: center;
+	margin-top:50px;
+	margin-bottom:30px;
+	gap:7px;
+}
+
+.time-picker {
+	margin-bottom:50px;
 }
