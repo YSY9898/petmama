@@ -86,4 +86,36 @@ public class PetsitterDAO {
 		}
 		
 	}
+	
+	//펫시터 일 유형
+	public int getPSwork(int sis_num) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int sis_work = 0;
+		
+		try {
+			//커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			//SQL문 작성
+			sql = "SELECT sis_work FROM petsitter_detail WHERE sis_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sis_num);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				sis_work = rs.getInt("sis_work");
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return sis_work;
+	}
+	
+	
 }
