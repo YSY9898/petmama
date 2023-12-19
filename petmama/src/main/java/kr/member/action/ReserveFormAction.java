@@ -42,6 +42,7 @@ public class ReserveFormAction implements Action{
 		PetsitterDAO PS = PetsitterDAO.getInstance();
 		int sis_work = PS.getPSwork(sis_num);
 		
+		//애완동물 유무 체크
 		
 		request.setAttribute("date", date);
 		request.setAttribute("time", time);

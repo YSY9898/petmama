@@ -38,7 +38,7 @@ function AddMin(time, min) {
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="content-main">
 		<h4>펫시터 예약하기</h4>
-		<form>
+		<form id="reservation_form" action="reservation.do" method="post">
 			<ul>
 				<li>
 					<label>예약 방식</label>
@@ -49,9 +49,12 @@ function AddMin(time, min) {
 					<div>시작 시간 : ${time}</div>
 				</li>
 				<li>
-					
+					<label for="pet_note">펫시터에게 전달할 내용</label>
+					<input type="text" name="pet_note" id="pet_note" maxlength="90">
 				</li>
 			</ul>
+			<input type="submit" value="등록">
+			<input type="button" value="취소">
 		</form>
 	</div>
 </div>
