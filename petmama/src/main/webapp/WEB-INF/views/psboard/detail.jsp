@@ -172,25 +172,10 @@
 </script>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<form id="reserve_form" action="${pageContext.request.contextPath}/PSboard/reserveForm.do" method="post">
+	<form id="reserve_form" action="${pageContext.request.contextPath}/member/reserveForm.do" method="post">
 		<% int sis_num = Integer.parseInt(request.getParameter("sis_num")); %>
 
 		<input type="hidden" id="sis_num" name="sis_num" value=<%=sis_num%>>
-		<input type="text" id="datetimepicker" name="date2">
-		<script>
-			$('#datetimepicker').datetimepicker();
-		</script>
-		
-		<input type="text" id="datetimepicker5" name="date5">
-		<script>
-			jQuery('#datetimepicker5').datetimepicker({
-	  	  	datepicker:false,
-	   	 	allowTimes:[
-	        	'12:00','13:00','15:00'
-	    	]
-		});
-	
-		</script>
 		
 		<!-- 제가 추가한거 -->
 		<p>예약날짜 : <input type="text" id="date" name="date"></p>
@@ -200,7 +185,7 @@
 		<!-- swiper 시작 -->
 		<div class="time-picker">
 	<div class="input-wrapper">
-		예약시간 : <input type="text" id="time" value="12:00:00" readonly />
+		예약시간 : <input type="text" id="time" name="time" value="12:00:00" readonly />
 	</div>
 	<div class="picker arrows">
 		<div class="swiper-container hours">
