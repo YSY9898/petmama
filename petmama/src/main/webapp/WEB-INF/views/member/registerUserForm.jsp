@@ -96,18 +96,14 @@
 <div class="page-main">
 	<div class="content-main">
 	<div class="container d-flex justify-content-center">
-	<br>
-
-		 <h2>회원가입</h2>
-		 <br>
-		 <br>
+	
 		   <div class="col-8 col8md-4">
          
 			<form id="register_form" accept-charset="UTF-8" role="form" action="registerUser.do" method="post">
-			
-				<p>회원정보</p>
+			 <h2>회원가입</h2>
+			  <br>
+				<h4 class="fw-bold">회원정보</h4>
 				
-				<br>
 				<br>
 				
 				<div class="form-group">
@@ -192,7 +188,7 @@
 				<hr>
 				<br><br><br>
 					
-				<p>펫정보</p>
+				<h4 class="fw-bold">펫 정보</h4>
 				
 				<br><br>
 				

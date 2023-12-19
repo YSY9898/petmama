@@ -51,6 +51,9 @@ type="text/javascript"></script>
 					data-bs-toggle="dropdown" aria-expanded="false"> 펫시터 </a>
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item"
+							href="${pageContext.request.contextPath}/views/common/serviceIntro.do">펫시터
+								서비스 소개</a></li>
+						<li><a class="dropdown-item"
 							href="${pageContext.request.contextPath}/PSboard/petsitterList.do">펫시터
 								프로필</a></li>
 					</ul></li>
