@@ -6,6 +6,7 @@
 <div class="offcanvas offcanvas-start show" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
   <div class="offcanvas-header">
     <h4 class="offcanvas-title" id="offcanvasLabel">My Page</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
   <div class="offcanvas-body">
    	<p><a href="${pageContext.request.contextPath}/member/modifyUserForm.do" class="dropdown-item">내 정보 수정</a></p>

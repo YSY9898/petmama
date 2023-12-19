@@ -6,9 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>회원목록</title>
-<link rel="stylesheet"
-	href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script type="text/javascript">
 window.onload=function(){
 	let myForm = document.getElementById('search_form');
@@ -28,39 +25,44 @@ window.onload=function(){
 <body>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<br><br>
 	<div class="content-main">
-		<h2>회원목록(관리자 전용)</h2>
+		<h2 class="fw-bold">회원목록(관리자 전용)</h2>
+		<br><br>
 		<form id="search_form" action="adminList.do" method="get">
-			<ul class="search">
-				<li>
+			<div class="search d-flex justify-content-center">
+				<div>
 					<select name="keyfield">
 						<option value="1" <c:if test="${param.keyfield==1}">selected</c:if>>ID</option>
 						<option value="2" <c:if test="${param.keyfield==2}">selected</c:if>>이름</option>
 						<option value="3" <c:if test="${param.keyfield==3}">selected</c:if>>email</option>
 					</select>
-				</li>
-				<li>	
+				</div>
+				<div>	
 					<input type="search" size="16" name="keyword" id="keyword"
 					                                      value="${param.keyword}">
-				</li>
-				<li>
+				</div>
+				<div>
 					<input type="submit" value="찾기">
-				</li>
-			</ul>
+				</div>
+			</div>
+			<br><br>
 		</form>
 		<div class="list-space align-right">
-			<input type="button" value="목록" 
+			<input type="button" value="목록" class="btn btn-primary btn-block btn-sm m-t-md"
 			     onclick="location.href='adminList.do'">
-			<input type="button" value="홈으로"
+			<input type="button" value="홈으로" class="btn btn-primary btn-block btn-sm m-t-md"
 			    onclick="location.href='${pageContext.request.contextPath}/main/main.do'">     
 		</div>
+		<br>
 		<c:if test="${count == 0}">
 		<div class="result-display">
 			표시할 회원정보가 없습니다.
 		</div>
 		</c:if>
 		<c:if test="${count > 0}">
-		<table>
+		<table class="table table-striped">
+			<thead class="thead-dark">
 			<tr>
 				<th>ID</th>
 				<th>이름</th>
@@ -69,6 +71,8 @@ window.onload=function(){
 				<th>가입일</th>
 				<th>등급</th>
 			</tr>
+			</thead>
+			<tbody>
 			<c:forEach var="member" items="${list}">
 			<tr>
 				<td>
@@ -91,8 +95,22 @@ window.onload=function(){
 				</td>
 			</tr>
 			</c:forEach>
+			</tbody>
 		</table>
-		<div class="align-center">${page}</div>
+		
+		<br><br>
+		
+		<nav aria-label="...">
+		  <ul class="pagination pagination-sm justify-content-center">
+		    <li class="page-item active" aria-current="page">
+		      <span class="page-link">1</span>
+		    </li>
+		    <li class="page-item"><a class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    <li class="page-item"><a class="page-link" href="#">4</a></li>
+		    <li class="page-item"><a class="page-link" href="#">5</a></li>
+		  </ul>
+		</nav>
 		</c:if>
 	</div>
 </div>

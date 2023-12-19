@@ -6,20 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 정보 수정(관리자 전용)</title>
-<link rel="stylesheet"
-	href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
 	<div class="page-main">
 		<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 		<div class="content-main">
-			<h2>${member.mem_id}의 회원정보 (관리자 전용)</h2>
+			<br>
+			<h2 class="fw-bold">${member.mem_id}의 회원정보 (관리자 전용)</h2>
+			<br>
+			
 			<form action="adminUser.do" method="post" id="detail_form">
 				<input type="hidden" name="mem_num" value="${member.mem_num}">	
-				<ul>
+				<ul class="list-unstyled">
 					<li>
-						<label>등급</label>
+						<label class="badge text-bg-primary mx-4">등급</label>
 						<c:if test="${member.mem_auth !=9}">
 						<input type="radio" name="mem_auth" value="1" 
 							id="auth1" <c:if test="${member.mem_auth == 1}">checked</c:if>>정지
@@ -33,30 +33,37 @@
 				</ul>
 				<div class="align=center">
 					<c:if test="${member.mem_auth != 9}">
-					<input type="submit" value="수정">
+					<input type="submit" value="수정" 
+					class="btn btn-primary btn-block btn-sm m-t-md">
 					</c:if>
-					<input type="button" value="목록" onclick="location.href='adminList.do'">
+					<input type="button" value="목록" 
+					onclick="location.href='adminList.do'" class="btn btn-primary btn-block btn-sm m-t-md">
 				</div>
-				<ul>
-					<li>
-						<label>이름</label>${member.mem_name}
+				
+				<br><br><br>
+				<div class="card mx-auto" style="width:50rem;">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<label>이름 : </label> ${member.mem_name}
 					</li>	
-					<li>
-						<label>닉네임</label>${member.mem_nickname}
+					<li class="list-group-item">
+						<label>닉네임 : </label> ${member.mem_nickname}
 					</li>
-					<li>
-						<label>전화번호</label>${member.mem_cell}
+					<li class="list-group-item">
+						<label>전화번호 : </label> ${member.mem_cell}
 					</li>	
-					<li>
-						<label>이메일</label>${member.mem_email}
+					<li class="list-group-item">
+						<label>이메일 : </label> ${member.mem_email}
 					</li>	
-					<li>
-						<label>우편번호</label>${member.mem_zipcode}
+					<li class="list-group-item">
+						<label>우편번호 : </label> ${member.mem_zipcode}
 					</li>	
-					<li>
-						<label>주소</label>${member.mem_address1} ${member.mem_address2}
+					<li class="list-group-item">
+						<label>주소 : </label> ${member.mem_address1} ${member.mem_address2}
 					</li>	
 				</ul>
+				</div>
+				
 			</form>
 		</div>
 	</div>

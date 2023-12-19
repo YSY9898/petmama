@@ -7,8 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>My페이지</title>
-<link rel="stylesheet"
-	href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -111,11 +109,11 @@ $(function(){
 		<br>
 		<br>
 		<div class="mypage-div gird">
-		<div class="container-fluid bg-secondary text-white" style="padding:100px 20px;">
+		<div class="container-fluid bg-dark text-white" style="padding:100px 20px;">
 			
 			<h3 class="fw-bold">${member.pet_name}의 동반자, ${member.mem_nickname}님!</h3>
 			<br>
-			<ul>
+			<ul class="list-unstyled">
 				<li class="d-none d-lg-inline">
 					<c:if test="${empty member.pet_photo}">
 					<img src="${pageContext.request.contextPath}/images/face.png" 
@@ -130,7 +128,7 @@ $(function(){
 				<li>
 					<div>
 						<input type="button" value="수정" id="photo_btn"
-						 class="btn btn-dark btn-block btn-sm m-t-md">
+						 class="btn btn-primary btn-block btn-sm m-t-md">
 					</div>
 					<div id="photo_choice" style="display:none;">
 						<input type="file" id="pet_photo" 
@@ -143,7 +141,7 @@ $(function(){
 				</li>
 			</ul>
 			
-			<hr>
+			<br><hr>
 			
 			</div>
 			
@@ -155,7 +153,7 @@ $(function(){
 				 onclick="location.href='modifyUserForm.do'">
 			</h4>
 			<div class="card mx-auto" style="width:50rem;">
-			<ul class="list-group">
+			<ul class="list-group list-unstyled">
 				<li class="list-group-item">이름 : ${member.mem_name}</li>
 				<li class="list-group-item">닉네임 : ${member.mem_nickname}</li>				
 				<li class="list-group-item">전화번호 : ${member.mem_cell}</li>
@@ -177,11 +175,8 @@ $(function(){
 								
 			
 			
-		<br>
-		<br>
-		<br>
-		<br>
-		
+		<br><br><br><br>
+
 		
 		<div class="mypage-div">
 			<h4 class="fw-bold">스크랩한 게시물 목록</h4>

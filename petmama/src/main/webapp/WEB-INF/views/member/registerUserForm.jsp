@@ -6,8 +6,6 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
