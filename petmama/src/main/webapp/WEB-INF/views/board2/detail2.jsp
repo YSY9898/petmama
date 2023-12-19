@@ -6,9 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>후기 상세 정보</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/board2/style.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board2.fav.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/board2.scrap.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board2.reply.js"></script>
 </head>
 <body>
@@ -52,6 +53,13 @@
 				                                               width="50">
 				좋아요
 				<span id="output_fcount"></span>                                               
+			</li>
+			<li>
+				<img id="output_scrap" data-num="${board.board_num}"
+					src="${pageContext.request.contextPath}/images/fav01.gif"
+																width="50">											
+				스크랩
+				<span id="output_scount"></span>      															
 			</li>
 			<li>
 				<c:if test="${!empty board.modify_date}">

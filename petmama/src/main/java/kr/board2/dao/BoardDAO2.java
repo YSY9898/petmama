@@ -8,6 +8,7 @@ import java.util.List;
 
 import kr.board2.vo.BoardFavVO2;
 import kr.board2.vo.BoardReplyVO2;
+import kr.board2.vo.BoardScrapVO2;
 import kr.board2.vo.BoardVO2;
 import kr.util.DBUtil;
 import kr.util.DurationFromNow;
@@ -246,37 +247,177 @@ public class BoardDAO2 {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
 		String sql = null;
 		
 		try {
 			conn = DBUtil.getConnection();
 			conn.setAutoCommit(false);
 			
-			sql = "DELETE FROM board2_fav WHERE board_num=?";
+			sql = "DELETE FROM board2_scrap WHERE board_num=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, board_num);
 			pstmt.executeUpdate();
 			
-			sql = "DELETE FROM board2_reply WHERE board_num=?";
+			sql = "DELETE FROM board2_fav WHERE board_num=?";
 			pstmt2 = conn.prepareStatement(sql);
 			pstmt2.setInt(1, board_num);
 			pstmt2.executeUpdate();
 			
-			sql = "DELETE FROM board2 WHERE board_num=?";
+			sql = "DELETE FROM board2_reply WHERE board_num=?";
 			pstmt3 = conn.prepareStatement(sql);
 			pstmt3.setInt(1, board_num);
 			pstmt3.executeUpdate();
+			
+			sql = "DELETE FROM board2 WHERE board_num=?";
+			pstmt4 = conn.prepareStatement(sql);
+			pstmt4.setInt(1, board_num);
+			pstmt4.executeUpdate();
 			
 			conn.commit();
 		}catch(Exception e) {
 			conn.rollback();
 			throw new Exception(e);
 		}finally {
+			DBUtil.executeClose(null, pstmt4, null);
 			DBUtil.executeClose(null, pstmt3, null);
 			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
+	//스크랩 등록
+	public void insertScrap(BoardScrapVO2 scrapVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "INSERT INTO board2_scrap (board_num,mem_num) VALUES (?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, scrapVO.getBoard_num());
+			pstmt.setInt(2, scrapVO.getMem_num());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	//좋아요 개수
+	public int selectScrapCount(int board_num)throws Exception{
+		Connection conn = null;			
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+			
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT COUNT (*) FROM board2_scrap WHERE board_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return count;
+	}
+	//회원번호와 게시물 번호를 이용한 스크랩 정보 (스크랩 상세 정보)
+	public BoardScrapVO2 selectScrap(BoardScrapVO2 scrapVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardScrapVO2 scrap = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM board2_scrap WHERE board_num=? AND mem_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, scrapVO.getBoard_num());
+			pstmt.setInt(2, scrapVO.getMem_num());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				scrap = new BoardScrapVO2();
+				scrap.setBoard_num(rs.getInt("board_num"));
+				scrap.setMem_num(rs.getInt("mem_num"));
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return scrap;
+	}
+	
+	//스크랩 삭제
+	public void deleteScrap(BoardScrapVO2 scrapVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "DELETE FROM board2_scrap WHERE board_num=? AND mem_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, scrapVO.getBoard_num());
+			pstmt.setInt(2, scrapVO.getMem_num());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	//내가 선택한 스크랩 목록
+	public List<BoardVO2> getListBoardScrap(int start,int end,int mem_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardVO2> list = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
+				+ "(SELECT * FROM board2 JOIN member USING(mem_num) "
+				+ "JOIN member_detail USING(mem_num) JOIN board2_scrap s USING(board_num) WHERE s.mem_num=? "
+				+ "ORDER BY board_num DESC)a)WHERE rnum >=? AND rnum <=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mem_num);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<BoardVO2>();
+			while(rs.next()) {
+				BoardVO2 board = new BoardVO2();
+				board.setBoard_num(rs.getInt("board_num"));
+				board.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				board.setReg_date(rs.getDate("reg_date"));
+				board.setMem_nickname(rs.getString("mem_nickname"));
+				board.setMem_id(rs.getString("mem_id"));
+				
+				list.add(board);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
+	}
+	
+	
 	//좋아요 등록
 	public void insertFav(BoardFavVO2 favVO)throws Exception{
 		Connection conn = null;

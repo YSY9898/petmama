@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>후기 목록</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/board2/style.css">
 <script type="text/javascript">
 window.onload=function(){
 	let myForm = document.getElementById("search_form");
@@ -27,7 +27,7 @@ window.onload=function(){
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="content-main">
-		<h2>후기 목록</h2>
+		<h2>실시간 후기</h2>
 		<form id="search_form" action="list2.do" method="get"> <!-- 검색을 제외하고 데이터베이스를 전송할땐 post방식 써야함 -->
 			<ul class="search">
 				<li>

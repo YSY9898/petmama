@@ -18,7 +18,7 @@ create sequence board2_seq;
 create table board2_scrap(
  board_num number not null,
  mem_num number not null,
- constraint board2_scrap_fk1 foreign key (board_num) references board (board_num),
+ constraint board2_scrap_fk1 foreign key (board_num) references board2 (board_num),
  constraint board2_scrap_fk2 foreign key (mem_num) references member (mem_num) 
 );
 
