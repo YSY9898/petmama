@@ -183,7 +183,7 @@
 		});
 	}
 </script>
-<div id="qontent-main">
+<div id="qcontent-main">
 	<h2>게시판 목록</h2>
 	<ul class="search">
 		<li><select name="keyfield" id="keyfield">
