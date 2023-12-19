@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,25 +11,29 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/petsitter/jquery.datetimepicker.css">
 </head>
 <body>
-
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.datetimepicker.full.min.js"></script>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<input type="text" id="datetimepicker" name="date">
-	<script>
-		$('#datetimepicker').datetimepicker();
-	</script>
+	<form id="reserve_form" action="${pageContext.request.contextPath}/reserveForm.do" method="post">
+		<% int sis_num = Integer.parseInt(request.getParameter("sis_num")); %>
+		<input type="hidden" id="sis_num" name="sis_num" value=${sis_num}>
+		<input type="text" id="datetimepicker" name="date">
+		<script>
+			$('#datetimepicker').datetimepicker();
+		</script>
+		
+		<input type="text" id="datetimepicker5" name="date5">
+		<script>
+			jQuery('#datetimepicker5').datetimepicker({
+	  	  	datepicker:false,
+	   	 	allowTimes:[
+	        	'12:00','13:00','15:00'
+	    	]
+		});
 	
-	<input type="text" id="datetimepicker5" name="date5">
-	<script>
-		jQuery('#datetimepicker5').datetimepicker({
-  	  	datepicker:false,
-   	 	allowTimes:[
-        	'12:00','13:00','15:00'
-    	]
-	});
-</script>
+		</script>
+	</form>
 </div>
 </body>
 </html>
