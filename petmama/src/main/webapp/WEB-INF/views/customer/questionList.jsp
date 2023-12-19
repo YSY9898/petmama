@@ -7,16 +7,9 @@
 <meta charset="UTF-8">
 <title>고객센터 - 자주묻는질문</title>
 <link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
-<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/customer/style.css">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-	type="text/javascript"></script>
 <script>
 	function openTab(tabName) {
 		var i, tabContent;

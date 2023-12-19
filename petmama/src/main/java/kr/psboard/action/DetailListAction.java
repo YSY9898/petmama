@@ -18,6 +18,7 @@ public class DetailListAction implements Action{
 		PSBoardVO vo = dao.getPSboard(sis_num);
 		
 		request.setAttribute("ps", vo);
+		request.setAttribute("sis_num", sis_num);
 		
 		return "/WEB-INF/views/psboard/detail.jsp";
 	}

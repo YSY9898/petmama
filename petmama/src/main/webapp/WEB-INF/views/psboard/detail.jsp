@@ -199,7 +199,7 @@
 				<%
 				int sis_num = Integer.parseInt(request.getParameter("sis_num"));
 				%>
-
+				<input type="hidden" id="sis_num" name="sis_num" value=<%=sis_num%>>
 				<div class="row">
 					<div class="col">{프로필}</div>
 					<div class="col">
