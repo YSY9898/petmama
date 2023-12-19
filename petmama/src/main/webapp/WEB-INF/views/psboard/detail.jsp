@@ -39,10 +39,11 @@
 </script>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<form id="reserve_form" action="${pageContext.request.contextPath}/reserveForm.do" method="post">
+	<form id="reserve_form" action="${pageContext.request.contextPath}/PSboard/reserveForm.do" method="post">
 		<% int sis_num = Integer.parseInt(request.getParameter("sis_num")); %>
-		<input type="hidden" id="sis_num" name="sis_num" value=${sis_num}>
-		<input type="text" id="datetimepicker" name="date">
+
+		<input type="hidden" id="sis_num" name="sis_num" value=<%=sis_num%>>
+		<input type="text" id="datetimepicker" name="date2">
 		<script>
 			$('#datetimepicker').datetimepicker();
 		</script>
@@ -59,10 +60,11 @@
 		</script>
 		
 		<!-- 제가 추가한거 -->
-		<p>예약날짜 : <input type="text" id="date"></p>
+		<p>예약날짜 : <input type="text" id="date" name="date"></p>
 		<div id="datepicker"></div>
 		<!-- 제가 추가한거 끝 -->
 		
+		<input type="submit" value="예약하기">
 	</form>
 </div>
 </body>
