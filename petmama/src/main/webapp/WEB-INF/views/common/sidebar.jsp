@@ -11,7 +11,7 @@
   <div class="offcanvas-body">
    	<p><a href="${pageContext.request.contextPath}/member/modifyUserForm.do" class="dropdown-item">내 정보 수정</a></p>
 	<p><a href="#" class="dropdown-item">펫 정보 수정</a></p>
-	<p><a href="#" class="dropdown-item">내 예약 현황</a></p>
+	<p><a href="${pageContext.request.contextPath}/reservation/list.do" class="dropdown-item">내 예약 현황</a></p>
 	<p><a href="#" class="dropdown-item">내가 쓴 글</a></p>
   </div>
 </div>
