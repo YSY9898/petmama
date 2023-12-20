@@ -117,11 +117,11 @@ $(function(){
 				<li class="d-none d-lg-inline">
 					<c:if test="${empty member.pet_photo}">
 					<img src="${pageContext.request.contextPath}/images/face.png" 
-					                  width="150" height="150" class="pet-photo">
+					                  width="150" height="150" class="my-photo">
 					</c:if>
 					<c:if test="${!empty member.pet_photo}">
-					<img src="${pageContext.request.contextPath}/upload/${member.pet-photo}"
-					                  width="150" height="150" class="pet-photo">
+					<img src="${pageContext.request.contextPath}/upload/${member.pet_photo}"
+					                  width="150" height="150" class="my-photo">
 					</c:if>
 				</li>
 				
