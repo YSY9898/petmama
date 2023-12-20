@@ -590,7 +590,7 @@ public class BoardDAO {
 					board.setTitle(StringUtil.useNoHtml(
 							          rs.getString("title")));
 					board.setReg_date(rs.getDate("reg_date"));
-					board.setId(rs.getString("id"));
+					//board.setId(rs.getString("id"));
 					
 					list.add(board);
 				}
