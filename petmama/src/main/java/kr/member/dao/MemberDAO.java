@@ -189,11 +189,15 @@ public class MemberDAO {
 	public void updateMember(MemberVO member)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		String sql = null;
 		
 		try {
 			//커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
+			//오토 커밋 해제
+			conn.setAutoCommit(false);
+			
 			//SQL문 작성
 			sql = "UPDATE member_detail SET mem_name=?,mem_nickname=?,mem_cell=?,mem_email=?,"
 				+ "mem_zipcode=?,mem_address1=?,mem_address2=?,"
@@ -209,15 +213,27 @@ public class MemberDAO {
 			pstmt.setString(6, member.getMem_address1());
 			pstmt.setString(7, member.getMem_address2());
 			pstmt.setInt(8, member.getMem_num());
-			//SQL문 실행
-			pstmt.executeUpdate();
+			
+			sql = "UPDATE pet_detail SET pet_name=?,pet_age=? WHERE mem_num=?";
+			//PreparedStatement 객체 생성
+			pstmt2 = conn.prepareStatement(sql);
+			//?에 데이터 바인딩
+			pstmt2.setString(1, member.getPet_name());
+			pstmt2.setInt(2, member.getPet_age());
+			pstmt2.setInt(3, member.getMem_num());
+			
+			//SQL문 실행시 모두 성공하면 commit
+			conn.commit();			
 		}catch(Exception e) {
+			//SQL문이 하나라도 실패하면 rollback
+			conn.rollback();
 			throw new Exception(e);
 		}finally {
+			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt, conn);
 		}		
 	}
-
+	
 	//펫 프로필 사진 수정
 	public void updatePetPhoto(String pet_photo,int mem_num)
 	                                    throws Exception{

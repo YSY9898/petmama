@@ -33,6 +33,10 @@ public class ModifyUserAction implements Action{
 		member.setMem_address1(request.getParameter("mem_address1"));
 		member.setMem_address2(request.getParameter("mem_address2"));
 		
+		member.setMem_num(user_num);
+		member.setPet_name(request.getParameter("pet_name"));
+		member.setPet_age(Integer.parseInt(request.getParameter("pet_age")));
+		
 		MemberDAO dao = MemberDAO.getInstance();
 		dao.updateMember(member);
 		

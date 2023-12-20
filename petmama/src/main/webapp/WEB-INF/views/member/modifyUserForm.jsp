@@ -95,11 +95,28 @@
 					<label for="address2">주소</label>
 				</div>
 				
+			<br><br>
+			<h4 class="fw-bold">펫 정보 수정</h4>
+			<br>
 			
+			<div class="form-floating mb-3">
+					<input type="text" name="pet_name" id="pet_name" maxlength="12"  value="${member.pet_name}"
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="펫이름">
+					<label for="pet_name">펫 이름</label>
+			</div>	
+			
+			<div class="form-floating mb-3">
+					<input type="text" name="pet_age" id="pet_age" maxlength="12"  value="${member.pet_age}"
+						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="펫나이">
+					<label for="pet_age">펫 나이</label>
+			</div>
+				
+			<br>
 			<div class="align-center">
 				<input type="submit" value="수정" class="btn btn-primary">
 				<input type="button" value="홈으로" onclick="${pageContext.request.contextPath}/main/main.do" class="btn btn-primary">
 			</div>
+			<br><br><br><br>
 		</form>
 	</div>
 
