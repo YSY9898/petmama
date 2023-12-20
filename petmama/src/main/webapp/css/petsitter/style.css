@@ -174,7 +174,7 @@ a:hover {
 /*---------별점 끝----------*/
 /*--------펫시터 리스트 끝-----------*/
 
-/*시간 swiper*/
+/*시간 swiper 시작*/
 h1, p {
 	text-align: center;
 }
@@ -325,4 +325,52 @@ input {
 
 .time-picker {
 	margin-bottom:50px;
+}
+/*시간 swiper 끝*/
+/*펫시터 지원서 시작*/
+
+
+
+/*펫시터 지원서 끝*/
+.application {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+}
+.head {
+	width: 1000px;
+	margin: 0px auto;
+}
+.head h2 {
+	margin-top: 168px;
+    margin-bottom: 101px;
+    font-size: 50px;
+    font-weight: 600;
+    color: #555555;
+}
+.main {
+	background-color: #FAFAFB;
+}
+.head_section {
+	width: 1000px;
+    margin: 0px auto;
+}
+
+.head_section p{
+	margin-top: 87px;
+    font-size: 27px;
+    font-weight: 600;
+    color: #555555;
+}
+
+.main_section {
+	background-color: white;
+    border: 1px solid #EBEBEB;
+    border-radius: 12px;
+    padding: 75px 80px 80px 80px;
+    margin-top: 46px;
+}
+.article {
+	
 }

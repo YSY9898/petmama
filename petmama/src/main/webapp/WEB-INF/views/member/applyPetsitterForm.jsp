@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>펫시터 지원하기</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/petsitter/style.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -36,74 +36,81 @@ $(function(){
 </script>
 </head>
 <body>
-<div class="page-main">
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<div class="content-main">
-		<h2>펫시터 지원서</h2>
-		<form id="register_form" action="applyPetsitter.do" method="post" enctype="multipart/form-data">
-			<ul>
-				<li>
-					<label for="sis_name">이름</label>
-					<input type="text" name="sis_name" id="sis_name" maxlength="10" class="input-check">
-				</li>
-				<li>
-					<label>일</label>
-						<input type="radio" name="sis_work" value="1" checked>돌봄
-						<input type="radio" name="sis_work" value="2">산책
-						<input type="radio" name="sis_work" value="3">돌봄 산책
-				</li>
-				<li>
-					<label for="sis_phone">전화번호</label>
-					<input type="text" name="sis_phone" id="sis_phone" 
-					      maxlength="15" class="input-check">
-				</li>
-				<li>
-					<label for="sis_email">이메일</label>
-					<input type="email" name="sis_email" id="sis_email" 
-					     maxlength="50" class="input-check">
-				</li>
-				<li>
-					<label for="zipcode">우편번호</label>
-					<input type="text" name="zipcode" id="zipcode" 
-					 maxlength="5" autocomplete="off" class="input-check">
-					<input type="button" onclick="execDaumPostcode()"
-					                                value="우편번호 찾기"> 
-				</li>
-				<li>
-					<label for="address1">주소</label>
-					<input type="text" name="address1" id="address1" 
-					  maxlength="30" class="input-check">
-				</li>
-				<li>
-					<label for="address2">나머지 주소</label>
-					<input type="text" name="address2" id="address2"
-                       maxlength="30" class="input-check">
-				</li>
-				<li>
-					<label for="photo1">프로필 사진</label>
-					<input type="file" name="photo1" id="photo1" class="input-check" accept="image/gif,image/png,image/jpeg">
-				</li>
-				<li>
-					<label for="photo2">펫시터 소개 사진</label>
-					<input type="file" name="photo2" id="photo2" class="input-check" accept="image/gif,image/png,image/jpeg">
-				</li>
-				<li>
-					<label for="title">자신을 소개하는 문장</label>
-					<input type="text" name="title" id="title" class="input-check" maxlength="90">
-				</li>
-				<li>
-					<label for="tag">태그</label>
-					<input type="text" name="tag" id="tag" class="input-check" maxlength="90">
-				</li>
-			</ul>
-			<div class="align-center">
-				<input type="submit" value="등록">
-				<input type="button" value="홈으로"
-				    onclick="${pageContext.request.contextPath}/main/main.do">
-			</div>
-		</form>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<div class="application">
+		<div class="head">
+			<h2>펫시터 지원하기</h2>
+		</div>
+		<div class="main">
+			<section class="head_section">
+				<p>1.기본 정보</p>
+				<div class="main_section">
+					<form id="register_form" action="applyPetsitter.do" method="post" enctype="multipart/form-data">
+						<ul>
+							<div class="article">
+								<label for="sis_name">이름</label>
+								<input type="text" name="sis_name" id="sis_name" maxlength="10" class="input-check">
+							</div>
+							<li>
+								<label>일</label>
+									<input type="radio" name="sis_work" value="1" checked>돌봄
+									<input type="radio" name="sis_work" value="2">산책
+									<input type="radio" name="sis_work" value="3">돌봄 산책
+							</li>
+							<li>
+								<label for="sis_phone">전화번호</label>
+								<input type="text" name="sis_phone" id="sis_phone" 
+								      maxlength="15" class="input-check">
+							</li>
+							<li>
+								<label for="sis_email">이메일</label>
+								<input type="email" name="sis_email" id="sis_email" 
+								     maxlength="50" class="input-check">
+							</li>
+							<li>
+								<label for="zipcode">우편번호</label>
+								<input type="text" name="zipcode" id="zipcode" 
+								 maxlength="5" autocomplete="off" class="input-check">
+								<input type="button" onclick="execDaumPostcode()"
+								                                value="우편번호 찾기"> 
+							</li>
+							<li>
+								<label for="address1">주소</label>
+								<input type="text" name="address1" id="address1" 
+								  maxlength="30" class="input-check">
+							</li>
+							<li>
+								<label for="address2">나머지 주소</label>
+								<input type="text" name="address2" id="address2"
+			                       maxlength="30" class="input-check">
+							</li>
+							<li>
+								<label for="photo1">프로필 사진</label>
+								<input type="file" name="photo1" id="photo1" class="input-check" accept="image/gif,image/png,image/jpeg">
+							</li>
+							<li>
+								<label for="photo2">펫시터 소개 사진</label>
+								<input type="file" name="photo2" id="photo2" class="input-check" accept="image/gif,image/png,image/jpeg">
+							</li>
+							<li>
+								<label for="title">자신을 소개하는 문장</label>
+								<input type="text" name="title" id="title" class="input-check" maxlength="90">
+							</li>
+							<li>
+								<label for="tag">태그</label>
+								<input type="text" name="tag" id="tag" class="input-check" maxlength="90">
+							</li>
+						</ul>
+						<div class="align-center">
+							<input type="submit" value="등록">
+							<input type="button" value="홈으로"
+							    onclick="${pageContext.request.contextPath}/main/main.do">
+						</div>
+				</form>
+				</div>
+			</section>
+		</div>
 	</div>
-</div>
 <!-- 우편번호 검색 시작 -->
 	<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">

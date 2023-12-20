@@ -417,7 +417,7 @@
 							</div>
 						</div>
 
-						<input type="submit" id="btn" value="예약하기">
+						<input type="submit" value="예약하기">
 						<!-- swiper 끝 -->
 					</div>
 				</div>

@@ -68,7 +68,7 @@ public class ReserveAction implements Action{
 		dao.reserve(vo);
 		
 		
-		return null;
+		return "/WEB-INF/views/member/reserve.jsp";
 	}
 
 }
