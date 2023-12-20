@@ -444,6 +444,7 @@ public class BoardDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
 	//회원번호와 게시물 번호를 이용한 스크랩 정보 (스크랩 상세 정보)
 	public BoardScrapVO selectScrap(BoardScrapVO scrapVO)throws Exception{
 		Connection conn = null;
@@ -528,6 +529,79 @@ public class BoardDAO {
 		
 		return list;
 	}
+	
+	//회원번호와 게시물 번호를 이용한 내가 작성한 글 정보 (내가 작성한 글 상세 정보)
+		public BoardFavVO selectWrite(BoardFavVO favVO)throws Exception{
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			BoardFavVO fav = null;
+			String sql = null;
+			
+			try {
+				conn = DBUtil.getConnection();
+				sql = "SELECT * FROM board_fav WHERE board_num=? AND mem_num=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, favVO.getBoard_num());
+				pstmt.setInt(2, favVO.getMem_num());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					fav = new BoardFavVO();
+					fav.setBoard_num(rs.getInt("board_num"));
+					fav.setMem_num(rs.getInt("mem_num"));
+				}
+			}catch(Exception e) {
+				throw new Exception(e);
+			}finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			
+			return fav;
+		}
+	
+	//내가 작성한 글 목록
+		public List<BoardVO> getListWriteBoard(int start, int end,int mem_num)throws Exception{
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<BoardVO> list = null;
+			String sql = null;
+			
+			try {
+				//커넥션풀로부터 커넥션 할당
+				conn = DBUtil.getConnection();
+				//SQL문 작성
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
+					+ "(SELECT * FROM zboard JOIN zmember USING(mem_num) "
+					+ "JOIN zboard_fav f USING(board_num) WHERE f.mem_num=? "
+					+ "ORDER BY board_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+				//PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				//?에 데이터 바인딩
+				pstmt.setInt(1, mem_num);
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+				//SQL문 실행
+				rs = pstmt.executeQuery();
+				list = new ArrayList<BoardVO>();
+				while(rs.next()) {
+					BoardVO board = new BoardVO();
+					board.setBoard_num(rs.getInt("board_num"));
+					board.setTitle(StringUtil.useNoHtml(
+							          rs.getString("title")));
+					board.setReg_date(rs.getDate("reg_date"));
+					board.setId(rs.getString("id"));
+					
+					list.add(board);
+				}
+				
+			}catch(Exception e) {
+				throw new Exception(e);
+			}finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}		
+			return list;
+		}
 		
 	//댓글 등록
 	public void insertReplyBoard(BoardReplyVO boardReply)throws Exception{
