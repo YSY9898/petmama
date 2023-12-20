@@ -3,8 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- side bar 시작 -->
-<button class="btn btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" 
-	data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">side</button>
+<button class="btn btn btn-outline-primary"  style="position:absolute; z-index:9999; background-color: white; margin:-16px 20px 20px 303px;" type="button" data-bs-toggle="offcanvas" 
+	data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Side
+	<img src="${pageContext.request.contextPath}/images/header/petmama.png" width="100" height="100">
+</button>
 
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" 
 	tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
