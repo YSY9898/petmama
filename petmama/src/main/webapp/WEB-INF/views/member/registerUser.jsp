@@ -6,20 +6,28 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입 완료</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head> 
 <body>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="content-main">
-		<div class="result-display">
-			<div class="align-center">
-				회원가입이 완료되었습니다.
-				<p>
-				<input type="button" value="홈으로" class="btn btn-primary btn-block btn-sm m-t-md"
-						onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+		<div class="row align-items-center">
+		<br><br><br><br><br>
+		<br><br><br><br><br>
+		<br><br><br><br><br>
+		<div class="col"></div>
+		<div class="card col" style="width: 18rem;">
+		  <div class="card-body">
+		    <h5 class="card-title text-center">회원가입 완료</h5>
+		    <p class="card-text fw-bold text-center">회원가입이 완료되었습니다.</p>
+		    <div class="d-flex justify-content-center">
+		    	<input type="button" value="홈으로" class="btn btn-primary"
+			 onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 			</div>
+		  </div>
 		</div>
+		<div class="col"></div>
+	</div>
 	</div>
 
 </div>
