@@ -97,6 +97,15 @@ ul.search li{
 .page-list-main{
 	margin:20px 100px;
 }
+.result-display{
+	width:400px;
+	height:200px;
+	margin:50px auto;
+	border:1px solid #000;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
 /* 게시판 글 상세
 ------------------------------*/
 ul.detail-info li{

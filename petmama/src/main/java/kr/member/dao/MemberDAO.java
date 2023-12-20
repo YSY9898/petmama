@@ -67,15 +67,14 @@ public class MemberDAO {
 			
 			//pet_detail 테이블에 데이터를 저장
 			sql="INSERT INTO pet_detail (mem_num,pet_num,pet_name,pet_age,pet_photo,pet_note) "
-					+ "VALUES (?,?,?,?,?,?)";
+					+ "VALUES (?,petnum_seq.nextval,?,?,?,?)";
 			pstmt4 = conn.prepareStatement(sql);
 			
 			pstmt4.setInt(1, num);//회원번호
-			pstmt4.setInt(2, member.getPet_num());
-			pstmt4.setString(3, member.getPet_name());
-			pstmt4.setInt(4, member.getPet_age());
-			pstmt4.setString(5,member.getPet_photo());
-			pstmt4.setString(6,member.getPet_note());
+			pstmt4.setString(2, member.getPet_name());
+			pstmt4.setInt(3, member.getPet_age());
+			pstmt4.setString(4,member.getPet_photo());
+			pstmt4.setString(5,member.getPet_note());
 			pstmt4.executeUpdate();
 			
 			//SQL문 실행시 모두 성공하면 commit

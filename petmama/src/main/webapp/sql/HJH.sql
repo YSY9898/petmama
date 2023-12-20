@@ -9,6 +9,8 @@ create table pet_detail(
 	constraint pet_detail_fk foreign key (mem_num) references member (mem_num)
 );
 
+create sequence petnum_seq;
+
 
 
 
