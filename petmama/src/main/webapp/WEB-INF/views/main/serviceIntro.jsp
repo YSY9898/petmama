@@ -217,13 +217,21 @@
  </div>
 </div>
 
+
 <div class="container-fluid bg-info" style="padding:200px 20px;">
-<h1 class="fw-bold text-center">"펫마마는 여러분을 환영합니다"</h1></div>
-
-
-
-
-
-
+  <div class="row">
+    <div class="col text-end">
+      <img src="${pageContext.request.contextPath}/images/open.png" 
+   	  		style="width:30px; height:30px;">
+    </div>
+    <div class="col-5">
+      <h1 class="fw-bold text-center">펫마마는 여러분을 환영합니다</h1>
+    </div>
+    <div class="col">
+      <img src="${pageContext.request.contextPath}/images/close.png" 
+   	  		style="width:30px; height:30px;">
+    </div>
+  </div>
+  </div>
 
 
