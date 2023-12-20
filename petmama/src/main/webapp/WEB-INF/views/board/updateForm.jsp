@@ -12,10 +12,13 @@
 <body>
 <div>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<div class="page-list-main">
-		<h2><b>PetMama 게시판 글 수정하기</b></h2>
-		<p>PetMama 회원들이 자유롭게 글을 올릴 수 있는 게시판입니다.<br>우리 모두 PetMama에서 소통해요!</p>
-	<div>
+	<div class="board_main">
+		<div class="main_msg">
+			<span class="main_msg_title">게시글 수정</span><br>
+			<span class="main_msg_detail">작성한 게시글을 수정합니다.</span>
+		</div>
+	</div>
+	<div class="main-margin">
 		<form id="update_form" action="update.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="board_num" value="${board.board_num}">
 			<div class="row mb-3">
@@ -77,7 +80,6 @@
 				<input type="button" value="목록" class="list-btn" onclick="location.href='list.do'">
 			</div>
 		</form>
-	</div>
 	</div>
 </div>
 </body>

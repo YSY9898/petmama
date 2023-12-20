@@ -1,9 +1,10 @@
-package kr.board.action;
+package kr.mywritelist.action;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.board.dao.BoardDAO;
 import kr.board.vo.BoardVO;
@@ -14,6 +15,13 @@ public class MyWriteListAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		Integer user_num = (Integer)session.getAttribute("user_num");
+		
+		if(user_num == null) {
+			return "redirect:/member/loginForm.do";
+		}
+		
 		String pageNum = request.getParameter("pageNum");
 		if(pageNum == null) pageNum = "1";
 		
@@ -21,21 +29,21 @@ public class MyWriteListAction implements Action{
 		String keyword = request.getParameter("keyword");
 		
 		BoardDAO dao = BoardDAO.getInstance();
-		int count = dao.getBoardCount(keyfield, keyword);
+		int count = dao.getWriteCountByMem_num(keyfield, keyword, user_num);
 		
 		//페이지 처리
-		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,20,10,"list.do");
+		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,20,10,"myWriteList.do");
 		
 		List<BoardVO> list = null;
 		if(count > 0) {
-			list = dao.getListBoard(page.getStartRow(), page.getEndRow(), keyfield, keyword);
+			list = dao.getListWriteByMem_num(page.getStartRow(), page.getEndRow(), keyfield, keyword, user_num);
 		}
 		
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);
 		request.setAttribute("page", page.getPage());
 		
-		return "/WEB-INF/views/myWriteList.jsp";
+		return "/WEB-INF/views/mypage/myWriteList.jsp";
 	}
 
 }

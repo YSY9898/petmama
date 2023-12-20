@@ -14,7 +14,13 @@
 <body>
 <div>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<div class="page-list-main">
+	<div class="board_main">
+		<div class="main_msg">
+			<span class="main_msg_title">PetMama 게시글 상세보기</span><br>
+			<span class="main_msg_detail">선택한 게시글의 상세 내용을 보여줍니다.</span>
+		</div>
+	</div>
+	<div class="main-margin">
 		<h2>${board.title}</h2>
 		<ul>
 			<li class="detail-title">

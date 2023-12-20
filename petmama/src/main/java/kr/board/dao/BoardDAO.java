@@ -530,78 +530,6 @@ public class BoardDAO {
 		return list;
 	}
 	
-	//회원번호와 게시물 번호를 이용한 내가 작성한 글 정보 (내가 작성한 글 상세 정보)
-		public BoardFavVO selectWrite(BoardFavVO favVO)throws Exception{
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			BoardFavVO fav = null;
-			String sql = null;
-			
-			try {
-				conn = DBUtil.getConnection();
-				sql = "SELECT * FROM board_fav WHERE board_num=? AND mem_num=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, favVO.getBoard_num());
-				pstmt.setInt(2, favVO.getMem_num());
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					fav = new BoardFavVO();
-					fav.setBoard_num(rs.getInt("board_num"));
-					fav.setMem_num(rs.getInt("mem_num"));
-				}
-			}catch(Exception e) {
-				throw new Exception(e);
-			}finally {
-				DBUtil.executeClose(rs, pstmt, conn);
-			}
-			
-			return fav;
-		}
-	
-	//내가 작성한 글 목록
-		public List<BoardVO> getListWriteBoard(int start, int end,int mem_num)throws Exception{
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			List<BoardVO> list = null;
-			String sql = null;
-			
-			try {
-				//커넥션풀로부터 커넥션 할당
-				conn = DBUtil.getConnection();
-				//SQL문 작성
-				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
-					+ "(SELECT * FROM zboard JOIN zmember USING(mem_num) "
-					+ "JOIN zboard_fav f USING(board_num) WHERE f.mem_num=? "
-					+ "ORDER BY board_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
-				//PreparedStatement 객체 생성
-				pstmt = conn.prepareStatement(sql);
-				//?에 데이터 바인딩
-				pstmt.setInt(1, mem_num);
-				pstmt.setInt(2, start);
-				pstmt.setInt(3, end);
-				//SQL문 실행
-				rs = pstmt.executeQuery();
-				list = new ArrayList<BoardVO>();
-				while(rs.next()) {
-					BoardVO board = new BoardVO();
-					board.setBoard_num(rs.getInt("board_num"));
-					board.setTitle(StringUtil.useNoHtml(
-							          rs.getString("title")));
-					board.setReg_date(rs.getDate("reg_date"));
-					//board.setId(rs.getString("id"));
-					
-					list.add(board);
-				}
-				
-			}catch(Exception e) {
-				throw new Exception(e);
-			}finally {
-				DBUtil.executeClose(rs, pstmt, conn);
-			}		
-			return list;
-		}
 		
 	//댓글 등록
 	public void insertReplyBoard(BoardReplyVO boardReply)throws Exception{
@@ -753,5 +681,92 @@ public class BoardDAO {
 		}
 	}
 	
+	//사용자가 작성한 글 개수/검색 글 개수
+	public int getWriteCountByMem_num(String keyfield,String keyword,int mem_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		String sub_sql = "";
+		int count = 0;
+		int cnt = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			if(keyword != null && !"".equals(keyword)) {
+				if(keyfield.equals("1")) sub_sql += "AND title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql += "AND content LIKE ?";
+			}
+			
+			sql = "SELECT COUNT(*) FROM board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) WHERE mem_num=? " + sub_sql;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(++cnt, mem_num);
+			if(keyword != null && !"".equals(keyword)) {
+				pstmt.setString(++cnt, "%"+keyword+"%");
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
 	
+	//사용자가 작성한 글 목록/검색 글 목록
+	public List<BoardVO> getListWriteByMem_num(int start,int end,String keyfield,String keyword,int mem_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardVO> list = null;
+		String sql = null;
+		String sub_sql = "";
+		int cnt = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			if(keyword != null && !"".equals(keyword)) {
+				if(keyfield.equals("1")) sub_sql += "AND title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql += "AND content LIKE ?";
+			}
+			
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) WHERE mem_num=? " + sub_sql + " ORDER BY board_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(++cnt, mem_num);
+			if(keyword != null && !"".equals(keyword)) {
+				pstmt.setString(++cnt, "%"+keyword+"%");
+			}
+			pstmt.setInt(++cnt, start);
+			pstmt.setInt(++cnt, end);
+			
+			rs = pstmt.executeQuery();
+			list = new ArrayList<BoardVO>();
+			while(rs.next()) {
+				BoardVO board = new BoardVO();
+				board.setBoard_num(rs.getInt("board_num"));
+				board.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				board.setHit(rs.getInt("hit"));
+				board.setReg_date(rs.getDate("reg_date"));
+				board.setMem_nickname(rs.getString("mem_nickname"));
+				board.setMem_id(rs.getString("mem_id"));
+				
+				
+				list.add(board);
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return list;
+	}
+		
 }

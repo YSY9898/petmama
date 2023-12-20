@@ -26,28 +26,30 @@ window.onload=function(){
 <body>
 <div>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<div class="page-list-main">
-		<h2><b>PetMama 게시판</b></h2>
-		<p>PetMama 회원들이 자유롭게 글을 올릴 수 있는 게시판입니다.<br>우리 모두 PetMama에서 소통해요!</p>
-		<div>
-		<form id="search_form" action="list.do" method="get">
-				<ul class="search">
-					<li>
-						<select name="keyfield" style="width:80px;height:30px;">
-							<option value="1" <c:if test="${param.keyfield==1}">selected</c:if>>제목</option>
-							<option value="2" <c:if test="${param.keyfield==2}">selected</c:if>>작성자</option>
-							<option value="3" <c:if test="${param.keyfield==3}">selected</c:if>>내용</option>
-						</select>
-					</li>
-					<li>
-						<input type="search" size="20" style="width:300px;height:30px;" name="keyword" id="keyword" value="${param.keyword}">
-					</li>
-					<li>
-						<input type="submit" value="검색" class="list-btn">
-					</li>
-				</ul>
-			</form>
+	<div class="board_main">
+		<div class="main_msg">
+			<span class="main_msg_title">PetMama 자유게시판</span><br>
+			<span class="main_msg_detail">PetMama 회원들이 자유롭게 글을 올릴 수 있는 게시판입니다</span>
 		</div>
+	</div>
+	<div class="main-margin">
+	<form id="search_form" action="list.do" method="get">
+			<ul class="search">
+				<li>
+					<select name="keyfield" style="width:80px;height:30px;">
+						<option value="1" <c:if test="${param.keyfield==1}">selected</c:if>>제목</option>
+						<option value="2" <c:if test="${param.keyfield==2}">selected</c:if>>작성자</option>
+						<option value="3" <c:if test="${param.keyfield==3}">selected</c:if>>내용</option>
+					</select>
+				</li>
+				<li>
+					<input type="search" size="20" style="width:300px;height:30px;" name="keyword" id="keyword" value="${param.keyword}">
+				</li>
+				<li>
+					<input type="submit" value="검색" class="list-btn">
+				</li>
+			</ul>
+		</form>
 		<c:if test="${count == 0}">
 		<div class="result-display">
 			표시할 게시물이 없습니다.

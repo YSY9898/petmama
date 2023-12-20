@@ -10,10 +10,13 @@
 <body>
 <div>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<div class="page-list-main">
-		<h2><b>PetMama 게시판 글쓰기</b></h2>
-		<p>PetMama 회원들이 자유롭게 글을 올릴 수 있는 게시판입니다.<br>우리 모두 PetMama에서 소통해요!</p>
-	<div>
+	<div class="board_main">
+		<div class="main_msg">
+			<span class="main_msg_title">PetMama 게시판 글쓰기</span><br>
+			<span class="main_msg_detail">우리 모두 PetMama에서 소통해요!</span>
+		</div>
+	</div>
+	<div class="main-margin">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript">
 		$(function(){
@@ -55,7 +58,6 @@
 			<input type="button" value="목록" class="list-btn" onclick="location.href='list.do'">
 		</div>
 		</form>
-	</div>
 	</div>
 </div>
 </body>
