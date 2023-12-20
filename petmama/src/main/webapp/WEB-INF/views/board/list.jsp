@@ -54,7 +54,7 @@ window.onload=function(){
 		</div>
 		</c:if>
 		<c:if test="${count > 0}">
-		<table class="table table-hover">
+		<table class="table table-hover" style="background:white">
 			<thead>
 				<tr class="color">
 					<th style="width:10%">글번호</th>
