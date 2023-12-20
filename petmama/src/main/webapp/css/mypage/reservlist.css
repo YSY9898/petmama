@@ -1,0 +1,127 @@
+@charset "UTF-8";
+
+a:link {
+	text-decoration: none;
+	color: #000000;
+}
+
+a:visited {
+	text-decoration: none;
+	color: #000000;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #6C6C6C;
+}
+
+.page-main {
+	background-color: #F7F8FA;
+	padding:0px 0px 107px;
+}
+
+.reserv_menu-div {
+	display: flex;
+	gap: 350px;
+}
+
+.reserv_cont {
+    width: 900px;
+}
+
+.reserv_article {
+	margin-top: 15px;
+}
+
+.petsitter_intro .petsitter_img {
+	width: 110px; 
+	height: 100px; 
+	display: inline;
+}
+
+.petsitter_intro {
+	position: relative;
+	height: 100px;
+	padding-top: 45px;
+	padding-left: 25px;
+	z-index: 10
+}
+
+a.btn_bxctrl {
+	border-radius:6px 6px 0px 0px;
+	background-color: #6A92FE;
+	top: 45px;
+	position: relative;
+	display: block;
+	height: 29px;
+	padding: 0px 0 0 25px;
+	position: relative;
+}
+
+a.btn_bxctrl .stit {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 14px;
+	color: #fff
+}
+
+.bar {
+	display: inline-block;
+	width: 1px;
+	height: 13px;
+	margin: 0 10px;
+	vertical-align: middle;
+	background:
+		url("//gscdn.hackers.co.kr/champ/images/champstudy/applyclass/ico_bar.png")
+}
+
+.petsitter_intro .btn_detail {
+	position: absolute;
+	bottom: 15px;
+	right: 0;
+	text-decoration: underline;
+	font-size: 11px
+}
+
+.cnt {
+	margin-top: 45px;
+	display: block;
+	clear: both;
+	background: #fff;
+	border: 1px solid #d7d7d7;
+	border-radius : 0px 0px 6px 6px;
+}
+
+.cnt .row.first, .cnt .row:first-child {
+	border-top: 0
+}
+
+.petsitter {
+	float: left;
+	margin-right: 19px
+}
+
+.cnt .txt {
+	float: left;
+	width: 500px;
+	padding:20px 45px 8px 45px;
+}
+
+.cnt .row .bx_right {
+	*zoom: 1;
+	float: right;
+	margin-top: 20px;
+	width: 365px;
+}
+
+.cnt .row:after {
+	display: block;
+	clear: both;
+	content: ''
+}
+
+.petsitter_intro h4 {
+	padding-top: 14px;
+	line-height: 35px;
+	font-size: 14px
+}

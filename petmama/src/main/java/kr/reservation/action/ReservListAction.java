@@ -42,6 +42,6 @@ public class ReservListAction implements Action{
 		request.setAttribute("page", page.getPage());
 		
 		//JSP 경로 반환
-		return "/WEB-INF/views/customer/questionList.jsp";
+		return "/WEB-INF/views/mypage/reservationList.jsp";
 	}
 }
