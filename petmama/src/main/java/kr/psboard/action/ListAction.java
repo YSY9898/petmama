@@ -16,7 +16,7 @@ public class ListAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		//펫시터 프로필 표시
-		PSBoardDAO dao = PSBoardDAO.getinstatnce();
+		PSBoardDAO dao = PSBoardDAO.getInstance();
 		List<PSBoardVO> list = dao.getListPS();
 		
 		request.setAttribute("list", list);

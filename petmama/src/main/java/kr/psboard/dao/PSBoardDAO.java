@@ -12,7 +12,7 @@ import kr.util.DBUtil;
 public class PSBoardDAO {
 	//싱글턴 패턴
 	private static PSBoardDAO instance = new PSBoardDAO();
-	public static PSBoardDAO getinstatnce() {
+	public static PSBoardDAO getInstance() {
 		return instance;
 	}
 	private PSBoardDAO() {}

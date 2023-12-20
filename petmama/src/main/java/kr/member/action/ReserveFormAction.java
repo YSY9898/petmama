@@ -1,10 +1,14 @@
 package kr.member.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import kr.controller.Action;
+import kr.pet.dao.PetDAO;
+import kr.pet.vo.PetVO;
 import kr.petsitter.dao.PetsitterDAO;
 
 public class ReserveFormAction implements Action{
@@ -43,10 +47,29 @@ public class ReserveFormAction implements Action{
 		int sis_work = PS.getPSwork(sis_num);
 		
 		//애완동물 유무 체크
+		PetDAO pet = PetDAO.getInstance();
+		List<PetVO> vo = pet.checkPet(user_num);
+		
+		if(vo == null || vo.isEmpty()) {
+			request.setAttribute("accessMsg", "펫을 추가해주세요.");
+			request.setAttribute("accessUrl", request.getContextPath());
+			return "/WEB-INF/views/common/notice.jsp";
+		}
+		
+		//요금
+		int fee = Integer.parseInt(request.getParameter("fee"));
+		if(fee == 0) {
+			request.setAttribute("accessMsg", "시간을 골라주세요.");
+			request.setAttribute("accessUrl", request.getContextPath());
+			return "/WEB-INF/views/common/notice.jsp";
+		}
+		
 		
 		request.setAttribute("date", date);
 		request.setAttribute("time", time);
 		request.setAttribute("sis_work", sis_work);
+		request.setAttribute("sis_num", sis_num);
+		request.setAttribute("fee", fee);
 		
 		return "/WEB-INF/views/member/reserveForm.jsp";
 	}

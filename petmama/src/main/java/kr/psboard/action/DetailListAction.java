@@ -14,7 +14,7 @@ public class DetailListAction implements Action{
 		//펫시터 번호 반환
 		int sis_num = Integer.parseInt(request.getParameter("sis_num"));
 		
-		PSBoardDAO dao = PSBoardDAO.getinstatnce();
+		PSBoardDAO dao = PSBoardDAO.getInstance();
 		PSBoardVO vo = dao.getPSboard(sis_num);
 		
 		request.setAttribute("ps", vo);

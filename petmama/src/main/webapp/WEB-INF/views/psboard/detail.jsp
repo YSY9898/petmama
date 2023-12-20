@@ -8,7 +8,6 @@
 <title>펫시터 상세 프로필</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"> --%>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/petsitter/style.css">
 <link rel="stylesheet" type="text/css"
@@ -186,6 +185,23 @@
 
 			input.focus();
 		});
+		
+		/* 요금 버튼 이벤트 */
+		$(function(){
+			$("#option1").click(function(){
+				$("#fee").val("1");
+			});
+			$("#option2").click(function(){
+				$("#fee").val("2");
+			});
+			$("#option3").click(function(){
+				$("#fee").val("3");
+			});
+			$("#option4").click(function(){
+				$("#fee").val("4");
+			});
+			
+		});
 	</script>
 
 
@@ -200,21 +216,22 @@
 				int sis_num = Integer.parseInt(request.getParameter("sis_num"));
 				%>
 				<input type="hidden" id="sis_num" name="sis_num" value=<%=sis_num%>>
+				<input type="hidden" id="fee" name="fee" value="0">
 				<div class="row">
 					<div class="col">{프로필}</div>
 					<div class="col">
 						{요금선택}
 						<div class="time_fee">
-							<a href="javascript:void(0)"><div class="circle" value="1440">
+							<a href="javascript:void(0)" id="option1"><div class="circle" value="1440">
 									종일
 									<p>시간별요금제</p>
-								</div></a> <a href="javascript:void(0)"><div class="circle" value="30">
+								</div></a> <a href="javascript:void(0)" id="option2"><div class="circle" value="30">
 									30분
 									<p>19,500~</p>
-								</div></a> <a href="javascript:void(0)"><div class="circle" value="60">
+								</div></a> <a href="javascript:void(0)" id="option3"><div class="circle" value="60">
 									60분
 									<p>28,500~</p>
-								</div></a> <a href="javascript:void(0)"><div class="circle"
+								</div></a> <a href="javascript:void(0)" id="option4"><div class="circle"
 									value="120">
 									120분
 									<p>42,000~</p>
@@ -400,7 +417,7 @@
 							</div>
 						</div>
 
-						<input type="submit" value="예약하기">
+						<input type="submit" id="btn" value="예약하기">
 						<!-- swiper 끝 -->
 					</div>
 				</div>

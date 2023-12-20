@@ -35,8 +35,9 @@ create table reservation(
  r_reg_date date not null,
  r_modify_date date,
  r_condition number default 1 not null, -- 1 : 예약접수 상태
- visit_status number not null, -- 0 : 펫시터 집으로 부르기 펫시터 집에 맡기기
- r_pet_note varchar2(90) not null,
+ visit_status number not null, -- 0 : 펫시터 집으로 부르기 1. 펫시터 집에 맡기기
+ sis_work number not null, -- 펫시터 일 유형
+ r_pet_note varchar2(90) not null, -- 펫 시터에게 전달
  r_start varchar2(30) not null,
  r_end varchar2(30) not null,
  constraint reservation_pk primary key(r_num),
