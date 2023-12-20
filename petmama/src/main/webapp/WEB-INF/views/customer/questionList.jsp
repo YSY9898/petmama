@@ -40,16 +40,21 @@
 	<div>
 		<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-		<div class="slide_msg">
-			<span>다정한 펫마마 고객님, 도움이 필요하신가요?</span></br> <span>운영시간 : 평일 오전 11시 ~
-				오후 5시</span>
-		</div>
+		<section class="slide_section">
+			<div class="slide_msg">
+				<span class="slide_msg_greeting">다정한 펫마마 고객님, 도움이 필요하신가요?</span></br> 
+				<span class="slide_msg_time">운영시간 : 평일 오전 11시 ~ 오후 5시</span>
+			</div>
+		</section>
 
 		<div class="tab-container">
+		
+		<div class="tab-button">
 			<button class="tab-btn" onclick="openTab('tab1')">방문 서비스</button>
 			<button class="tab-btn" onclick="openTab('tab2')">이용요금</button>
 			<button class="tab-btn" onclick="openTab('tab3')">변경 및 취소</button>
 			<button class="tab-btn" onclick="openTab('tab4')">고객센터 문의</button>
+		</div>
 
 			<div id="tab1" class="tab-content">
 				<div class="toggle-btn" onclick="toggleContent(this);">
@@ -58,7 +63,7 @@
 						src="${pageContext.request.contextPath}/images/customer/qna_arrow_down.png"
 						width="25" height="25" class="my-photo">
 				</div>
-				<div class="tab1 content">
+				<div class="tab1 tabcontent">
 					<p>도그메이트 펫시터가 고객의 집으로 찾아가 돌봄을 진행합니다.</p>
 					<p>기본 30분 진행</p>
 					<p>배식/급수</p>
@@ -77,7 +82,7 @@
 						src="${pageContext.request.contextPath}/images/customer/qna_arrow_down.png"
 						width="25" height="25" class="my-photo">
 				</div>
-				<div class="tab1 content">
+				<div class="tab1 tabcontent">
 					<p>도그메이트 펫시터가 고객의 집으로 찾아가 산책을 진행합니다.</p>
 					<p>기본 60분 진행</p>
 					<p>산책준비 (하네스 및 이중산책줄 착용)</p>
@@ -93,50 +98,86 @@
 			
 			<div id="tab2" class="tab-content">
 				<div class="toggle-btn" onclick="toggleContent(this);">
-					<p>기본 돌봄이란2?</p>
+					<p>돌봄 서비스</p>
 					<img
 						src="${pageContext.request.contextPath}/images/customer/qna_arrow_down.png"
 						width="25" height="25" class="my-photo">
 				</div>
-				<div class="tab2 content">
-					<h2>여기에 내용이 들어갑니다</h2>
-					<p>이 부분은 버튼을 누르면 나타나거나 사라집니다.</p>
+				<div class="tab2 tabcontent">
+<p>기본/고양이 서비스</p>
+<p>30분</p>
+<p>15,000원</p>
+<p>기본 추가 (30분)</p>
+<p>10,500원</p>
+<p>마리 추가</p>
+<p>5,000원</p>
+<p>대형견 (15~29kg)</p>
+<p>10,000원</p>
+<p>초대형견 (30kg~)</p>
+<p>15,000원</p>
+<p>공휴일/주말</p>
+<p>5,000원</p>
+<p>명절</p>
+<p>10,000원</p>
+<p>요청하는 서비스에 따라 마리 추가 금액이 발생할 수 있습니다.</p>
+<p>배식/배변처리(기본돌봄)와 산책을 희망하는 경우 기본돌봄에 산책 옵션을 추가해야 합니다.</p>
 				</div>
 
 				<div class="toggle-btn" onclick="toggleContent(this);">
-					<p>기본 산책이란2?</p>
+					<p>산책 서비스</p>
 					<img
 						src="${pageContext.request.contextPath}/images/customer/qna_arrow_down.png"
 						width="25" height="25" class="my-photo">
 				</div>
-				<div class="tab2 content">
-					<h2>여기에 내용이 들어갑니다</h2>
-					<p>이 부분은 버튼을 누르면 나타나거나 사라집니다.</p>
+				<div class="tab2 tabcontent">
+					<p>30분</p>
+<p>18,000원</p>
+<p>산책 옵션 (30분)</p>
+<p>10,500원</p>
+<p>마리 추가</p>
+<p>5,000원</p>
+<p>대형견 (15~29kg)</p>
+<p>10,000원</p>
+<p>초대형견 (30kg~)</p>
+<p>15,000원</p>
+<p>공휴일/주말</p>
+<p>5,000원</p>
+<p>명절</p>
+<p>10,000원</p>
+<p>
+요청하는 서비스에 따라 마리 추가 금액이 발생할 수 있습니다.</p>
+<p>
+배식/배변처리(기본돌봄)와 산책을 희망하는 경우 기본돌봄에 산책 옵션을 추가해야 합니다.</p>
 				</div>
 			</div>
 
 			<div id="tab3" class="tab-content">
 				<div class="toggle-btn" onclick="toggleContent(this);">
-					<p>기본 돌봄이란3?</p>
+					<p>서비스 예약 변경 및 취소</p>
 					<img
 						src="${pageContext.request.contextPath}/images/customer/qna_arrow_down.png"
 						width="25" height="25" class="my-photo">
 				</div>
-				<div class="tab3 content">
-					<h2>여기에 내용이 들어갑니다</h2>
-					<p>이 부분은 버튼을 누르면 나타나거나 사라집니다.</p>
+				<div class="tab3 tabcontent">
+					<p>예약 변경</p>
+<p>•
+돌봄 3일 전 : 변경 가능</p>
+<p>•
+돌봄 1~2일 전 : 결제 금액의 20% 수수료 발생</p>
+<p>•
+돌봄 당일 : 변경 불가</p>
+ 
+<p>예약 취소</p>
+<p>•
+돌봄 3일 전 : 전액 환불</p>
+<p>•
+돌봄 1~2일 전 : 결제 금액의 50% 환불</p>
+<p>•
+돌봄 시작 3시간 전 : 결제 금액의 20% 환불</p>
+<p>•
+돌봄 시작 3시간 이내 : 환불금 없음</p>
+<p>수수료는 할인 전 청구금액을 기준으로 합니다.</p>
 				</div> 
-
-				<div class="toggle-btn" onclick="toggleContent(this);">
-					<p>기본 산책이란3?</p>
-					<img
-						src="${pageContext.request.contextPath}/images/customer/qna_arrow_down.png"
-						width="25" height="25" class="my-photo">
-				</div>
-				<div class="tab3 content">
-					<h2>여기에 내용이 들어갑니다</h2>
-					<p>이 부분은 버튼을 누르면 나타나거나 사라집니다.</p>
-				</div>
 			</div>
 			<div id="tab4" class="tab-content">
 				<jsp:include page="/WEB-INF/views/customer/qnaList.jsp" />
