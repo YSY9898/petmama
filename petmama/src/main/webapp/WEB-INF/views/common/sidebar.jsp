@@ -60,7 +60,12 @@
 					class="dropdown-item">회원 관리</a>
 			</p>
 			<p>
-				<a href="#" class="dropdown-item">게시글 관리</a>
+				<a href="${pageContext.request.contextPath}/board/list.do" 
+				class="dropdown-item">자유게시글 관리</a>
+			</p>
+			<p>
+				<a href="${pageContext.request.contextPath}/board2/list2.do" 
+				class="dropdown-item">후기게시글 관리</a>
 			</p>
 		</div>
 	</div>
