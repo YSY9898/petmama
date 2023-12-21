@@ -28,58 +28,61 @@
 
 			<div class="reserv_menu grid">
 				<div class="reserv_menu-div">
-					<a href="javascript:void(0);"><h4 class="fw-bold">진행예약</h4></a> 
-					<a href="javascript:void(0);"><h4 class="fw-bold">지난예약</h4></a>
+					<a href="javascript:void(0);"><h4 class="fw-bold">진행예약</h4></a> <a
+						href="javascript:void(0);"><h4 class="fw-bold">지난예약</h4></a>
 				</div>
 			</div>
 
 			<div class="reserv_cont">
 
-				<div class="reserv_article">
-				
-					<!-- petsitter_intro start -->
-					<div class="petsitter_intro">
-						<span class="petsitter"> 
-							<a href="#;">
-								<img class="petsitter_img" src="/petmama/upload/훈련사1.jpeg" >
+				<c:forEach var="reservation" items="${list}"  varStatus="status">
+
+					<div class="reserv_article">
+
+						<!-- petsitter_intro start -->
+						<div class="petsitter_intro">
+							<span class="petsitter"> <a href="#;"> <img
+									class="petsitter_img" src="/petmama/upload/${list2[status.index].photo1}">
 							</a>
-						</span>
-						<h4>
-							<strong>[김승규 펫시터]</strong><br> 
-							<p>우리 아이들의 마음을 이해하는 소통의 창이 되어드릴게요</p>
-						</h4>
-						<a href="#;" class="btn_detail">예약정보 상세보기 &gt;</a>
-					</div>
-					<!-- petsitter_intro end -->
-					
-					<a href="#;"  class="btn_bxctrl open"> 
-						<span class="stit">#방문훈련 전문</span> 
-						<span class="stit">#동물병원 근무</span> 
-						<span class="stit">#행동교정 전문</span>
-					</a>
+							</span>
+							<h4>
+								<strong>[${list2[status.index].name} 펫시터]</strong><br>
+								<p>${list2[status.index].title}</p>
+							</h4>
+							<a href="#;" class="btn_detail">예약정보 상세보기 &gt;</a>
+						</div>
+						<!-- petsitter_intro end -->
 
-					<div class="cnt" >
-						<div class="row first">
-							<div class="txt">
-								<h5>
-									산책 <span class="bar"></span> 30분
-								</h5>
-								<p>
-									예약시작시간 <span class="bar"></span> 1월 30일 9시
-								</p>
+						<a href="#;" class="btn_bxctrl open"> 
+						<span class="stit"> ${list2[status.index].tag} </span> 
+						</a>
 
-								<p>
-									예약종료시간 <span class="bar"></span> 1월 30일 9시 30분
-								</p>
-							</div>
-							<div class="bx_right">
-								예약상태 : <font color="blue">예약확정</font>
+						<div class="cnt">
+							<div class="row first">
+								<div class="txt">
+									<h5>
+										산책 <span class="bar"></span> 30분
+									</h5>
+									<p>
+										예약시작시간 <span class="bar"></span> ${reservation.r_start}
+									</p>
+
+									<p>
+										예약종료시간 <span class="bar"></span> ${reservation.r_end}
+									</p>
+								</div>
+								<div class="bx_right">
+									예약상태 : <font color="blue">예약대기중</font>
+								</div>
 							</div>
 						</div>
+
 					</div>
-					
-				</div>
+
+				</c:forEach>
 			</div>
+
+			<div class="align-center">${page}</div>
 		</div>
 	</div>
 </body>

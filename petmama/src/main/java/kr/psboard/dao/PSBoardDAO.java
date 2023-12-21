@@ -85,6 +85,8 @@ public class PSBoardDAO {
 				vo.setName(rs.getString("sis_name"));
 				//펫시터 소개 제목
 				vo.setTitle(rs.getString("sis_title"));
+				//태그
+				vo.setTag(rs.getString("sis_tag"));
 				//평점
 				//리뷰수
 				//리뷰
