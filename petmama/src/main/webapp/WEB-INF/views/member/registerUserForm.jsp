@@ -96,9 +96,7 @@
 <div class="page-main">
 	<div class="content-main">
 	<div class="container d-flex justify-content-center">
-	
 		   <div class="col-8 col8md-4">
-         
 			<form id="register_form" accept-charset="UTF-8" role="form" action="registerUser.do" method="post">
 			 <h2>회원가입</h2>
 			  <br>
