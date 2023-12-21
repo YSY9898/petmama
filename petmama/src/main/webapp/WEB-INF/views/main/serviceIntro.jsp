@@ -6,7 +6,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!-- header 끝 -->
 
-<div class="container-fluid bg-info" style="padding:150px 20px;"></div>
+<div class="container-fluid bg-info bg-opacity-50" style="padding:150px 20px;"></div>
 
 <div class="container-fluid" style="padding:200px 20px;">
   <div class="row">
@@ -25,7 +25,7 @@
  </div>
 </div>
 
-<div class="container-fluid bg-secondary text-white" style="padding:80px 20px;">
+<div class="container-fluid bg-secondary bg-opacity-75 text-white" style="padding:80px 20px;">
 
 <div class="row">
     <div class="col text-center">
@@ -41,7 +41,7 @@
  </div>
 </div>
 
-<div class="container-fluid bg-info" style="padding:200px 20px;"></div>
+<div class="container-fluid bg-info bg-opacity-50" style="padding:200px 20px;"></div>
 
 <div class="container-fluid" style="padding:200px 20px;">
   <div class="row">
@@ -60,7 +60,7 @@
  </div>
 </div>
 
-<div class="container-fluid bg-info" style="padding:200px 20px;"></div>
+<div class="container-fluid bg-info bg-opacity-50" style="padding:200px 20px;"></div>
 
 <div class="container-fluid" style="padding:200px 20px;">
   <div class="row">
@@ -81,7 +81,7 @@
 </div>
 
 
-<div class="container-fluid bg-info" style="padding:80px 20px;">
+<div class="container-fluid bg-info bg-opacity-50" style="padding:80px 20px;">
 <br><br>
 <h1 class="fw-bold text-center">어떤 펫시터가 방문하나요?</h1>
 <br><br><br><br><br>
@@ -202,7 +202,7 @@
  </div>
 </div>
 
-<div class="container-fluid bg-secondary text-white" style="padding:200px 20px;">
+<div class="container-fluid bg-secondary bg-opacity-75 text-white" style="padding:200px 20px;">
   <div class="row">
     <div class="col col-lg-5 text-end">
     <br><br><br><br><br><br><br>
@@ -218,7 +218,7 @@
 </div>
 
 
-<div class="container-fluid bg-info" style="padding:200px 20px;">
+<div class="container-fluid bg-info bg-opacity-50" style="padding:200px 20px;">
   <div class="row">
     <div class="col text-end">
       <img src="${pageContext.request.contextPath}/images/open.png" 

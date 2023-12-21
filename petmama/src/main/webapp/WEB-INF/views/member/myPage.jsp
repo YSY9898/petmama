@@ -109,27 +109,17 @@ $(function(){
 		<br>
 		<br>
 		<div class="mypage-div gird">
-		<div class="container-fluid bg-dark text-white" style="padding:100px 20px;">
+		<div class="container-fluid bg-info bg-opacity-25" style="padding:100px 20px;">
 		
 		<h3 class="fw-bold">${member.pet_name}의 동반자, ${member.mem_nickname}님!</h3>
 		<br><br>
 		<div class="row">
 			
 			<ul class="col-md-6 list-unstyled d-flex justify-content-center">
-				<li class="d-none d-lg-inline">
-					<c:if test="${empty member.pet_photo}">
-					<img src="${pageContext.request.contextPath}/images/face.png" 
-					                  width="150" height="150" class="my-photo">
-					</c:if>
-					<c:if test="${!empty member.pet_photo}">
-					<img src="${pageContext.request.contextPath}/upload/${member.pet_photo}"
-					                  width="150" height="150" class="my-photo">
-					</c:if>
-				</li>
-				<li>
+			<li>
 					<div>
 						<input type="button" value="수정" id="photo_btn"
-						 class="btn btn-primary btn-block btn-sm m-t-md">
+						 class="btn btn-dark btn-block btn-sm m-t-md">
 					</div>
 					<div id="photo_choice" style="display:none;">
 						<input type="file" id="photo" 
@@ -140,6 +130,17 @@ $(function(){
 						 class="btn btn-primary btn-block btn-sm m-t-md">	
 					</div>
 				</li>
+				<li class="d-none d-lg-inline">
+					<c:if test="${empty member.pet_photo}">
+					<img src="${pageContext.request.contextPath}/images/face.png" 
+					                  width="150" height="150" class="my-photo">
+					</c:if>
+					<c:if test="${!empty member.pet_photo}">
+					<img src="${pageContext.request.contextPath}/upload/${member.pet_photo}"
+					                  width="150" height="150" class="my-photo">
+					</c:if>
+				</li>
+				
 			</ul>
 			
 			<div class="col-md-6">
