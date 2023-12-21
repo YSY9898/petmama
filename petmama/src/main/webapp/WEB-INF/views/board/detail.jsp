@@ -68,8 +68,10 @@
 				<li class="float-right" style="margin-left: auto; margin-right: auto;">
 					<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정, 삭제 가능 --%>
 					<input type="button" value="목록" class="list-btn" onclick="location.href='list.do'">
-					<c:if test="${user_num == board.mem_num}">	
+					<c:if test="${user_num == board.mem_num}">
 					<input type="button" value="수정" class="list-btn" onclick="location.href='updateForm.do?board_num=${board.board_num}'">
+					</c:if>
+					<c:if test="${user_num == board.mem_num || user_auth == 9}">
 					<input type="button" value="삭제" class="list-btn" id="delete_btn">
 					<script type="text/javascript">
 						let delete_btn = document.getElementById('delete_btn');

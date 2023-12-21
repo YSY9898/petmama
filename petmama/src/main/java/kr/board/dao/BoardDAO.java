@@ -69,6 +69,7 @@ public class BoardDAO {
 				else if(keyfield.equals("2")) sub_sql += "WHERE mem_nickname LIKE ?";
 				else if(keyfield.equals("3")) sub_sql += "WHERE content LIKE ?";
 			}
+			
 			//SQL문 작성
 			sql = "SELECT COUNT(*) FROM board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) " + sub_sql;
 			//PreparedStatement 객체 생성
@@ -110,6 +111,7 @@ public class BoardDAO {
 				else if(keyfield.equals("2")) sub_sql += "WHERE mem_nickname LIKE ?";
 				else if(keyfield.equals("3")) sub_sql += "WHERE content LIKE ?";	
 			}
+		
 			//SQL문 작성
 			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) " + sub_sql + " ORDER BY board_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
 			//PreparedStatement 객체 생성
@@ -118,7 +120,7 @@ public class BoardDAO {
 			if(keyword!=null && !"".equals(keyword)) {
 				pstmt.setString(++cnt, "%"+keyword+"%");
 			}
-			
+
 			pstmt.setInt(++cnt, start);
 			pstmt.setInt(++cnt, end);
 			
@@ -268,6 +270,10 @@ public class BoardDAO {
 			pstmt.executeUpdate();
 			
 			//스크랩 삭제 
+			sql = "DELETE FROM board_scrap WHERE board_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			pstmt.executeUpdate();
 			
 			//댓글 삭제
 			sql = "DELETE FROM board_reply WHERE board_num=?";

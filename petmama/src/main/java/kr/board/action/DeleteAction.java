@@ -15,6 +15,7 @@ public class DeleteAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer)session.getAttribute("user_num");
+		Integer user_auth = (Integer)session.getAttribute("user_auth");
 		
 		if(user_num == null) {
 			return "redirect:/member/loginForm.do";
@@ -25,7 +26,7 @@ public class DeleteAction implements Action{
 		BoardDAO dao = BoardDAO.getInstance();
 		BoardVO db_board = dao.getBoard(board_num);
 		
-		if(user_num != db_board.getMem_num()) {
+		if(user_num != db_board.getMem_num() && user_auth != 9) {
 			return "/WEB-INF/views/common/notice.jsp";
 		}
 		
