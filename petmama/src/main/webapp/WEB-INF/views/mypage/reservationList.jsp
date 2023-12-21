@@ -7,11 +7,33 @@
 <head>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/mypage/reservlist.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
 <title>예약 현황</title>
 </head>
 <script>
+	$(function(){
+		const searchParams = new URLSearchParams(location.search);
 	
+		for (const param of searchParams) {
+		  if(param[0] == 'keyfield') {
+		  	$(".align-center a").eq(0).attr("href", $(".align-center a").eq(0).attr("href") + "&keyfield=" + param[1]);
+		  	$(".align-center a").eq(1).attr("href", $(".align-center a").eq(1).attr("href") + "&keyfield=" + param[1]);
+		  	$(".align-center a").eq(2).attr("href", $(".align-center a").eq(2).attr("href") + "&keyfield=" + param[1]);
+		  	$(".align-center a").eq(3).attr("href", $(".align-center a").eq(3).attr("href") + "&keyfield=" + param[1]);
+		  	$(".align-center a").eq(4).attr("href", $(".align-center a").eq(4).attr("href") + "&keyfield=" + param[1]);
+		  }
+		}
+	});
+	
+	function beforeSearchReserv(beforeORafter) {
+		if(beforeORafter == 0) {
+				$("#keyfield").val("ing");
+			} else {
+				$("#keyfield").val("after");
+		}
+		$("#search_form").submit();
+	}
 </script>
 <!-- header 시작 -->
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -26,12 +48,15 @@
 			<h2 class="text-center fw-bold">예약현황</h2>
 			<br> <br>
 
+		<form id="search_form" action="list.do" method="get" onsubmit="beforeSearchReserv">
+		<input type="hidden" id="keyfield" name="keyfield" value="ing">
 			<div class="reserv_menu grid">
 				<div class="reserv_menu-div">
-					<a href="javascript:void(0);"><h4 class="fw-bold">진행예약</h4></a> <a
-						href="javascript:void(0);"><h4 class="fw-bold">지난예약</h4></a>
+					<a href="javascript:beforeSearchReserv(0);"><h4 class="fw-bold">진행예약</h4></a> <a
+						href="javascript:beforeSearchReserv(1);"><h4 class="fw-bold">지난예약</h4></a>
 				</div>
 			</div>
+		</form>
 
 			<div class="reserv_cont">
 
@@ -72,7 +97,18 @@
 									</p>
 								</div>
 								<div class="bx_right">
-									예약상태 : <font color="blue">예약대기중</font>
+								<c:if test="${reservation.r_condition == 0}">
+									예약상태 : <font color="blue">예약대기중</font>				
+								</c:if>
+								<c:if test="${reservation.r_condition == 1}">
+									예약상태 : <font color="blue">예약확정</font>				
+								</c:if>
+								<c:if test="${reservation.r_condition == 2}">
+									예약상태 : <font color="blue">예약취소</font>				
+								</c:if>
+								<c:if test="${reservation.r_condition == 3}">
+									예약상태 : <font color="blue">펫시터 예약취소</font>				
+								</c:if>
 								</div>
 							</div>
 						</div>

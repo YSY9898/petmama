@@ -13,7 +13,7 @@ import kr.psboard.dao.PSBoardDAO;
 import kr.psboard.vo.PSBoardVO;
 import kr.reservation.dao.ReservationDAO;
 import kr.reservation.vo.ReservationVO;
-import kr.util.PageUtilForAjax;
+import kr.util.PageUtil;
 
 public class ReservListAction implements Action{
 
@@ -35,7 +35,7 @@ public class ReservListAction implements Action{
 		int count = dao.getReservCount(user_num, keyfield, keyword);
 		
 		//페이지 처리
-		PageUtilForAjax page = new PageUtilForAjax(keyfield,keyword,Integer.parseInt(pageNum),count,20,10,"list.do");
+		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,5,5,"list.do");
 		
 		List<ReservationVO> list = null;
 		if(count > 0) {

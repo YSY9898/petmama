@@ -121,7 +121,7 @@ public class ReservationDAO {
 			if (keyword != null && !"".equals(keyword)) {
 				// 검색 처리
 				if (keyfield.equals("1"))
-					sub_sql += "WHERE title LIKE ?";
+					sub_sql += " r_start < TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')";
 				else if (keyfield.equals("2"))
 					sub_sql += "WHERE content LIKE ?";
 				else if (keyfield.equals("3"))
