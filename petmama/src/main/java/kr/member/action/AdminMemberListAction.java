@@ -39,7 +39,8 @@ public class AdminMemberListAction implements Action{
 		
 		//페이지 처리
 		//keyfield, keyword, currentPage, count, rowCount,pageCount
-		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,20,15,"adminList.do");
+		PageUtil page = new PageUtil(keyfield,keyword,
+				Integer.parseInt(pageNum),count,20,10,"adminList.do");
 		
 		List<MemberVO> list = null;
 		if(count>0) {

@@ -231,7 +231,7 @@
 				
 				<div class="form-group">
 				 	<div class="align-center">
-				<input type="submit" value="등록">
+				<input type="submit" value="등록" class="btn btn-primary" >
 				<input type="button" value="홈으로" class="btn btn-primary" 
 					onclick="${pageContext.request.contextPath}/main/main.do">
 				<br><br><br>

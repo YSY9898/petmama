@@ -179,8 +179,11 @@ $(function(){
 		<br><br><br><br>
 
 		
+		
 		<div class="mypage-div">
-			<h4 class="fw-bold">스크랩한 게시물 목록</h4>
+		
+		
+			<h4 class="fw-bold text-center">스크랩한 자유게시물 목록</h4>
 			<table class="table table-striped">
 				<thead class="thead-dark">
 				<tr>
@@ -201,9 +204,33 @@ $(function(){
 				</c:forEach>
 				</tbody>
 			</table>
+			
+			<br><br>
+			
+			<h4 class="fw-bold text-center">스크랩한 후기게시물 목록</h4>
+			<table class="table table-striped">
+				<thead class="thead-dark">
+				<tr>
+					<th class="text-center" scope="col">제목</th>
+					<th class="text-center" scope="col">작성자</th>
+					<th class="text-center" scope="col">등록일</th>
+				</tr>
+				</thead>
+				<tbody>
+				<c:forEach var="board2" items="${boardList2}">
+				<tr>
+					<td class="text-center">
+					<a href="${pageContext.request.contextPath}/board2/detail2.do?board_num=${board2.board_num}" 
+					target="_blank">${fn:substring(board2.title,0,12)}</a></td>
+					<td class="text-center">${board2.mem_nickname}</td>
+					<td class="text-center">${board2.reg_date}</td>
+				</tr>
+				</c:forEach>
+				</tbody>
+			</table>
+		
 		</div>
-		
-		
+
 		<br><br><br><br>
 		
 		<p class="btn btn-sm">
