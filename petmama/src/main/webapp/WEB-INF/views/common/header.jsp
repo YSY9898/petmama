@@ -78,9 +78,15 @@ type="text/javascript"></script>
 							href="${pageContext.request.contextPath}/member/applyPetsitterForm.do">펫시터
 								지원하기</a></li>
 					</ul></li>
-				<li class="nav-item spacing"><a class="nav-link active"
-					aria-current="page" href="/petmama/customer/questions.do">고객센터</a></li>
-
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" role="button"
+					data-bs-toggle="dropdown" aria-expanded="false"> 고객센터 </a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item"
+							href="${pageContext.request.contextPath}/noticeboard/noticelist.do">공지사항</a></li>
+						<li><a class="dropdown-item"
+							href="/petmama/customer/questions.do">고객센터</a></li>
+					</ul></li>
 				<li class="nav-item spacing" style="margin-right:35px;"><a class="nav-link active"
 					aria-current="page" href="/petmama/member/myPage.do">MyPage</a></li>
 			</ul>

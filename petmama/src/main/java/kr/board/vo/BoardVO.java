@@ -14,6 +14,7 @@ public class BoardVO {
 	private String ip;
 	private int mem_num;
 	private String mem_nickname;
+	private int board_best;
 	
 	//member 데이터
 	private String mem_id;
@@ -117,4 +118,10 @@ public class BoardVO {
 		this.pet_photo = pet_photo;
 	}
 	
+	public int getBoard_best() {
+		return board_best;
+	}
+	public void setBoard_best(int board_best) {
+		this.board_best = board_best;
+	}
 }

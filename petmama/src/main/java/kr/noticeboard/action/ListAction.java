@@ -1,4 +1,4 @@
-package kr.board.action;
+package kr.noticeboard.action;
 
 import java.util.List;
 

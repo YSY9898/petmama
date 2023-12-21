@@ -113,7 +113,7 @@ public class BoardDAO {
 			}
 		
 			//SQL문 작성
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) " + sub_sql + " ORDER BY board_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) " + sub_sql + " ORDER BY board_best DESC, board_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			
@@ -136,6 +136,7 @@ public class BoardDAO {
 				board.setReg_date(rs.getDate("reg_date"));
 				board.setMem_nickname(rs.getString("mem_nickname"));
 				board.setMem_id(rs.getString("mem_id"));
+				board.setBoard_best(rs.getInt("board_best"));
 				
 				list.add(board);
 			}
