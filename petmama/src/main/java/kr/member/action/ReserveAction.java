@@ -27,10 +27,12 @@ public class ReserveAction implements Action{
 		
 		String time = request.getParameter("time");
 		String date = request.getParameter("date");
-	
+		
+		String td = date + " " + time; 
+		
 		//시간 계산
-		SimpleDateFormat formatdate = new SimpleDateFormat("HH:mm:ss");
-		Date DATE = formatdate.parse(time);
+		SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date DATE = formatdate.parse(td);
 		String da = null;
 		
 		Calendar cal = Calendar.getInstance();
@@ -38,7 +40,7 @@ public class ReserveAction implements Action{
 		
 		int fee = Integer.parseInt(request.getParameter("fee"));
 		if(fee==1) {
-			da = "23:59:59";
+			da = date + " 23:59:59";
 		}else if(fee==2) {
 			cal.add(Calendar.MINUTE, 30); //30분 후 
 			da = formatdate.format(cal.getTime());
@@ -50,10 +52,6 @@ public class ReserveAction implements Action{
 			da = formatdate.format(cal.getTime());
 		}
 		
-		//System.out.println(formatdate.format(cal.getTime()));	
-			
-		//System.out.println(date+ " " + da);
-		
 		//자바빈 생성
 		ReservationVO vo = new ReservationVO();
 		vo.setMem_num(user_num);
@@ -62,7 +60,7 @@ public class ReserveAction implements Action{
 		vo.setVisit_status(Integer.parseInt(request.getParameter("visit_status")));
 		vo.setR_pet_note(request.getParameter("pet_note"));
 		vo.setR_start(date + " " +time);
-		vo.setR_end(date+ " " + da);
+		vo.setR_end(da);
 		
 		ReservationDAO dao= ReservationDAO.getInstance();
 		dao.reserve(vo);

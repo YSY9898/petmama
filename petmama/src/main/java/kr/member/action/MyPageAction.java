@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import kr.board.dao.BoardDAO;
 import kr.board.vo.BoardVO;
+import kr.board2.dao.BoardDAO2;
+import kr.board2.vo.BoardVO2;
 import kr.controller.Action;
 import kr.member.dao.MemberDAO;
 import kr.member.vo.MemberVO;
@@ -27,13 +29,18 @@ public class MyPageAction implements Action{
 		MemberDAO dao = MemberDAO.getInstance();
 		MemberVO member = dao.getMember(user_num);
 		
-		//관심 게시물 정보
+		//관심 게시물 정보(자유)
 		BoardDAO boardDao = BoardDAO.getInstance();
 		List<BoardVO> boardList = boardDao.getListBoardScrap(1, 5, user_num);
-		//getListBoardFav -> getListBoardScrap 바꾸기
+		
+		//관심 게시물 정보(후기)
+		BoardDAO2 boardDao2 = BoardDAO2.getInstance();
+		List<BoardVO2> boardList2 = boardDao2.getListBoardScrap(1, 5, user_num);
+
 		
 		request.setAttribute("member", member);
 		request.setAttribute("boardList", boardList);
+		request.setAttribute("boardList2", boardList2);
 		
 		//JSP 경로 반환
 		return "/WEB-INF/views/member/myPage.jsp";
