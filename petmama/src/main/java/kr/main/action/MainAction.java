@@ -13,7 +13,7 @@ public class MainAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		//JSP 경로 반환
-		return "/WEB-INF/views/main/main.jsp";
+		return "/WEB-INF/views/main/serviceIntro.jsp";
 	}
 
 }

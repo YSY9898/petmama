@@ -38,8 +38,10 @@ src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundl
 type="text/javascript"></script>
 <nav class="navbar navbar-expand-lg bg-white">
 	<div class="container-fluid justify-content-end">
-		<img src="${pageContext.request.contextPath}/images/header/petmama_typo.png" width="170"
-			height="65" class="my-photo"> 
+		<a href="${pageContext.request.contextPath}/main/main.do">
+		<img src="${pageContext.request.contextPath}/images/header/petmama_typo.svg" width="170"
+			height="65"> 
+		</a>
 		<button class="navbar-toggler justify-content-end" type="button"
 			data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
