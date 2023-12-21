@@ -110,10 +110,12 @@ $(function(){
 		<br>
 		<div class="mypage-div gird">
 		<div class="container-fluid bg-dark text-white" style="padding:100px 20px;">
+		
+		<h3 class="fw-bold">${member.pet_name}의 동반자, ${member.mem_nickname}님!</h3>
+		<br><br>
+		<div class="row">
 			
-			<h3 class="fw-bold">${member.pet_name}의 동반자, ${member.mem_nickname}님!</h3>
-			<br>
-			<ul class="list-unstyled">
+			<ul class="col-md-6 list-unstyled d-flex justify-content-center">
 				<li class="d-none d-lg-inline">
 					<c:if test="${empty member.pet_photo}">
 					<img src="${pageContext.request.contextPath}/images/face.png" 
@@ -124,7 +126,6 @@ $(function(){
 					                  width="150" height="150" class="my-photo">
 					</c:if>
 				</li>
-				
 				<li>
 					<div>
 						<input type="button" value="수정" id="photo_btn"
@@ -136,13 +137,28 @@ $(function(){
 						<input type="button" value="전송" id="photo_submit"
 						 class="btn btn-primary btn-block btn-sm m-t-md">
 						<input type="button" value="취소" id="photo_reset"
-						 class="btn btn-primary btn-block btn-sm m-t-md">
-	
+						 class="btn btn-primary btn-block btn-sm m-t-md">	
 					</div>
 				</li>
 			</ul>
 			
-			<br><hr>
+			<div class="col-md-6">
+				<h5 class="text-center" style="font-family: sans-serif;">♡ 펫 정보 ♡</h5>	
+				<div class="card mx-auto" style="width:18rem;">
+				<ul class="list-group list-unstyled">
+					<li class="list-group-item">펫이름 : ${member.pet_name}</li>
+					<li class="list-group-item">펫나이 : ${member.pet_age}</li>				
+					<c:if test="${!empty member.mem_mdate}">
+					<li>최근 정보 수정일 : ${member.mem_mdate}</li>
+					</c:if>
+					</ul>
+					</div>
+					</div>
+				</div>
+				
+			</div>
+		
+			<br><br><br><br><hr>
 			
 			</div>
 			
@@ -176,8 +192,8 @@ $(function(){
 								
 			
 			
+		<br><br><br><br><hr>
 		<br><br><br><br>
-
 		
 		
 		<div class="mypage-div">
@@ -231,6 +247,7 @@ $(function(){
 		
 		</div>
 
+		<br><br><br><br><hr>
 		<br><br><br><br>
 		
 		<p class="btn btn-sm">
