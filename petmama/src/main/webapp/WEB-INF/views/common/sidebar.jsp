@@ -7,9 +7,7 @@
 	style="position: absolute; z-index: 9999; background-color: white; margin: -16px 20px 20px 303px;"
 	type="button" data-bs-toggle="offcanvas"
 	data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-	Side <img
-		src="${pageContext.request.contextPath}/images/header/petmama.png"
-		width="100" height="100">
+	Side 
 </button>
 
 
