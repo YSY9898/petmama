@@ -184,7 +184,6 @@
 	}
 </script>
 <div id="qcontent-main">
-	<h2>게시판 목록</h2>
 	<ul class="search">
 		<li><select name="keyfield" id="keyfield">
 				<option value="1">제목</option>
@@ -197,12 +196,12 @@
 	</ul>
 	<div class="list-space align-right">
 		<input type="button" value="글쓰기"
-			onclick="window.open('writeForm.do', '_blank', 'width=550, height=500'); return false;">
+			onclick="window.open('writeForm.do', '_blank', 'width=410, height=300'); return false;">
 		<input type="button" value="전체 문의보기" onclick="searchQNA('all', 1)">
 		<input type="button" value="나의 Q&A 조회" onclick="searchQNA('mine', 1)">
 	</div>
-	<table>
-		<tr>
+	<table class="table table-hover">
+		<tr class="color">
 			<th>글번호</th>
 			<th>답변상태</th>
 			<th>제목</th>
