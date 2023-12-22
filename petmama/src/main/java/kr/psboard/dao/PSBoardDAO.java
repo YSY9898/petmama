@@ -88,6 +88,7 @@ public class PSBoardDAO {
 				//태그
 				vo.setTag(rs.getString("sis_tag"));
 				//평점
+				vo.setRating(rs.getDouble("sis_rate"));
 				//리뷰수
 				//리뷰
 				//프로필 사진
@@ -102,4 +103,6 @@ public class PSBoardDAO {
 		}
 		return vo;
 	}
+	//펫시터 리뷰
+	//펫시터 리뷰 수
 }

@@ -187,23 +187,58 @@
 		});
 		
 		/* 요금 버튼 이벤트 */
+		var prev_num = 0;
+		var num;
 		$(function(){
+			
 			$("#option1").click(function(){
 				$("#fee").val("1");
+				num = 1;
+				check();
 			});
 			$("#option2").click(function(){
 				$("#fee").val("2");
+				num = 2;
+				check();
 			});
 			$("#option3").click(function(){
 				$("#fee").val("3");
+				num = 3;
+				check();
 			});
 			$("#option4").click(function(){
 				$("#fee").val("4");
+				num = 4;
+				check();
 			});
 			
+			
 		});
+		//요금 체크해제 확인
+		function check(){
+			if(num == prev_num){
+				$("#fee").val("0");
+				prev_num=0;
+			}else{
+				prev_num = num;
+			}
+		}
+		//유효성 검사
+		function valid_check(){
+			if($("#fee").val()=="0"){
+				alert("요금을 골라주세요.");
+				return false;
+			}
+			if($("#date").val()==''){
+				alert("예약 날짜를 선택해주세요.");
+				return false;
+			}
+			if($("#time").val()==''){
+				alert("예약 시간을 선택해주세요.");
+				return false;
+			}
+		}
 	</script>
-
 
 	<div class="container text-center">
 		<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -217,6 +252,19 @@
 				%>
 				<input type="hidden" id="sis_num" name="sis_num" value=<%=sis_num%>>
 				<input type="hidden" id="fee" name="fee" value="0">
+<!-- 시작 -->				
+				<div><!-- 전체 페이지 시작(헤더 제외) -->
+					<div class="bg_photo_outline"> <!-- 소개 사진 틀 -->
+						<div style="width: 62.5%; height: 580px; overflow: hidden;">
+							<img class="bg_photo"src="${pageContext.request.contextPath}/upload/${ps.photo2}">
+						</div>
+					
+					</div>
+					<div class="ps_info_outline"><!-- -->
+						
+					</div>
+				</div><!-- 전체 페이지 끝 -->
+<!-- 끝 -->				
 				<div class="row">
 					<div class="col">{프로필}</div>
 					<div class="col">
@@ -417,7 +465,7 @@
 							</div>
 						</div>
 
-						<input type="submit" value="예약하기">
+						<input type="submit" onclick="return valid_check()" value="예약하기">
 						<!-- swiper 끝 -->
 					</div>
 				</div>

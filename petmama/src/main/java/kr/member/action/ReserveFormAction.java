@@ -58,11 +58,11 @@ public class ReserveFormAction implements Action{
 		
 		//요금
 		int fee = Integer.parseInt(request.getParameter("fee"));
-		if(fee == 0) {
+		/*if(fee == 0) {
 			request.setAttribute("accessMsg", "시간을 골라주세요.");
 			request.setAttribute("accessUrl", request.getContextPath());
 			return "/WEB-INF/views/common/notice.jsp";
-		}
+		}*/
 		
 		
 		request.setAttribute("date", date);

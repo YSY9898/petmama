@@ -397,4 +397,59 @@ input {
     margin-top: 0;
     margin-bottom: 0;
 }
+.article_content input{
+	text-align:left;
+}
+/*radio 버튼 css*/
+.select {
+    padding: 15px 10px;
+}
+.select input[type=radio]{
+    display: none;
+}
+.select input[type=radio]+label{
+    display: inline-block;
+    cursor: pointer;
+    height: 40px;
+    width: 200px;
+    border: 1px solid #333;
+    line-height: 40px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+}
+.select input[type=radio]+label{
+    background-color: #fff;
+    color: #333;
+}
+.select input[type=radio]:checked+label{
+    background-color: #333;
+    color: #fff;
+}
+
 /*펫시터 지원서 끝*/
+
+/*펫시터 상세 페이지*/
+.bg_photo_outline{
+	z-index: 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 580px;
+    margin-top: 80px;
+    position: relative;
+}
+.bg_photo{
+	object-fit: cover;
+    width: 100%;
+    user-select: none;
+    cursor: pointer;
+}
+.ps_info_outline{
+	margin-left: auto;
+    margin-right: auto;
+    width: 1027px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
