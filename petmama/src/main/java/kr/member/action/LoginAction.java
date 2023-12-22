@@ -26,7 +26,7 @@ public class LoginAction implements Action{
 			//비밀번호 일치 여부 체크
 			check = vo.isCheckedPassword(passwd);
 			//정지회원의 경우 상태 표시
-			request.setAttribute("auth", vo.getMem_auth());
+			request.setAttribute("mem_auth", vo.getMem_auth());
 		}
 		if(check) {//인증 성공
 			HttpSession session = request.getSession();
