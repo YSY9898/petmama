@@ -43,6 +43,7 @@
 					</c:if>
 			</li>
 		</ul>
+			    
 		<hr size="0" noshade="noshade" width="100%">
 		<c:if test="${!empty board.filename}">
 		<div class="align-center">
