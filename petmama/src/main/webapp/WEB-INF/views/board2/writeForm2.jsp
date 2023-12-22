@@ -39,8 +39,6 @@
 		<br><br><br><br>
 		<h4 class="fw-bold">게시판 글쓰기</h4>
 		<hr><br><br>	
-		
-		
 			<ul class="list-unstyled">
 				<li class="form-floating mb-3">
 					<label for="title">제목을 입력해주세요</label>
