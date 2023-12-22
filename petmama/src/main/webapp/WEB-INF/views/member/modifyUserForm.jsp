@@ -110,7 +110,16 @@
 						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="펫나이">
 					<label for="pet_age">펫 나이</label>
 			</div>
-				
+			<div>
+				<label for="mem_email">희망 반려생활</label>
+				<br>
+					<input type="radio" name="pet_note" value="3" 
+						id="note3" <c:if test="${member.pet_note == 3}"></c:if>>산책
+				<input type="radio" name="pet_note" value="4" 
+						id="note4" <c:if test="${member.pet_note == 4}"></c:if>>돌봄
+				<input type="radio" name="pet_note" value="5" 
+						id="note5" <c:if test="${member.pet_note == 5}"></c:if>>둘 다
+			</div>	
 			<br>
 			<div class="align-center">
 				<input type="submit" value="수정" class="btn btn-primary">

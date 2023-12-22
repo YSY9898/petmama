@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.member.vo.MemberVO;
+import kr.pet.vo.PetVO;
 import kr.util.DBUtil;
 
 public class MemberDAO {
@@ -18,7 +19,7 @@ public class MemberDAO {
 	private MemberDAO() {}
 	
 	//일반회원 회원가입 
-	public void insertMember(MemberVO member)throws Exception{
+	public void insertMember(MemberVO member,PetVO pet)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -71,10 +72,10 @@ public class MemberDAO {
 			pstmt4 = conn.prepareStatement(sql);
 			
 			pstmt4.setInt(1, num);//회원번호
-			pstmt4.setString(2, member.getPet_name());
-			pstmt4.setInt(3, member.getPet_age());
-			pstmt4.setString(4,member.getPet_photo());
-			pstmt4.setString(5,member.getPet_note());
+			pstmt4.setString(2, pet.getPet_name());
+			pstmt4.setInt(3, pet.getPet_age());
+			pstmt4.setString(4,pet.getPet_photo());
+			pstmt4.setString(5,pet.getPet_note());
 			pstmt4.executeUpdate();
 			
 			//SQL문 실행시 모두 성공하면 commit
@@ -185,22 +186,18 @@ public class MemberDAO {
 	
 	
 	//회원 정보 수정
-	public void updateMember(MemberVO member)throws Exception{
+	public void updateMember(MemberVO member,PetVO pet)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
 		String sql = null;
 		
 		try {
 			//커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-			//오토 커밋 해제
-			conn.setAutoCommit(false);
 			
 			//SQL문 작성
-			sql = "UPDATE member_detail SET mem_name=?,mem_nickname=?,mem_cell=?,mem_email=?,"
-				+ "mem_zipcode=?,mem_address1=?,mem_address2=?,"
-				+ "mem_mdate=SYSDATE WHERE mem_num=?";
+			sql = "UPDATE member_detail LEFT OUTER JOIN pet_detail USING(mem_num) SET mem_name=?,mem_nickname=?,mem_cell=?,mem_email=?,"
+				+ "mem_zipcode=?,mem_address1=?,mem_address2=?,mem_mdate=SYSDATE WHERE mem_num=?";
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			//?에 데이터 바인딩
@@ -211,24 +208,16 @@ public class MemberDAO {
 			pstmt.setString(5, member.getMem_zipcode());
 			pstmt.setString(6, member.getMem_address1());
 			pstmt.setString(7, member.getMem_address2());
-			pstmt.setInt(8, member.getMem_num());
+			pstmt.setString(8, pet.getPet_name());
+			pstmt.setInt(9, pet.getPet_age());
+			pstmt.setString(10, pet.getPet_note());
+			pstmt.setInt(11, member.getMem_num());
 			
-			sql = "UPDATE pet_detail SET pet_name=?,pet_age=? WHERE mem_num=?";
-			//PreparedStatement 객체 생성
-			pstmt2 = conn.prepareStatement(sql);
-			//?에 데이터 바인딩
-			pstmt2.setString(1, member.getPet_name());
-			pstmt2.setInt(2, member.getPet_age());
-			pstmt2.setInt(3, member.getMem_num());
-			
-			//SQL문 실행시 모두 성공하면 commit
-			conn.commit();			
 		}catch(Exception e) {
 			//SQL문이 하나라도 실패하면 rollback
 			conn.rollback();
 			throw new Exception(e);
 		}finally {
-			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt, conn);
 		}		
 	}
