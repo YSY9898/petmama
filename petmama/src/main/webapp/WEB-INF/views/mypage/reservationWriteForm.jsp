@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +12,6 @@
 	href="${pageContext.request.contextPath}/css/mypage/reservWrite.css">
 <body>
 	<div class="reserv_cont">
-
 		<c:forEach var="reservation" items="${list}" varStatus="status">
 
 			<div class="reserv_article">
@@ -24,37 +25,70 @@
 					</span>
 					<h4>
 						<strong>[${list2[status.index].name} 펫시터가 방문합니다]</strong><br>
-						<p>단순 훈련사만이 아닌 심리 안정을 위한 멘토가 되어드리겠습니다
-							${list2[status.index].title}</p>
+						<p>${list2[status.index].title}</p>
 					</h4>
 
 					<div class="bxc_btns">
 						<a href="#;" class="btn_bxctrl2 open"> <span class="stit">
-								프로필보기 ${list2[status.index].tag} </span>
+								프로필보기</span>
 						</a> <a href="#;" class="btn_bxctrl2 open"> <span class="stit">
-								연락하기 ${list2[status.index].tag} </span>
+								연락하기</span>
 						</a>
 					</div>
 				</div>
 				<!-- petsitter_intro end -->
 
 				<a href="#;" class="btn_bxctrl open"> <span class="stit">
-						태그 태그 ${list2[status.index].tag} </span>
+						${list2[status.index].tag} </span>
 				</a>
 
 				<div class="cnt">
 					<div class="row first">
 						<div class="txt">
 							<p>2월 1일(화)${reservation.r_start}</p>
-							<p>돌봄 30분</p>
+							<p>
+								<c:if test="${reservation.sis_work == 1}">
+										산책 
+										</c:if>
+								<c:if test="${reservation.sis_work == 2}">
+										돌봄 
+										</c:if>
+								<c:if test="${reservation.sis_work == 3}">
+										산책&돌봄 
+										</c:if>
+
+								<c:if test="${reservation.fee == 1}">
+										&nbsp;종일
+										</c:if>
+
+								<c:if test="${reservation.fee == 2}">
+										&nbsp;30분
+										</c:if>
+
+								<c:if test="${reservation.fee == 3}">
+										&nbsp;60분
+										</c:if>
+
+								<c:if test="${reservation.fee == 4}">
+										&nbsp;120분
+										</c:if>
 							<p>예약상태</p>
 						</div>
 						<div class="bx_right">
-							<p>오전 9 : 30 ${reservation.r_start}</p>
+							<p>${reservation.r_start}</p>
 							<font color="blue">27,000원</font>
 							<p>
 								<c:if test="${reservation.r_condition == 0}">
-									예약상태 : <font color="blue">예약대기중</font>
+									<font color="blue">예약대기중</font>
+								</c:if>
+								<c:if test="${reservation.r_condition == 1}">
+									 <font color="blue">예약확정</font>
+								</c:if>
+								<c:if test="${reservation.r_condition == 2}">
+									<font color="blue">예약취소</font>
+								</c:if>
+								<c:if test="${reservation.r_condition == 3}">
+									 <font color="blue">펫시터 예약취소</font>
 								</c:if>
 
 							</p>
@@ -65,11 +99,11 @@
 						<!-- petsitter_intro start -->
 						<div class="pet_intro">
 							<span class="pet"> <a href="#;"> <img class="pet_img"
-									src="/petmama/upload/${list2[status.index].photo1}">
+									src="/petmama/upload/${list3[status.index].pet_photo}">
 							</a>
 
 								<h4>
-									<strong>[${list2[status.index].name} 티티(2세)]</strong><br>
+									<strong>[${list3[status.index].pet_name} (${list3[status.index].pet_age}세)]</strong><br>
 								</h4>
 							</span>
 						</div>
@@ -79,7 +113,7 @@
 							<p>방문주소&nbsp;&nbsp;&nbsp;</p>
 						</div>
 						<div class="bx_right">
-							<p>티티</p>
+							<p>${list3[status.index].pet_name}</p>
 							<p>서울 강남구</p>
 						</div>
 					</div>
@@ -88,11 +122,12 @@
 				</div>
 				<div class="bxc_btn2">
 					<a href="#;" class="btn_bxctrl3 open"> <span class="stit">
-							예약변경 ${list2[status.index].tag} </span>
+							예약변경  </span>
 					</a> <a href="#;" class="btn_bxctrl3 open"> <span class="stit">
-							예약취소 ${list2[status.index].tag} </span>
+							예약취소  </span>
 					</a>
 				</div>
+			</div>
 		</c:forEach>
 	</div>
 </body>

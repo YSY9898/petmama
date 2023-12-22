@@ -31,8 +31,8 @@ public class ReservationDAO {
 		try {
 			conn = DBUtil.getConnection();
 			sql = "INSERT INTO reservation (r_num, mem_num, sis_num, r_condition, "
-					+ "visit_status, sis_work, r_pet_note, r_start, r_end, r_reg_date)"
-					+ " VALUES(reservation_seq.nextval,?,?,?,?,?,?,?,?,SYSDATE)";
+					+ "visit_status, sis_work, r_pet_note, fee, r_start, r_end, r_reg_date)"
+					+ " VALUES(reservation_seq.nextval,?,?,?,?,?,?,?,?,?,SYSDATE)";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, reservation.getMem_num());
@@ -41,8 +41,9 @@ public class ReservationDAO {
 			pstmt.setInt(4, reservation.getVisit_status());
 			pstmt.setInt(5, reservation.getSis_work());
 			pstmt.setString(6, reservation.getR_pet_note());
-			pstmt.setString(7, reservation.getR_start());
-			pstmt.setString(8, reservation.getR_end());
+			pstmt.setInt(7, reservation.getFee());
+			pstmt.setString(8, reservation.getR_start());
+			pstmt.setString(9, reservation.getR_end());
 
 			pstmt.executeUpdate();
 
@@ -131,6 +132,51 @@ public class ReservationDAO {
 				reservation.setVisit_status(rs.getInt("visit_status"));
 				reservation.setSis_work(rs.getInt("sis_work"));
 				reservation.setR_pet_note(rs.getString("r_pet_note"));
+				reservation.setFee(rs.getInt("fee"));
+				reservation.setR_start(rs.getString("r_start"));
+				reservation.setR_end(rs.getString("r_end"));
+				list.add(reservation);
+			}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
+	}
+	
+	public List<ReservationVO> getReservDetail(int mem_num, int r_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ReservationVO> list = null;
+		String sql = null;
+		String sub_sql = "";
+		int cnt = 0;
+
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+
+			// SQL문 작성
+			sql = "SELECT * FROM reservation WHERE mem_num = " + mem_num + " AND r_num= " + r_num;
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			list = new ArrayList<ReservationVO>();
+			while (rs.next()) {
+				ReservationVO reservation = new ReservationVO();
+				reservation.setR_num(rs.getInt("r_num"));
+				reservation.setMem_num(rs.getInt("mem_num"));
+				reservation.setSis_num(rs.getInt("sis_num"));
+				reservation.setR_reg_date(rs.getDate("r_reg_date"));
+				reservation.setR_modify_date(rs.getDate("r_modify_date"));
+				reservation.setR_condition(rs.getInt("r_condition"));
+				reservation.setVisit_status(rs.getInt("visit_status"));
+				reservation.setSis_work(rs.getInt("sis_work"));
+				reservation.setR_pet_note(rs.getString("r_pet_note"));
+				reservation.setFee(rs.getInt("fee"));
 				reservation.setR_start(rs.getString("r_start"));
 				reservation.setR_end(rs.getString("r_end"));
 				list.add(reservation);

@@ -7,7 +7,8 @@
 <head>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/mypage/reservlist.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
 <title>예약 현황</title>
 </head>
@@ -48,45 +49,75 @@
 			<h2 class="text-center fw-bold">예약현황</h2>
 			<br> <br>
 
-		<form id="search_form" action="list.do" method="get" onsubmit="beforeSearchReserv">
-		<input type="hidden" id="keyfield" name="keyfield" value="ing">
-			<div class="reserv_menu grid">
-				<div class="reserv_menu-div">
-					<a href="javascript:beforeSearchReserv(0);"><h4 class="fw-bold">진행예약</h4></a> <a
-						href="javascript:beforeSearchReserv(1);"><h4 class="fw-bold">지난예약</h4></a>
+			<form id="search_form" action="list.do" method="get"
+				onsubmit="beforeSearchReserv">
+				<input type="hidden" id="keyfield" name="keyfield" value="ing">
+				<div class="reserv_menu grid">
+					<div class="reserv_menu-div">
+						<a href="javascript:beforeSearchReserv(0);"><h4
+								class="fw-bold">진행예약</h4></a> <a
+							href="javascript:beforeSearchReserv(1);"><h4 class="fw-bold">지난예약</h4></a>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
 
 			<div class="reserv_cont">
 
-				<c:forEach var="reservation" items="${list}"  varStatus="status">
+				<c:forEach var="reservation" items="${list}" varStatus="status">
 
 					<div class="reserv_article">
 
 						<!-- petsitter_intro start -->
 						<div class="petsitter_intro">
 							<span class="petsitter"> <a href="#;"> <img
-									class="petsitter_img" src="/petmama/upload/${list2[status.index].photo1}">
+									class="petsitter_img"
+									src="/petmama/upload/${list2[status.index].photo1}">
 							</a>
 							</span>
 							<h4>
 								<strong>[${list2[status.index].name} 펫시터]</strong><br>
 								<p>${list2[status.index].title}</p>
 							</h4>
-							<a href="#;"  onclick="window.open('writeForm.do?r_num=${reservation.r_num}', '_blank', 'width=410, height=300'); return false;" class="btn_detail" >예약정보 상세보기 &gt;</a>
+							<a href="#;"
+								onclick="window.open('writeForm.do?r_num=${reservation.r_num}', '_blank', 'width=410, height=300'); return false;"
+								class="btn_detail">예약정보 상세보기 &gt;</a>
 						</div>
 						<!-- petsitter_intro end -->
 
-						<a href="#;" class="btn_bxctrl open"> 
-						<span class="stit"> ${list2[status.index].tag} </span> 
+						<a href="#;" class="btn_bxctrl open"> <span class="stit">
+								${list2[status.index].tag} </span>
 						</a>
 
 						<div class="cnt">
 							<div class="row first">
 								<div class="txt">
 									<h5>
-										산책 <span class="bar"></span> 30분
+										<c:if test="${reservation.sis_work == 1}">
+										산책 <span class="bar"></span>
+										</c:if>
+										<c:if test="${reservation.sis_work == 2}">
+										돌봄 <span class="bar"></span>
+										</c:if>
+										<c:if test="${reservation.sis_work == 3}">
+										산책&돌봄 <span class="bar"></span>
+										</c:if>
+
+										<c:if test="${reservation.fee == 1}">
+										종일
+										</c:if>
+
+										<c:if test="${reservation.fee == 2}">
+										30분
+										</c:if>
+
+										<c:if test="${reservation.fee == 3}">
+										60분
+										</c:if>
+
+										<c:if test="${reservation.fee == 4}">
+										120분
+										</c:if>
+
 									</h5>
 									<p>
 										예약시작시간 <span class="bar"></span> ${reservation.r_start}
@@ -97,18 +128,18 @@
 									</p>
 								</div>
 								<div class="bx_right">
-								<c:if test="${reservation.r_condition == 0}">
-									예약상태 : <font color="blue">예약대기중</font>				
-								</c:if>
-								<c:if test="${reservation.r_condition == 1}">
-									예약상태 : <font color="blue">예약확정</font>				
-								</c:if>
-								<c:if test="${reservation.r_condition == 2}">
-									예약상태 : <font color="blue">예약취소</font>				
-								</c:if>
-								<c:if test="${reservation.r_condition == 3}">
-									예약상태 : <font color="blue">펫시터 예약취소</font>				
-								</c:if>
+									<c:if test="${reservation.r_condition == 0}">
+									예약상태 : <font color="blue">예약대기중</font>
+									</c:if>
+									<c:if test="${reservation.r_condition == 1}">
+									예약상태 : <font color="blue">예약확정</font>
+									</c:if>
+									<c:if test="${reservation.r_condition == 2}">
+									예약상태 : <font color="blue">예약취소</font>
+									</c:if>
+									<c:if test="${reservation.r_condition == 3}">
+									예약상태 : <font color="blue">펫시터 예약취소</font>
+									</c:if>
 								</div>
 							</div>
 						</div>

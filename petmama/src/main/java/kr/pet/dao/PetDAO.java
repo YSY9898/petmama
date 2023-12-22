@@ -47,6 +47,8 @@ public class PetDAO {
 					//펫 나이
 					vo.setPet_age(rs.getInt("pet_age"));
 					//펫 사진
+					vo.setPet_photo(rs.getString("pet_photo"));
+					//펫 사진
 					list.add(vo);
 				}
 
