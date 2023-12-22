@@ -27,7 +27,7 @@
 					class="dropdown-item">내 정보 & 펫 정보 수정</a>
 			</p>
 			<p>
-				<a href="${pageContext.request.contextPath}/reservation/list.do"
+				<a href="${pageContext.request.contextPath}/reservation/list.do?keyfield=ing"
 					class="dropdown-item">내 예약 현황</a>
 			</p>
 			<p>
