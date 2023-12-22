@@ -1,5 +1,8 @@
 package kr.member.action;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,11 +61,30 @@ public class ReserveFormAction implements Action{
 		
 		//요금
 		int fee = Integer.parseInt(request.getParameter("fee"));
-		/*if(fee == 0) {
-			request.setAttribute("accessMsg", "시간을 골라주세요.");
-			request.setAttribute("accessUrl", request.getContextPath());
-			return "/WEB-INF/views/common/notice.jsp";
-		}*/
+		
+		//시간 계산	
+		String td = date + " " + time; 
+		
+		SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date DATE = formatdate.parse(td);
+		String da = null;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(DATE);
+		
+		if(fee==1) {
+			da = date + " 23:59:59";
+		}else if(fee==2) {
+			cal.add(Calendar.MINUTE, 30); //30분 후 
+			da = formatdate.format(cal.getTime());
+		}else if(fee==3) {
+			cal.add(Calendar.HOUR, 1); //1시간 후 
+			da = formatdate.format(cal.getTime());
+		}else if(fee==4) {
+			cal.add(Calendar.HOUR, 2); //2시간 후 
+			da = formatdate.format(cal.getTime());
+		}
+				
 		
 		
 		request.setAttribute("date", date);
@@ -70,6 +92,7 @@ public class ReserveFormAction implements Action{
 		request.setAttribute("sis_work", sis_work);
 		request.setAttribute("sis_num", sis_num);
 		request.setAttribute("fee", fee);
+		request.setAttribute("endtime", da);
 		
 		return "/WEB-INF/views/member/reserveForm.jsp";
 	}

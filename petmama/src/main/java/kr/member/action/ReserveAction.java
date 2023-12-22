@@ -24,33 +24,9 @@ public class ReserveAction implements Action{
 		//현재 로그인한 아이디
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer)session.getAttribute("user_num");
-		
 		String time = request.getParameter("time");
 		String date = request.getParameter("date");
-		
-		String td = date + " " + time; 
-		
-		//시간 계산
-		SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date DATE = formatdate.parse(td);
-		String da = null;
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(DATE);
-		
 		int fee = Integer.parseInt(request.getParameter("fee"));
-		if(fee==1) {
-			da = date + " 23:59:59";
-		}else if(fee==2) {
-			cal.add(Calendar.MINUTE, 30); //30분 후 
-			da = formatdate.format(cal.getTime());
-		}else if(fee==3) {
-			cal.add(Calendar.HOUR, 1); //1시간 후 
-			da = formatdate.format(cal.getTime());
-		}else if(fee==4) {
-			cal.add(Calendar.HOUR, 2); //2시간 후 
-			da = formatdate.format(cal.getTime());
-		}
 		
 		//자바빈 생성
 		ReservationVO vo = new ReservationVO();
@@ -61,7 +37,7 @@ public class ReserveAction implements Action{
 		vo.setR_pet_note(request.getParameter("pet_note"));
 		vo.setFee(fee);
 		vo.setR_start(date + " " +time);
-		vo.setR_end(da);
+		vo.setR_end(request.getParameter("endtime"));
 		
 		ReservationDAO dao= ReservationDAO.getInstance();
 		dao.reserve(vo);

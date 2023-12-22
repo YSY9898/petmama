@@ -1,3 +1,4 @@
+<%@page import="org.apache.catalina.filters.ExpiresFilter.XServletOutputStream"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,9 +44,11 @@
 						dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
 						weekHeader : "주",
 						yearSuffix : '년',
+						minDate:0,
 						onSelect : function(dateString) {
 							$("#date").val(dateString);
 						}
+						
 					});
 
 			$(".circle").on("click", function() {
@@ -318,6 +321,15 @@
 								</div>
 							</div>
 							
+							<!-- 해당 펫시터로 온 문의 시작 -->
+							<!-- 
+							<div style="margin-top: 50px;">
+								<jsp:include page="/WEB-INF/views/customer/qnaList.jsp">
+									<jsp:param name="sis_num" value="${sis_num}"/>
+								</jsp:include>
+							</div>
+							-->
+							<!-- 끝 -->
 						</div>
 						<div class="right_menu"><!-- 오른쪽 메뉴 -->
 							<!-- 시간 -->
