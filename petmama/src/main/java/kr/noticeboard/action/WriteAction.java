@@ -34,13 +34,14 @@ public class WriteAction implements Action{
 		board.setNotice_content(multi.getParameter("content"));
 		board.setNotice_filename(multi.getFilesystemName("filename"));
 		board.setNotice_ip(request.getRemoteAddr());
+		board.setNotice_status(Integer.parseInt(multi.getParameter("status")));
 		board.setMem_num(user_num);
 		
 		NoticeBoardDAO dao = NoticeBoardDAO.getInstance();
 		dao.insertNoticeBoard(board);
 		
 		request.setAttribute("notice_msg", "게시글을 등록하였습니다.");
-		request.setAttribute("notice_url", request.getContextPath()+"/noticeboard/list.do");
+		request.setAttribute("notice_url", request.getContextPath()+"/noticeboard/noticelist.do");
 		
 		return "/WEB-INF/views/common/alert_singleView.jsp";
 	}

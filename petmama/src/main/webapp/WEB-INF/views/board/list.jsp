@@ -67,14 +67,16 @@ window.onload=function(){
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="board" items="${list}">
-				<tr>
-					<td><b>${board.board_num}</b></td>
-					<td class="title"><b><a href="detail.do?board_num=${board.board_num}">${board.title}</a></b></td>
-					<td><b>관리자</b></td>
-					<td><b>${board.reg_date}</b></td>
-					<td><b>${board.hit}</b></td>
-				</tr>
+			<c:forEach var="boardno" items="${noticelist}">
+				<c:if test="${boardno.notice_status == 1}">
+					<tr>
+						<td><b>공지사항</b></td>
+						<td class="title"><b><a href="${pageContext.request.contextPath}/noticeboard/noticedetail.do?notice_num=${boardno.notice_num}">${boardno.notice_title}</a></b></td>
+						<td><b>관리자</b></td>	
+						<td><b>${boardno.notice_reg_date}</b></td>
+						<td><b>${boardno.notice_hit}</b></td>
+					</tr>
+				</c:if>
 			</c:forEach>
 			<c:forEach var="board" items="${list}">
 				<tr>
@@ -90,6 +92,7 @@ window.onload=function(){
 				</c:forEach>
 			</tbody>
 		</table>
+	</c:if>
 		<div class="align-right" style="margin-top:20px">
 			<c:if test="${!empty user_num}">
 			<input type="button" value="글쓰기" class="list-btn" onclick="location.href='writeForm.do'">
@@ -97,7 +100,8 @@ window.onload=function(){
 			<input type="button" value="목록" class="list-btn" onclick="location.href='list.do'">
 			<input type="button" value="홈으로" class="list-btn" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</div>
-		<div class="align-center">${page}</div>
+		<c:if test="${count > 0}">
+			<div class="align-center">${page}</div>
 		</c:if>
 	</div>
 </div>
