@@ -138,7 +138,7 @@ $(function(){
 						<div class="article_content">
 							<div>
 								<input type="submit" value="등록" style="width: 485px;text-align:center;">
-								<input type="button" value="홈으로" style="width: 485px;text-align:center;" onclick="${pageContext.request.contextPath}/main/main.do">
+								<input type="button" value="홈으로" style="width: 485px;text-align:center;" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 							</div>
 						</div>
 				</article>

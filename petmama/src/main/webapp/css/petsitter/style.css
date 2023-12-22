@@ -453,3 +453,65 @@ input {
     flex-direction: row;
     justify-content: space-between;
 }
+.profile_photo_outline{
+	position: absolute;
+    top: -60px;
+    left: 0
+}
+.profile_photo{
+	width: 120px;
+    height: 120px;
+    border-radius: 60px 
+}
+.profile_title{
+	padding-bottom: 50px;
+    border-bottom: 1px solid #EBEBEB;
+}
+.profile_title h2{
+	font-size: 27px;
+    font-weight: 500;
+    color: #333333;
+    letter-spacing: -0.2px;
+    margin-top: 105px;
+    line-height: 38px;
+    
+    text-align:left;
+}
+.profile_detail{
+	margin-top: 23px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.profile_detail p{
+	font-size: 15px;
+    color: #555555;
+    margin-right: 11px;
+}
+.rating{
+	font-size: 15px;
+    font-weight: 600;
+    color: #555555;
+    margin-right: 9px;
+    margin-bottom: 2px;
+}
+.review_num{
+	font-size: 12px;
+    font-weight: 500;
+    color: #A0A0A0;
+    text-decoration: underline;
+    margin-top: 4px;
+}
+.career{
+	display: flex;
+	flex-direction: row;
+}
+.career img{
+	width:32px;
+	height:32px
+}
+
+
+.right_menu{
+	
+}

@@ -13,12 +13,18 @@ create table petsitter_detail(
  sis_work number not null,
  sis_career number(2) not null,
  sis_photo1 varchar2(150) not null,
- sis_photo2 varchar2(150) not null,
+ sis_photo2 varchar2(150) not null,	-- 펫시터 배경 이미지1
  sis_phone varchar2(15) not null,
  sis_email varchar2(50) not null,
  sis_zipcode varchar2(5) not null,
  sis_address1 varchar2(90) not null,
  sis_address2 varchar2(90) not null,
+ sis_title varchar2(90),	-- 펫시터 소개 문장
+ sis_tag varchar2(90),	-- 펫시터 대표 경력 태그
+ sis_field varchar2(90),	-- 펫시터 전문 분야	
+ sis_career_image varchar2(150), -- 펫시터 경력 이미지
+ sis_photo3 varchar3(150),	-- 펫시터 배경 이미지2
+ sis_photo4 varchar4(150),	-- 펫시터 배경 이미지3
  sis_accept_date date,
  sis_mdate date,
  sis_rate number(3,2),

@@ -3,19 +3,47 @@ package kr.psboard.vo;
 import java.sql.Date;
 
 public class PSBoardVO {
-	private int board_num; 		//글번호
-	private String title;		//제목
-	private String tag;			//태그 ex)#훈련 경기 대회 수상 다수 # 방송 출현(개훌륭)
-	private double rating;		//평점 5점 만점이며 소숫점 둘째 자리까지
-	private int review_num;		//후기수
-	private String photo1;		//펫시터 프로필 사진
-	private String photo2;		//펫시터 소개 사진
-	private String name;		//펫시터 이름
-	private int sis_num;		//펫시터 회원번호
-	private String ip;			//ip주소
-	private Date reg_date;		//등록일
-	private Date modify_date;	//수정일
+	private int board_num; 			//글번호
+	private String title;			//제목
+	private String tag;				//태그 ex)#훈련 경기 대회 수상 다수 # 방송 출현(개훌륭)
+	private double rating;			//평점 5점 만점이며 소숫점 둘째 자리까지
+	private String field;			//전문 분야
+	private String career_image;	//경력, 자격
+	private int review_num;			//후기수
+	private String photo1;			//펫시터 프로필 사진
+	private String photo2;			//펫시터 소개 사진1
+	private String photo3;			//펫시터 소개 사진2
+	private String photo4;			//펫시터 소개 사진3
+	private String name;			//펫시터 이름
+	private int sis_num;			//펫시터 회원번호
+	private String ip;				//ip주소
+	private Date reg_date;			//등록일
+	private Date modify_date;		//수정일
 	
+	public String getPhoto3() {
+		return photo3;
+	}
+	public void setPhoto3(String photo3) {
+		this.photo3 = photo3;
+	}
+	public String getPhoto4() {
+		return photo4;
+	}
+	public void setPhoto4(String photo4) {
+		this.photo4 = photo4;
+	}
+	public String getCareer_image() {
+		return career_image;
+	}
+	public void setCareer_image(String career_image) {
+		this.career_image = career_image;
+	}
+	public String getField() {
+		return field;
+	}
+	public void setField(String field) {
+		this.field = field;
+	}
 	public int getSis_num() {
 		return sis_num;
 	}

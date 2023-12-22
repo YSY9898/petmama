@@ -256,20 +256,72 @@
 				<div><!-- 전체 페이지 시작(헤더 제외) -->
 					<div class="bg_photo_outline"> <!-- 소개 사진 틀 -->
 						<div style="width: 62.5%; height: 580px; overflow: hidden;">
-							<img class="bg_photo"src="${pageContext.request.contextPath}/upload/${ps.photo2}">
+							<img width="900" height="580" class="bg_photo" src="${pageContext.request.contextPath}/upload/${ps.photo2}">
 						</div>
-					
+						<!-- 작은 소개 사진 2장 -->
+						<div style="display: flex; flex-grow: 1; width: 37.5%; height: 580px; flex-direction: column;">
+							<!-- 상단 이미지 -->
+							<div style="width: 100%; height: 290px; overflow: hidden">
+								<img height="290" style="object-fit: cover; user-select: none; cursor: pointer; width: 100%"
+								src="${pageContext.request.contextPath}/upload/${ps.photo3}">
+							</div>
+							<!-- 하단 이미지 -->
+							<div style="width: 100%; height: 290px; overflow: hidden">
+								<img height="290" style="object-fit: cover; user-select: none; cursor: pointer; width: 100%"
+								src="${pageContext.request.contextPath}/upload/${ps.photo4}">
+							</div>
+						</div>
 					</div>
-					<div class="ps_info_outline"><!-- -->
-						
-					</div>
-				</div><!-- 전체 페이지 끝 -->
-<!-- 끝 -->				
-				<div class="row">
-					<div class="col">{프로필}</div>
-					<div class="col">
-						{요금선택}
-						<div class="time_fee">
+					<div class="ps_info_outline"><!-- 프로필 상세 정보 시작 -->
+						<div style="width: 570px; position: relative; padding-bottom: 150px;">
+							<div class="profile_photo_outline"><!-- 프로필 사진 -->
+								<img class="profile_photo" src="${pageContext.request.contextPath}/upload/${ps.photo1}">
+							</div>
+							<div class="profile_title"> <!-- 펫시터 소개 시작 -->
+								<h2>${ps.title}</h2>
+								<div class="profile_detail">
+									<p>${ps.name} 펫시터님</p>
+								</div>
+								<div style="display: flex; align-items: center;">
+									<img style="width: 12px; height: 12px; margin-right: 4px;" 
+									src="${pageContext.request.contextPath}/images/petsitter/one star.png">
+									<p class="rating">${ps.rating}</p>
+									<p class="review_num">리뷰 수</p> <!-- 아직 미구현 -->
+								</div>
+							</div>
+							
+							<!-- 대표 경력, 전문 분야, 방문 지역 -->
+							<div style="margin-top: 39px; padding-bottom: 48px; border-bottom: 1px solid #EBEBEB;"> 
+								<div class="career">
+									<img src = "${pageContext.request.contextPath}/images/petsitter/대표 경력.png">
+										<div style="margin-top: 4px; margin-left: 18px;">
+											<p style="font-weight: 500; font-size: 17px; color: #333333; letter-spacing: -0.2px; text-align:left;">대표 경력</p>
+											<p style="ont-size: 15px; color: #777777; line-height: 20px; margin-top: 10px;">${ps.tag}</p>
+										</div>
+								</div>
+								<div class="career">
+									<img src = "${pageContext.request.contextPath}/images/petsitter/전문 분야.png">
+										<div style="margin-top: 4px; margin-left: 18px;">
+											<p style="font-weight: 500; font-size: 17px; color: #333333; letter-spacing: -0.2px; text-align:left;">전문 분야</p>
+											<p style="ont-size: 15px; color: #777777; line-height: 20px; margin-top: 10px;">${ps.field}</p>
+										</div>
+								</div>
+								<div class="career">
+									<img src = "${pageContext.request.contextPath}/images/petsitter/방문 지역.png">
+										<div style="margin-top: 4px; margin-left: 18px;">
+											<p style="font-weight: 500; font-size: 17px; color: #333333; letter-spacing: -0.2px; text-align:left;">방문 지역</p>
+											<p style="ont-size: 15px; color: #777777; line-height: 20px; margin-top: 10px;">서울특별시</p>
+										</div>
+								</div>
+								<div>
+									<img src = "${pageContext.request.contextPath}/upload/${ps.career_image}">
+								</div>
+							</div>
+							
+						</div>
+						<div class="right_menu"><!-- 오른쪽 메뉴 -->
+							<!-- 시간 -->
+							<div class="time_fee">
 							<a href="javascript:void(0)" id="option1"><div class="circle" value="1440">
 									종일
 									<p>시간별요금제</p>
@@ -284,26 +336,20 @@
 									120분
 									<p>42,000~</p>
 								</div></a>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">{경력}</div>
-					<div class="col">
-						{달력&시간}
-						<!-- 제가 추가한거 -->
-						<p>
-							예약날짜 : <input type="text" id="date" name="date">
-						</p>
-						<div id="datepicker"></div>
-						<!-- 제가 추가한거 끝 -->
-
-						<!-- swiper 시작 -->
-						<div class="time-picker">
+							</div>
+							<!-- 달력 -->
+							<p>
+								예약날짜 : <input type="text" id="date" name="date">
+							</p>
+							<div id="datepicker"></div>
+							
+							<!-- 달력&시간 -->
+							<div class="time-picker">
 							<div class="input-wrapper">
 								예약시간 : <input type="text" id="time" name="time" value="12:00:00"
 									readonly />
 							</div>
+							<!-- swiper 시작 -->
 							<div class="picker arrows">
 								<div class="swiper-container hours">
 									<div class="swiper-wrapper">
@@ -464,14 +510,14 @@
 								<div class="vizor"></div>
 							</div>
 						</div>
-
-						<input type="submit" onclick="return valid_check()" value="예약하기">
 						<!-- swiper 끝 -->
+						<input type="submit" onclick="return valid_check()" value="예약하기">
+						
+						</div>
+						
 					</div>
-				</div>
-				<div class="row">
-					<div class="col">{후기게시판}</div>
-				</div>
+				</div><!-- 전체 페이지 끝 -->
+<!-- 끝 -->				
 			</form>
 		</div>
 	</div>

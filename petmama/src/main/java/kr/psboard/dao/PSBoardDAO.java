@@ -89,12 +89,20 @@ public class PSBoardDAO {
 				vo.setTag(rs.getString("sis_tag"));
 				//평점
 				vo.setRating(rs.getDouble("sis_rate"));
+				//전문분야
+				vo.setField(rs.getString("sis_field"));
+				//경력, 자격
+				vo.setCareer_image(rs.getString("sis_career_image"));
 				//리뷰수
 				//리뷰
 				//프로필 사진
 				vo.setPhoto1(rs.getString("sis_photo1"));
 				//소개 사진
 				vo.setPhoto2(rs.getString("sis_photo2"));
+				//소개 사진
+				vo.setPhoto3(rs.getString("sis_photo3"));
+				//소개 사진
+				vo.setPhoto4(rs.getString("sis_photo4"));
 			}
 		}catch(Exception e) {
 			throw new Exception(e);
