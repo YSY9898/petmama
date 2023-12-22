@@ -74,7 +74,7 @@
 								<strong>[${list2[status.index].name} 펫시터]</strong><br>
 								<p>${list2[status.index].title}</p>
 							</h4>
-							<a href="#;" class="btn_detail">예약정보 상세보기 &gt;</a>
+							<a href="#;"  onclick="window.open('writeForm.do?r_num=${reservation.r_num}', '_blank', 'width=410, height=300'); return false;" class="btn_detail" >예약정보 상세보기 &gt;</a>
 						</div>
 						<!-- petsitter_intro end -->
 

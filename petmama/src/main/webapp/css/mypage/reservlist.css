@@ -125,3 +125,8 @@ a.btn_bxctrl .stit {
 	line-height: 35px;
 	font-size: 14px
 }
+
+.align-center {
+	text-align: center;
+	margin-top:30px;
+}

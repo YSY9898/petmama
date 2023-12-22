@@ -62,34 +62,20 @@ public class ReservationDAO {
 		String sub_sql = "";
 		int count = 0;
 
-		System.out.println("keyfield : " + keyfield);
-		System.out.println("keyword : " + keyword);
-
 		try {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			if (keyword != null && !"".equals(keyword)) {
-				// 검색 처리
-				if (keyfield.equals("1"))
-					sub_sql += "WHERE title LIKE ?";
-				else if (keyfield.equals("2"))
-					sub_sql += "WHERE content LIKE ?";
-				else if (keyfield.equals("3"))
-					sub_sql += "WHERE qna.mem_id = ?";
+			if (keyfield.equals("ing")) {
+				sub_sql += "AND r_start >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_condition IN(0,1)";
+			} else if (keyfield.equals("after")) {
+				sub_sql += "AND (r_start <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')) OR r_condition IN(2,3)";
 			}
 			// SQL문 작성
-			sql = "SELECT COUNT(*) FROM reservation JOIN member USING(mem_num) WHERE mem_num = " + mem_num;
+			sql = "SELECT COUNT(*) FROM reservation JOIN member USING(mem_num) WHERE mem_num = " + mem_num + " " + sub_sql;
 			System.out.println(sql);
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			if (keyword != null && !"".equals(keyword)) { // 객체가 생성되었는데 비어있을 수도 있어서 조건 검사
-				if (keyfield.equals("3")) {
-					pstmt.setString(1, keyword);
-				} else {
-					pstmt.setString(1, "%" + keyword + "%");
-				}
-			}
 			// SQL문 실행
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -101,7 +87,6 @@ public class ReservationDAO {
 		} finally {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
-
 		return count;
 	}
 
@@ -118,27 +103,16 @@ public class ReservationDAO {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			if (keyword != null && !"".equals(keyword)) {
-				// 검색 처리
-				if (keyfield.equals("1"))
-					sub_sql += " r_start < TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')";
-				else if (keyfield.equals("2"))
-					sub_sql += "WHERE content LIKE ?";
-				else if (keyfield.equals("3"))
-					sub_sql += "WHERE qna.mem_id = ?";
+			if (keyfield.equals("ing")) {
+				sub_sql += "WHERE r_start >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_condition IN(0,1)";
+			} else if (keyfield.equals("after")) {
+				sub_sql += "WHERE (r_start <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')) OR r_condition IN(2,3)";
 			}
 			// SQL문 작성
 			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM reservation JOIN member USING(mem_num) " + sub_sql
-					+ " ORDER BY r_num DESC)a) WHERE rnum >= ? AND rnum <= ? AND mem_num = " + mem_num ;
+					+ " ORDER BY r_num DESC)a) WHERE rnum >= ? AND rnum <= ? AND mem_num = " + mem_num;
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			if (keyword != null && !"".equals(keyword)) { // 객체가 생성되었는데 비어있을 수도 있어서 조건 검사
-				if (keyfield.equals("3")) {
-					pstmt.setString(++cnt, keyword);
-				} else {
-					pstmt.setString(++cnt, "%" + keyword + "%");
-				}
-			}
 
 			pstmt.setInt(++cnt, start);
 			pstmt.setInt(++cnt, end);
@@ -148,7 +122,6 @@ public class ReservationDAO {
 			list = new ArrayList<ReservationVO>();
 			while (rs.next()) {
 				ReservationVO reservation = new ReservationVO();
-				
 				reservation.setR_num(rs.getInt("r_num"));
 				reservation.setMem_num(rs.getInt("mem_num"));
 				reservation.setSis_num(rs.getInt("sis_num"));
@@ -160,8 +133,6 @@ public class ReservationDAO {
 				reservation.setR_pet_note(rs.getString("r_pet_note"));
 				reservation.setR_start(rs.getString("r_start"));
 				reservation.setR_end(rs.getString("r_end"));
-				
-				System.out.println("============================");
 				list.add(reservation);
 			}
 
@@ -170,7 +141,6 @@ public class ReservationDAO {
 		} finally {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
-
 		return list;
 	}
 }

@@ -46,12 +46,15 @@ public class ReservListAction implements Action{
 		List<PSBoardVO> list2 = new ArrayList<PSBoardVO>();
 		PSBoardDAO dao_p = PSBoardDAO.getInstance();
 		
-		ListIterator<ReservationVO> iterator = list.listIterator();
-        //정방향 출력
-        while(iterator.hasNext()){
-            list_p = dao_p.getPSboard(iterator.next().getSis_num());
-            list2.add(list_p);
-        }
+		if(list != null) {
+			ListIterator<ReservationVO> iterator = list.listIterator();
+		
+			//정방향 출력
+	        while(iterator.hasNext()){
+	            list_p = dao_p.getPSboard(iterator.next().getSis_num());
+	            list2.add(list_p);
+	        }
+		}
 		
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);
