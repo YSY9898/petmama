@@ -53,6 +53,7 @@ create table notice_board(
  notice_modify_date date,
  notice_filename varchar2(150),
  notice_ip varchar2(40) not null,
+ notice_status number(1) not null, --1:전체공지, 2:미공지
  mem_num number not null,
  constraint notice_board_pk primary key (notice_num),
  constraint notice_board_fk foreign key (mem_num) references member (mem_num)

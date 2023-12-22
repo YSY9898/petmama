@@ -68,19 +68,34 @@ window.onload=function(){
 			</thead>
 			<tbody>
 			<c:forEach var="board" items="${list}">
+				<c:if test="${board.notice_status == 1}">
+					<tr>
+						<td><b>공지사항</b></td>
+						<td class="title"><b><a href="noticedetail.do?notice_num=${board.notice_num}">${board.notice_title}</a></b></td>
+						<td><b>
+							<c:if test="${empty board.mem_nickname}">${board.mem_id}</c:if>
+							<c:if test="${!empty board.mem_nickname}">${board.mem_nickname}</c:if>
+						</b></td>
+						<td><b>${board.notice_reg_date}</b></td>
+						<td><b>${board.notice_hit}</b></td>
+					</tr>
+				</c:if>
+			</c:forEach>
+			<c:forEach var="board" items="${list}">
 				<tr>
-					<td>${board.board_num}</td>
-					<td class="title"><a href="detail.do?board_num=${board.board_num}">${board.title}</a></td>
+					<td>${board.notice_num}</td>
+					<td class="title"><a href="noticedetail.do?notice_num=${board.notice_num}">${board.notice_title}</a></td>
 					<td>
 						<c:if test="${empty board.mem_nickname}">${board.mem_id}</c:if>
 						<c:if test="${!empty board.mem_nickname}">${board.mem_nickname}</c:if>
 					</td>
-					<td>${board.reg_date}</td>
-					<td>${board.hit}</td>
+					<td>${board.notice_reg_date}</td>
+					<td>${board.notice_hit}</td>
 				</tr>
-				</c:forEach>
+			</c:forEach>
 			</tbody>
 		</table>
+		</c:if>
 		<div class="align-right" style="margin-top:20px">
 			<c:if test="${user_auth == 9}">
 			<input type="button" value="글쓰기" class="list-btn" onclick="location.href='noticewriteForm.do'">
@@ -88,7 +103,8 @@ window.onload=function(){
 			<input type="button" value="목록" class="list-btn" onclick="location.href='noticelist.do'">
 			<input type="button" value="홈으로" class="list-btn" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</div>
-		<div class="align-center">${page}</div>
+		<c:if test="${count > 0}">
+			<div class="align-center">${page}</div>
 		</c:if>
 	</div>
 </div>

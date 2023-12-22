@@ -264,3 +264,7 @@ textarea#content {
 .board_best{
 	background:#6A92FE;
 }
+.notice_select{
+	margin-bottom: 30px;
+	text-align: right;
+}

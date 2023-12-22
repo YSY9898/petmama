@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import kr.board.dao.BoardDAO;
 import kr.board.vo.BoardVO;
 import kr.controller.Action;
+import kr.noticeboard.dao.NoticeBoardDAO;
+import kr.noticeboard.vo.NoticeBoardVO;
 import kr.util.PageUtil;
 
 public class ListAction implements Action{
@@ -21,6 +23,7 @@ public class ListAction implements Action{
 		String keyword = request.getParameter("keyword");
 		
 		BoardDAO dao = BoardDAO.getInstance();
+		NoticeBoardDAO daono = NoticeBoardDAO.getInstance();
 		int count = dao.getBoardCount(keyfield, keyword);
 		
 		//페이지 처리
@@ -30,11 +33,14 @@ public class ListAction implements Action{
 		if(count > 0) {
 			list = dao.getListBoard(page.getStartRow(), page.getEndRow(), keyfield, keyword);
 		}
-		
+		List<NoticeBoardVO> listno = null;
+		if(count > 0) {
+			listno = daono.getNoticeListBoard(page.getStartRow(), page.getEndRow(), keyfield, keyword);
+		}
 		
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);
-		//request.setAttribute("noticelist", noticelist);
+		request.setAttribute("noticelist", listno);
 		request.setAttribute("page", page.getPage());
 		
 		//JSP 경로 반환

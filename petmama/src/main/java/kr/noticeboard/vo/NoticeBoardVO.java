@@ -12,7 +12,12 @@ public class NoticeBoardVO {
 	private Date notice_modify_date;
 	private String notice_filename;
 	private String notice_ip;
+	private int notice_status;
 	private int mem_num;
+	private String mem_id;
+	private String mem_nickname;
+	private String pet_photo;
+	
 	
 	public int getNotice_num() {
 		return notice_num;
@@ -62,11 +67,34 @@ public class NoticeBoardVO {
 	public void setNotice_ip(String notice_ip) {
 		this.notice_ip = notice_ip;
 	}
+	public int getNotice_status() {
+		return notice_status;
+	}
+	public void setNotice_status(int notice_status) {
+		this.notice_status = notice_status;
+	}
 	public int getMem_num() {
 		return mem_num;
 	}
 	public void setMem_num(int mem_num) {
 		this.mem_num = mem_num;
 	}
-
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
+	}
+	public String getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+	public String getPet_photo() {
+		return pet_photo;
+	}
+	public void setPet_photo(String pet_photo) {
+		this.pet_photo = pet_photo;
+	}
 }

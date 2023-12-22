@@ -21,6 +21,10 @@
 		<script type="text/javascript">
 		$(function(){
 			$('#write_form').submit(function(){
+				if($('input[type=radio]:checked').length < 1){
+					alert('전체 공지 게시 여부를 지정하세요!');
+					return false;
+				}
 				if($('#title').val().trim() == ''){
 					alert('제목을 입력하세요.');
 					$('#title').val('').focus();
@@ -35,6 +39,11 @@
 		});
 		</script>
 		<form id="write_form" action="noticewrite.do" method="post" enctype="multipart/form-data">
+		<div class="notice_select">
+			<label>&lt;전체 공지 게시 여부&gt;</label>
+				<input type="radio" name="status" value="1" id="status1">전체 공지
+				<input type="radio" name="status" value="2" id="status2">미공지                   
+		</div>
 		<div class="row mb-3">
 			<label for="title" class="col-sm-2 col-form-label">제목</label>
 			<div class="col-sm-10">
