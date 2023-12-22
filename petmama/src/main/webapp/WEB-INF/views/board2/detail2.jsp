@@ -6,18 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>후기 상세 정보</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/board2/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/board/style.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board2.fav.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board2.scrap.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board2.reply.js"></script>
 </head>
 <body>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <div class="page-main">
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<div class="content-main">
+		
+	<div class="main-margin">
 		<h2>${board.title}</h2>
-		<ul class="detail-info">
+		<ul class="detail-info list-unstyled">
 			<li>
 				<c:if test="${!empty board2.photo}">
 				<img src="${pageContext.request.contextPath}/upload/${board2.photo}" 
@@ -34,8 +36,14 @@
 				<br>
 				조회 : ${board.hit}
 			</li>
+			<li class="detail-title float-right">
+				작성일 : ${board.reg_date}<br>
+					<c:if test="${!empty board.modify_date}">
+						(최근 수정일 : ${board.modify_date})
+					</c:if>
+			</li>
 		</ul>
-		<hr size="1" noshade="noshade" width="100%">
+		<hr size="0" noshade="noshade" width="100%">
 		<c:if test="${!empty board.filename}">
 		<div class="align-center">
 			<img src="${pageContext.request.contextPath}/upload/${board.filename}" class="detail-img">
@@ -45,45 +53,38 @@
 			${board.content}
 		</p>
 		<hr size="1" noshade="noshade" width="100%">
-		<ul class="detail-sub">
-			<li>
-				<%-- 좋아요 --%>
-				<img id="output_fav" data-num="${board.board_num}" 
-				  src="${pageContext.request.contextPath}/images/fav01.gif" 
-				                                               width="50">
-				좋아요
-				<span id="output_fcount"></span>                                               
+		<ul class="detail-ul-height list-unstyled">
+			<li class="float-left detail-ul-fav" style="margin-right:50px">
+					<%-- 스크랩 --%>
+					<img id="output_scrap" data-num="${board.board_num}" src="${pageContext.request.contextPath}/images/scrap1.png" width="20">
+					스크랩
 			</li>
-			<li>
-				<img id="output_scrap" data-num="${board.board_num}"
-					src="${pageContext.request.contextPath}/images/fav01.gif"
-																width="50">											
-				스크랩
-				<span id="output_scount"></span>      															
+			<li class="float-left">
+					<%-- 좋아요 --%>
+					<img id="output_fav" data-num="${board.board_num}" src="${pageContext.request.contextPath}/images/like1.png" width="20">
+					좋아요
+					<span id="output_fcount"></span>
 			</li>
-			<li>
-				<c:if test="${!empty board.modify_date}">
-					최근 수정일 : ${board.modify_date}
-				</c:if>
+			<li class="float-right" style="margin-left: auto; margin-right: auto;">
 				작성일 : ${board.reg_date}
-				<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야
-				     수정,삭제 가능 --%>
+				<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정,삭제 가능 --%>
+				<input type="button" value="목록" class="btn btn-primary btn-sm" 
+					onclick="location.href='list2.do'">     
 				<c:if test="${user_num == board.mem_num}">
-				<input type="button" value="수정"
-				 onclick="location.href='updateForm2.do?board_num=${board.board_num}'">
-				<input type="button" value="삭제" id="delete_btn">
+				<input type="button" value="수정" class="btn btn-primary btn-sm"
+				 	onclick="location.href='updateForm2.do?board_num=${board.board_num}'">
+				<input type="button" value="삭제" id="delete_btn" class="btn btn-primary btn-sm">
+				</c:if> 
 				<script type="text/javascript">
-					let delete_btn = document.getElementById('delete_btn');
-					//이벤트 연결
-					delete_btn.onclick=function(){
-						let choice = confirm('삭제하시겠습니까?');
-						if(choice){
-							location.replace('delete.do?board_num=${board.board_num}');
-						}
-					};
-				</script>
-				</c:if>     
-			</li>
+						let delete_btn = document.getElementById('delete_btn');
+						delete_btn.onclick=function(){
+							let choice = confirm('삭제하시겠습니까?');
+							if(choice){
+								location.replace('delete.do?board_num=${board.board_num}');
+							}
+						};
+				</script>	
+			</li>	
 		</ul>
 		<!-- 댓글 시작 -->
 		<div id="reply_div">
@@ -95,19 +96,20 @@
 				  id="re_content" class="rep-content"
 				  <c:if test="${empty user_num}">disabled="disabled"</c:if>><c:if test="${empty user_num}">로그인해야 작성할 수 있습니다.</c:if></textarea>
 				<c:if test="${!empty user_num}">
+				<div id="re_second" class="float-right">
+					<input type="submit" value="전송" class="list-btn">
+				</div>
 				<div id="re_first">
 					<span class="letter-count">300/300</span>
 				</div>   
-				<div id="re_second" class="align-right">
-					<input type="submit" value="전송">
-				</div>
+				
 				</c:if>
 			</form>
 		</div>
 		<!-- 댓글 목록 출력 시작 -->
 		<div id="output"></div>
 		<div class="paging-button" style="display:none;">
-			<input type="button" value="다음글 보기">
+			<input type="button" value="다음글 보기" class="list-btn">
 		</div>
 		<div id="loading" style="display:none;">
 			<img src="${pageContext.request.contextPath}/images/loading.gif" width="50" height="50">
