@@ -10,6 +10,7 @@ public class ReservationVO {
 	private Date r_modify_date;
 	private int r_condition;
 	private String r_pet_note;
+	private int fee;
 	private String r_start;
 	private String r_end;
 	private int visit_status;
@@ -69,6 +70,12 @@ public class ReservationVO {
 	}
 	public void setR_condition(int r_condition) {
 		this.r_condition = r_condition;
+	}
+	public int getFee() {
+		return fee;
+	}
+	public void setFee(int fee) {
+		this.fee = fee;
 	}
 	public String getR_start() {
 		return r_start;

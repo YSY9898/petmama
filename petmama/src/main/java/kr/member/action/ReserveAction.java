@@ -59,6 +59,7 @@ public class ReserveAction implements Action{
 		vo.setSis_work(Integer.parseInt(request.getParameter("sis_work")));
 		vo.setVisit_status(Integer.parseInt(request.getParameter("visit_status")));
 		vo.setR_pet_note(request.getParameter("pet_note"));
+		vo.setFee(fee);
 		vo.setR_start(date + " " +time);
 		vo.setR_end(da);
 		
