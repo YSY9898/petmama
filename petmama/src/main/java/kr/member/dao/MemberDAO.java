@@ -189,14 +189,15 @@ public class MemberDAO {
 	public void updateMember(MemberVO member,PetVO pet)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		String sql = null;
 		
 		try {
 			//커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-			
+			conn.setAutoCommit(false);
 			//SQL문 작성
-			sql = "UPDATE member_detail LEFT OUTER JOIN pet_detail USING(mem_num) SET mem_name=?,mem_nickname=?,mem_cell=?,mem_email=?,"
+			sql = "UPDATE member_detail SET mem_name=?,mem_nickname=?,mem_cell=?,mem_email=?,"
 				+ "mem_zipcode=?,mem_address1=?,mem_address2=?,mem_mdate=SYSDATE WHERE mem_num=?";
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -208,16 +209,27 @@ public class MemberDAO {
 			pstmt.setString(5, member.getMem_zipcode());
 			pstmt.setString(6, member.getMem_address1());
 			pstmt.setString(7, member.getMem_address2());
-			pstmt.setString(8, pet.getPet_name());
-			pstmt.setInt(9, pet.getPet_age());
-			pstmt.setString(10, pet.getPet_note());
-			pstmt.setInt(11, member.getMem_num());
+			pstmt.setInt(8, member.getMem_num());
 			
+			pstmt.executeUpdate();
+			
+			sql = "UPDATE pet_detail SET pet_name=?,pet_age=?,pet_note=? WHERE mem_num=?";
+			pstmt2 = conn.prepareStatement(sql);
+			
+			pstmt2.setString(1, pet.getPet_name());
+			pstmt2.setInt(2, pet.getPet_age());
+			pstmt2.setString(3, pet.getPet_note());
+			pstmt2.setInt(4, member.getMem_num());			
+			
+			pstmt2.executeUpdate();
+			
+			conn.commit();
 		}catch(Exception e) {
 			//SQL문이 하나라도 실패하면 rollback
 			conn.rollback();
 			throw new Exception(e);
 		}finally {
+			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt, conn);
 		}		
 	}

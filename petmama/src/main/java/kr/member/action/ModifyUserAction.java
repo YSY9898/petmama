@@ -16,7 +16,6 @@ public class ModifyUserAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer)session.getAttribute("user_num");
-		Integer pet_num = (Integer)session.getAttribute("pet_num");
 		
 		if(user_num == null) {//로그인이 되지 않은 경우
 			return "redirect:/member/loginForm.do";
@@ -37,26 +36,15 @@ public class ModifyUserAction implements Action{
 		member.setMem_address1(request.getParameter("mem_address1"));
 		member.setMem_address2(request.getParameter("mem_address2"));
 		
-		member.setMem_num(user_num);
-		member.setPet_name(request.getParameter("pet_name"));
-		member.setPet_age(Integer.parseInt(request.getParameter("pet_age")));
-		
-		MemberDAO dao = MemberDAO.getInstance();
-		//dao.updateMember(member);
-		
 		//자바빈(VO) 생성
 		PetVO pet = new PetVO();
 		
-		pet.setMem_num(user_num);
-		pet.setPet_num(pet_num);
 		pet.setPet_name(request.getParameter("pet_name"));
 		pet.setPet_age(Integer.parseInt(request.getParameter("pet_age")));
-		pet.setPet_photo(request.getParameter("pet_photo"));
 		pet.setPet_note(request.getParameter("pet_note"));
 		
-		PetDAO pdao = PetDAO.getInstance();
-		pdao.updatePet(pet);
-		
+		MemberDAO dao = MemberDAO.getInstance();
+		dao.updateMember(member, pet);
 		//jsp 경로 반환
 		return "/WEB-INF/views/member/modifyUser.jsp";
 }

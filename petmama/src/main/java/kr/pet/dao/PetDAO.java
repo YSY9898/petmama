@@ -59,26 +59,4 @@ public class PetDAO {
 			return list;
 		}
 		
-		//펫 정보 수정
-		public void updatePet(PetVO vo)throws Exception{
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			String sql = null;
-			
-			try {
-				conn = DBUtil.getConnection();
-
-				sql = "UPDATE pet_detail SET pet_name=?,pet_age=? WHERE mem_num=?";
-				//PreparedStatement 객체 생성
-				pstmt = conn.prepareStatement(sql);
-				//?에 데이터 바인딩
-				pstmt.setString(1, vo.getPet_name());
-				pstmt.setInt(2, vo.getPet_age());
-				pstmt.setInt(3, vo.getMem_num());
-			}catch(Exception e) {
-				throw new Exception(e);
-			}finally {
-				DBUtil.executeClose(null, pstmt, conn);
-			}
-		}
 }

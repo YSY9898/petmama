@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import kr.controller.Action;
 import kr.member.dao.MemberDAO;
 import kr.member.vo.MemberVO;
+import kr.pet.dao.PetDAO;
+import kr.pet.vo.PetVO;
 
 public class LoginAction implements Action{
 
@@ -20,6 +22,7 @@ public class LoginAction implements Action{
 		
 		MemberDAO dao = MemberDAO.getInstance();
 		MemberVO vo = dao.checkMember(id);
+		PetVO pvo = new PetVO();
 		boolean check = false;
 		
 		if(vo!=null) {
@@ -34,6 +37,8 @@ public class LoginAction implements Action{
 			session.setAttribute("user_id", vo.getMem_id());
 			session.setAttribute("user_auth", vo.getMem_auth());
 			session.setAttribute("user_nickname", vo.getMem_nickname());
+			session.setAttribute("pet_num", pvo.getPet_num());
+			
 			
 			//메인으로 리다이렉트
 			return "redirect:/main/main.do";
