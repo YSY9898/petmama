@@ -12,8 +12,8 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="board_main">
 		<div class="main_msg">
-			<span class="main_msg_title">PetMama 공지사항</span><br>
-			<span class="main_msg_detail">공지사항 확인하고 가세요!</span>
+			<span class="main_msg_title">PetMama 공지사항 글쓰기</span><br>
+			<span class="main_msg_detail">공지사항을 작성하세요.</span>
 		</div>
 	</div>
 	<div class="main-margin">

@@ -28,12 +28,12 @@ window.onload=function(){
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="board_main">
 		<div class="main_msg">
-			<span class="main_msg_title">PetMama 자유게시판</span><br>
-			<span class="main_msg_detail">PetMama 회원들이 자유롭게 글을 올릴 수 있는 게시판입니다</span>
+			<span class="main_msg_title">PetMama 공지게시판</span><br>
+			<span class="main_msg_detail">PetMama 이용에 대한 공지사항 게시판입니다.</span>
 		</div>
 	</div>
 	<div class="main-margin">
-	<form id="search_form" action="list.do" method="get">
+	<form id="search_form" action="noticelist.do" method="get">
 			<ul class="search">
 				<li>
 					<select name="keyfield" style="width:80px;height:30px;">
@@ -68,16 +68,7 @@ window.onload=function(){
 			</thead>
 			<tbody>
 			<c:forEach var="board" items="${list}">
-				<tr class="board_best">
-					<td>${board.board_num}</td>
-					<td class="title"><b><a href="detail.do?board_num=${board.board_num}">${board.title}</a></b></td>
-					<td><b>관리자</b></td>
-					<td><b>${board.reg_date}</b></td>
-					<td><b>${board.hit}</b></td>
-				</tr>
-			</c:forEach>
-			<c:forEach var="board" items="${list}">
-				<tr class="board_best">
+				<tr>
 					<td>${board.board_num}</td>
 					<td class="title"><a href="detail.do?board_num=${board.board_num}">${board.title}</a></td>
 					<td>
@@ -91,10 +82,10 @@ window.onload=function(){
 			</tbody>
 		</table>
 		<div class="align-right" style="margin-top:20px">
-			<c:if test="${!empty user_num}">
-			<input type="button" value="글쓰기" class="list-btn" onclick="location.href='writeForm.do'">
+			<c:if test="${user_auth == 9}">
+			<input type="button" value="글쓰기" class="list-btn" onclick="location.href='noticewriteForm.do'">
 			</c:if>
-			<input type="button" value="목록" class="list-btn" onclick="location.href='list.do'">
+			<input type="button" value="목록" class="list-btn" onclick="location.href='noticelist.do'">
 			<input type="button" value="홈으로" class="list-btn" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</div>
 		<div class="align-center">${page}</div>

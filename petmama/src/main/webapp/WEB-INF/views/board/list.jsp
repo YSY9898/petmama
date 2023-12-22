@@ -68,8 +68,8 @@ window.onload=function(){
 			</thead>
 			<tbody>
 			<c:forEach var="board" items="${list}">
-				<tr class="board_best">
-					<td>${board.board_num}</td>
+				<tr>
+					<td><b>${board.board_num}</b></td>
 					<td class="title"><b><a href="detail.do?board_num=${board.board_num}">${board.title}</a></b></td>
 					<td><b>관리자</b></td>
 					<td><b>${board.reg_date}</b></td>
@@ -77,7 +77,7 @@ window.onload=function(){
 				</tr>
 			</c:forEach>
 			<c:forEach var="board" items="${list}">
-				<tr class="board_best">
+				<tr>
 					<td>${board.board_num}</td>
 					<td class="title"><a href="detail.do?board_num=${board.board_num}">${board.title}</a></td>
 					<td>

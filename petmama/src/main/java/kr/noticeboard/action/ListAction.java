@@ -24,7 +24,7 @@ public class ListAction implements Action{
 		int count = dao.getBoardCount(keyfield, keyword);
 		
 		//페이지 처리
-		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,20,10,"list.do");
+		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,20,10,"noticelist.do");
 		
 		List<BoardVO> list = null;
 		if(count > 0) {
@@ -38,7 +38,7 @@ public class ListAction implements Action{
 		request.setAttribute("page", page.getPage());
 		
 		//JSP 경로 반환
-		return "/WEB-INF/views/board/list.jsp";
+		return "/WEB-INF/views/noticeboard/list.jsp";
 	}
 
 }

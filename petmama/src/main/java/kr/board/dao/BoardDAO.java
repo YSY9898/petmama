@@ -33,7 +33,6 @@ public class BoardDAO {
 		try {
 			conn = DBUtil.getConnection();
 			sql = "INSERT INTO board (board_num,title,content,filename,ip,mem_num) VALUES (board_seq.nextval,?,?,?,?,?)";
-			//System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getTitle());
 			pstmt.setString(2, board.getContent());
