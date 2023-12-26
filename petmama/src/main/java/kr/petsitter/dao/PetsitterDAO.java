@@ -3,6 +3,8 @@ package kr.petsitter.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -51,8 +53,8 @@ public class PetsitterDAO {
 			//petsitter_detail 테이블에 데이터를 저장
 			sql = "INSERT INTO petsitter_detail (sis_num,mem_num,sis_name,sis_condition,sis_work,sis_career,"
 				+ "sis_photo1,sis_photo2,sis_phone,sis_email,sis_zipcode,sis_address1,sis_address2,"
-				+ "sis_title,sis_tag) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "sis_title,sis_tag,sis_apply_date) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,SYSDATE)";
 			pstmt3 = conn.prepareStatement(sql);
 			
 			pstmt3.setInt(1,num);
@@ -70,6 +72,7 @@ public class PetsitterDAO {
 			pstmt3.setString(13, member.getSis_address2());
 			pstmt3.setString(14, member.getTitle());
 			pstmt3.setString(15, member.getTag());
+
 			pstmt3.executeUpdate();
 			
 			//SQL문 실행시 모두 성공하면 commit
@@ -117,5 +120,185 @@ public class PetsitterDAO {
 		return sis_work;
 	}
 	
-	
+	//관리자 - 전체 지원글 수
+	public int getApplyCount(String keyfield, String keyword) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		String sub_sql = "";
+		int count = 0;
+		
+		try {
+			//커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+			if(keyword!=null && !"".equals(keyword)) {
+				//검색 처리
+				if(keyfield.equals("1")) sub_sql += "WHERE sis_num LIKE ?";
+				else if(keyfield.equals("2")) sub_sql += "WHERE sis_name LIKE ?";
+				else if(keyfield.equals("3")) sub_sql += "WHERE sis_condition LIKE ?";
+			}
+			//SQL문 작성
+			sql = "SELECT COUNT(*) FROM petsitter JOIN petsitter_detail USING(mem_num) " + sub_sql;
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			if(keyword!=null && !"".equals(keyword)) {
+				pstmt.setString(1, "%"+keyword+"%");
+			}
+			
+			//SQL문 실행
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}		
+		return count;
+	}
+	//관리자 - 전체 지원글 목록
+	public List<PetsitterVO> getListApply(int start, int end,
+			                    String keyfield, String keyword)
+	                            throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<PetsitterVO> list = null;
+		String sql = null;
+		String sub_sql = "";
+		int cnt = 0;
+		
+		try {
+			//커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+		
+			if(keyword!=null && !"".equals(keyword)) {
+				//검색 처리
+				if(keyfield.equals("1")) sub_sql += "WHERE sis_num LIKE ?";
+				else if(keyfield.equals("2")) sub_sql += "WHERE sis_name LIKE ?";
+				else if(keyfield.equals("3")) sub_sql += "WHERE sis_condition LIKE ?";
+			}
+			
+			//SQL문 작성
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM petsitter JOIN petsitter_detail USING(mem_num) " + sub_sql + " ORDER BY sis_apply_date DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			//?에 데이터 바인딩
+			if(keyword!=null && !"".equals(keyword)) {
+				pstmt.setString(++cnt, "%"+keyword+"%");
+			}
+			
+			pstmt.setInt(++cnt, start);
+			pstmt.setInt(++cnt, end);
+			//SQL문 실행
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<PetsitterVO>();
+			while(rs.next()) {
+				PetsitterVO vo = new PetsitterVO();
+				vo.setSis_num(rs.getInt("sis_num"));
+				vo.setMem_num(rs.getInt("mem_num"));
+				vo.setSis_name(rs.getString("sis_name"));
+				vo.setSis_condition(rs.getInt("sis_condition"));
+				vo.setSis_work(rs.getInt("sis_work"));
+				vo.setSis_career(rs.getInt("sis_career"));
+				vo.setSis_email(rs.getString("sis_email"));
+				vo.setSis_phone(rs.getString("sis_phone"));
+				vo.setSis_photo1(rs.getString("sis_photo1"));
+				vo.setSis_photo2(rs.getString("sis_photo2"));
+				vo.setSis_zipcode(rs.getString("sis_zipcode"));
+				vo.setSis_address1(rs.getString("sis_address1"));
+				vo.setSis_address2(rs.getString("sis_address2"));
+				vo.setSis_apply_date(rs.getDate("sis_apply_date"));
+				//vo.setSis_accept_date(rs.getDate("sis_accept_date"));
+				//vo.setSis_mdate(rs.getDate("sis_mdate"));
+				vo.setTitle(rs.getString("sis_title"));
+				vo.setTag(rs.getString("sis_tag"));
+				
+				list.add(vo);				
+			}			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}		
+		return list;
+	}
+	//펫시터 상세
+	public PetsitterVO getApply(int sis_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PetsitterVO vo = null;
+		String sql = null;
+
+		try {
+			//커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+		
+			//SQL문 작성
+			sql = "SELECT * FROM petsitter a JOIN petsitter_detail USING(mem_num) WHERE a.sis_num=?";
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			//?에 데이터 바인딩
+			pstmt.setInt(1, sis_num);
+			//SQL문 실행
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo = new PetsitterVO();
+				vo.setSis_num(rs.getInt("sis_num"));
+				vo.setMem_num(rs.getInt("mem_num"));
+				vo.setSis_name(rs.getString("sis_name"));
+				vo.setSis_condition(rs.getInt("sis_condition"));
+				vo.setSis_work(rs.getInt("sis_work"));
+				vo.setSis_career(rs.getInt("sis_career"));
+				vo.setSis_email(rs.getString("sis_email"));
+				vo.setSis_phone(rs.getString("sis_phone"));
+				vo.setSis_photo1(rs.getString("sis_photo1"));
+				vo.setSis_photo2(rs.getString("sis_photo2"));
+				vo.setSis_zipcode(rs.getString("sis_zipcode"));
+				vo.setSis_address1(rs.getString("sis_address1"));
+				vo.setSis_address2(rs.getString("sis_address2"));
+				vo.setSis_apply_date(rs.getDate("sis_apply_date"));
+				vo.setSis_accept_date(rs.getDate("sis_accept_date"));
+				vo.setSis_mdate(rs.getDate("sis_mdate"));
+				vo.setTitle(rs.getString("sis_title"));
+				vo.setTag(rs.getString("sis_tag"));				
+			}			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}		
+			return vo;
+		}
+		
+	//관리자 - 시터 상태 수정
+	public void updatePetsitterStatus(PetsitterVO vo)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			//커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			//SQL문 작성
+			sql = "UPDATE petsitter_detail SET sis_condition=?,sis_accept_date=SYSDATE WHERE sis_num=?";
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			//?에 데이터 바인딩
+			pstmt.setInt(1, vo.getSis_condition());
+			pstmt.setInt(2, vo.getSis_num());
+			//SQL문 실행
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 }

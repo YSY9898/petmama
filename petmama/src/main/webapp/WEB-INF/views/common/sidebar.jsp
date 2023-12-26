@@ -58,6 +58,10 @@
 					class="dropdown-item">회원 관리</a>
 			</p>
 			<p>
+				<a href="${pageContext.request.contextPath}/member/sitterAdminList.do"
+					class="dropdown-item">시터 관리</a>
+			</p>
+			<p>
 				<a href="${pageContext.request.contextPath}/board/list.do" 
 				class="dropdown-item">자유게시글 관리</a>
 			</p>

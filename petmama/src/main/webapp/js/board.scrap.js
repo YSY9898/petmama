@@ -40,9 +40,9 @@ $(function(){
 	//스크랩 표시
 	function displayScrap(param){
 		let output;
-		if(param.status=='yesScrap'){//좋아요 선택
+		if(param.status=='yesScrap'){//스크랩 선택
 			output = '../images/scrap2.png';
-		}else{//좋아요 미선택
+		}else{//스크랩 미선택
 			output = '../images/scrap1.png';		
 		}
 		

@@ -16,6 +16,7 @@ public class PetsitterVO {
 	private String sis_zipcode;		//우편번호
 	private String sis_address1;	//펫시터 주소
 	private String sis_address2;	//펫시터 상세주소
+	private Date sis_apply_date;	//펫시터 지원일
 	private Date sis_accept_date;	//펫시터 수락일
 	private Date sis_mdate;			//펫시터 정보 수정일		
 	private String title;			//펫시터 소개 제목
@@ -86,6 +87,12 @@ public class PetsitterVO {
 	}
 	public void setSis_address2(String sis_address2) {
 		this.sis_address2 = sis_address2;
+	}
+	public Date getSis_apply_date() {
+		return sis_apply_date;
+	}
+	public void setSis_apply_date(Date sis_apply_date) {
+		this.sis_apply_date = sis_apply_date;
 	}
 	public Date getSis_accept_date() {
 		return sis_accept_date;

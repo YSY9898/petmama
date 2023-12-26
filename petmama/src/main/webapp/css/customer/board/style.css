@@ -97,6 +97,13 @@ ul.search li{
 .page-list-main{
 	margin:20px 100px;
 }
+.page-main{
+	background:#FFFFFF;
+	margin:40px 0;
+	border-radius:5px;
+	box-shadow:0 2px 6px rgba(100,100,100,0.3);
+	min-height:650px;
+}
 .result-display{
 	width:400px;
 	height:200px;
