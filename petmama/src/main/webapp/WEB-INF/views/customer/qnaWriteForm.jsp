@@ -75,12 +75,12 @@ body {
 }
 
 #title {
-	width: 550px;
+	width: 100%;
 }
 
 #qna_content {
-	width: 550px;
-	height: 250px;
+	width: 100%;
+	height: 150px;
 }
 
 .inquery_section div {

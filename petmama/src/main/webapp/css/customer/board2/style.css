@@ -32,6 +32,47 @@
 	width:150px;
 	text-align:left;
 }
+
+/*---------별점 시작----------*/
+.rating_box {
+	display: flex;
+}
+
+.rating {
+	position: relative;
+	color: #ddd;
+	font-size: 30px;
+	text-align: center;
+}
+
+.under_rating {
+	position: relative;
+	color: #ddd;
+	font-size: 30px;
+	text-align: center;
+}
+
+.star-rating {
+	width: 304px;
+}
+
+.star-rating, .star-rating span {
+	display: inline-block;
+	height: 27px;
+	overflow: hidden;
+	background: url('/petmama/images/petsitter/star_.png') no-repeat;
+}
+
+.star-rating span {
+	background-position: left bottom;
+	line-height: 0;
+	vertical-align: top;
+}
+
+.rating_number {
+	margin-left: -141px;
+	margin-top: 8px;
+}
 /* 공통 정렬
 */
 body{
