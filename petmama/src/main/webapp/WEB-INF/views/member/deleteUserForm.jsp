@@ -24,7 +24,7 @@ $(function(){
 		}
 		
 		if($('#passwd').val()!=$('#cpasswd').val()){
-			alert('새비밀번호와 새비밀번호 확인이 불일치');
+			alert('비밀번호 확인이 불일치');
 			$('#passwd').val('').focus();
 			$('#cpasswd').val('');
 			return false;
@@ -66,7 +66,7 @@ $(function(){
 					<input type="password" name="cpasswd" id="cpasswd" maxlength="12"  
 					value="${member.cpasswd}" placeholder="비밀번호 확인"
 					class="input-check form-control rounded-3 bg-body-tertiary border-0" >
-					<label for="ㅊpasswd">비밀번호 확인</label>
+					<label for="passwd">비밀번호 확인</label>
 				</li>
 			</ul> 
 			<br>
