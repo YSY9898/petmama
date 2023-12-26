@@ -240,6 +240,23 @@
 				alert("예약 시간을 선택해주세요.");
 				return false;
 			}
+			
+			/* 예약 시간이 현재 시간과 같거나 이후인지 확인 */
+			//현재 날짜
+			let today = new Date();
+			//예약 시간 변환
+			let t = $("#time").val();
+			let time = new Date(today.toDateString() + " " + t);
+			
+			if(today > time){
+				alert("예약 시간을 현재 시간 이후로 설정해주세요.");
+				return false;
+			}
+			
+			
+			let hours = today.getHours(); //시
+			let minutes = today.getMinutes(); //분
+			let seconds = today.getSeconds(); //초
 		}
 	</script>
 

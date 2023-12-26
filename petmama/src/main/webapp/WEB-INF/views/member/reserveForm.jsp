@@ -7,6 +7,33 @@
 <meta charset="UTF-8">
 <title>펫시터 프로필 리스트</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/petsitter/style.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	//회원정보 등록 유효성 체크
+	$('#reservation_form').submit(function(){
+		let items = document.querySelectorAll('.input-check');
+		for(let i=0;i<items.length;i++){
+			if(items[i].value.trim()==''){
+				let label = document.querySelector('label[for="'+items[i].id+'"]');
+				alert(label.textContent + ' 항목은 필수 입력');
+				items[i].value = '';
+				items[i].focus();
+				return false;
+			}//end of if
+			
+			if(items[i].id == 'zipcode' 
+					            && !/^[0-9]{5}$/.test($('#zipcode').val())){
+				alert('우편번호를 입력하세요(숫자5자리)');
+				$('#zipcode').val('').focus();
+				return false;
+			}
+	
+		}//end of for
+	});//end of submit
+});
+
+</script>
 </head>
 <body>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -60,18 +87,25 @@
 							</p>
 						</div>
 					</article>
-					<article class="article">
-						<div class="article_content">
-							<p>펫시터에게 남길 메모 :
-								<input type="text" name="pet_note" id="pet_note" maxlength="90">
-							</p>
-						</div>
-					</article>
+					
+					<br><br><br><br><br>
 					
 					<article class="article">
 						<div class="article_content">
-							<input type="submit" style="width:380px;" value="등록">
-							<input type="button" style="width:380px;" value="취소">
+								<label for="pet_note">펫시터에게 남길 메모</label>
+								<input type="text" name="pet_note" id="pet_note" maxlength="90" style="height:300px;" class="input-check">
+						</div>
+					</article>
+					
+					<br><br><br><br><br>
+					
+					<article class="article">
+						<div class="article_content" style="justify-content : center;">
+							<div style="margin: 0 auto;">
+								<input type="submit" style="width:380px;" value="등록" class="btn">
+								<input type="button" style="width:380px;" value="취소" class="btn"
+								onclick="location.href='${pageContext.request.contextPath}/PSboard/detail.do?sis_num=${sis_num}'">
+							</div>
 						</div>
 					</article>
 					
@@ -79,7 +113,7 @@
 				
 				
 			</section>
-			
+	
 			
 		</div>
 	</div>
