@@ -23,8 +23,8 @@ public class DeleteUserAction implements Action{
 		//전송된 데이터 인코딩 처리
 		request.setCharacterEncoding("utf-8");
 		//전송된 데이터 반환
-		String id = request.getParameter("id");
-		String email = request.getParameter("email");
+		String id = request.getParameter("mem_id");
+		String email = request.getParameter("mem_email");
 		String passwd = request.getParameter("passwd");
 		
 		//로그인한 아이디
