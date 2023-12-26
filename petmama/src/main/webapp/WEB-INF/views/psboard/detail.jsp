@@ -306,7 +306,10 @@
 									<img style="width: 12px; height: 12px; margin-right: 4px;" 
 									src="${pageContext.request.contextPath}/images/petsitter/one star.png">
 									<p class="rating">${ps.rating}</p>
-									<p class="review_num">리뷰 수</p> <!-- 아직 미구현 -->
+									<!-- 미구현 -->
+									<!-- 
+									<p class="review_num">리뷰 수</p> 
+									-->
 								</div>
 							</div>
 							
