@@ -31,14 +31,16 @@ public class ReservListAction implements Action{
 		String keyword = request.getParameter("keyword");
 
 		ReservationDAO dao = ReservationDAO.getInstance();
-		int count = dao.getReservCount(user_num, keyfield, keyword);
+		System.out.println("??getReservCount");
+		int count = dao.getReservCount(user_num, user_auth, keyfield, keyword);
 		
 		//페이지 처리
 		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,5,5,"list.do");
 		
 		List<ReservationVO> list = null;
 		if(count > 0) {
-			list = dao.getReservList(user_num, page.getStartRow(), page.getEndRow(), keyfield, keyword);
+			System.out.println("??getReservList");
+			list = dao.getReservList(user_num, user_auth, page.getStartRow(), page.getEndRow(), keyfield, keyword);
 		}
 		
 		PSBoardVO list_p = new PSBoardVO();

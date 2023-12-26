@@ -124,19 +124,30 @@
 						</div>
 						<div class="bx_right">
 							<p>${list3[status.index].pet_name}</p>
-							<p>서울 강남구</p>
+							<p>${list4[status.index].mem_address1}${list4[status.index].mem_address2}</p>
 						</div>
 					</div>
 
 
 				</div>
-				<div class="bxc_btn2">
-					<a href="#;" class="btn_bxctrl3 open"> <span class="stit">
-							예약변경 </span>
-					</a> <a href="#;" class="btn_bxctrl3 open"> <span class="stit">
-							예약취소 </span>
-					</a>
-				</div>
+				<c:if test="${!empty user_num && user_auth == 3}">
+					<div class="bxc_btn2">
+						<a href="#;" class="btn_bxctrl3 open"> <span class="stit">
+								예약변경요청 </span>
+						</a> <a href="#;" class="btn_bxctrl3 open"> <span class="stit">
+								예약취소 </span>
+						</a>
+					</div>
+				</c:if>
+				<c:if test="${!empty user_num && user_auth != 3}">
+					<div class="bxc_btn2">
+						<a href="#;" class="btn_bxctrl3 open"> <span class="stit">
+								예약변경 </span>
+						</a> <a href="#;" class="btn_bxctrl3 open"> <span class="stit">
+								예약취소 </span>
+						</a>
+					</div>
+				</c:if>
 			</div>
 		</c:forEach>
 	</div>

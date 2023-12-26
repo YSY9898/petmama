@@ -55,13 +55,14 @@ public class ReservationDAO {
 	}
 
 	// 전체 레코드 수/검색 레코드 수
-	public int getReservCount(int mem_num, String keyfield, String keyword) throws Exception {
+	public int getReservCount(int mem_num, int mem_auth, String keyfield, String keyword) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
 		String sub_sql = "";
 		int count = 0;
+		System.out.println(mem_auth);
 
 		try {
 			// 커넥션풀로부터 커넥션 할당
@@ -73,7 +74,11 @@ public class ReservationDAO {
 				sub_sql += "AND (r_start <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')) OR r_condition IN(2,3)";
 			}
 			// SQL문 작성
-			sql = "SELECT COUNT(*) FROM reservation JOIN member USING(mem_num) WHERE mem_num = " + mem_num + " " + sub_sql;
+			if(mem_auth == 3) {
+				sql = "SELECT COUNT(*) FROM reservation JOIN member USING(mem_num) WHERE sis_num = (select sis_num from petsitter where mem_num = " + mem_num + ")";
+			} else {
+				sql = "SELECT COUNT(*) FROM reservation JOIN member USING(mem_num) WHERE mem_num = " + mem_num + " " + sub_sql;				
+			}
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			// SQL문 실행
@@ -90,7 +95,7 @@ public class ReservationDAO {
 		return count;
 	}
 
-	public List<ReservationVO> getReservList(int mem_num, int start, int end, String keyfield, String keyword) throws Exception {
+	public List<ReservationVO> getReservList(int mem_num, int mem_auth, int start, int end, String keyfield, String keyword) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -98,19 +103,28 @@ public class ReservationDAO {
 		String sql = null;
 		String sub_sql = "";
 		int cnt = 0;
+		
+		System.out.println("mem_auth ::: " + mem_auth);
 
 		try {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
 			if (keyfield.equals("ing")) {
+				System.out.println("inging");
 				sub_sql += " r_start >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_condition IN(0,1)";
 			} else if (keyfield.equals("after")) {
 				sub_sql += " (r_start <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')) OR r_condition IN(2,3)";
 			}
 			// SQL문 작성
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM reservation JOIN member USING(mem_num) WHERE mem_num =" + mem_num + " AND " + sub_sql
-					+ " ORDER BY r_num DESC)a) WHERE rnum >= ? AND rnum <= ? AND mem_num = " + mem_num + " AND " + sub_sql;
+			if(mem_auth == 3) {
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM reservation JOIN member USING(mem_num) WHERE sis_num = (select sis_num from petsitter where mem_num = " + mem_num + ") AND " + sub_sql
+						+ " ORDER BY r_num DESC)a) WHERE rnum >= ? AND rnum <= ? AND sis_num = (select sis_num from petsitter where mem_num = " + mem_num + ") AND " + sub_sql;
+			} else {
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM reservation JOIN member USING(mem_num) WHERE mem_num =" + mem_num + " AND " + sub_sql
+						+ " ORDER BY r_num DESC)a) WHERE rnum >= ? AND rnum <= ? AND mem_num = " + mem_num + " AND " + sub_sql;
+			}
+			System.out.println(sql);
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 
@@ -144,7 +158,7 @@ public class ReservationDAO {
 		return list;
 	}
 	
-	public List<ReservationVO> getReservDetail(int mem_num, int r_num) throws Exception {
+	public List<ReservationVO> getReservDetail(int mem_num, int mem_auth, int r_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -158,7 +172,11 @@ public class ReservationDAO {
 			conn = DBUtil.getConnection();
 
 			// SQL문 작성
-			sql = "SELECT * FROM reservation WHERE mem_num = " + mem_num + " AND r_num= " + r_num;
+			if(mem_auth == 3) {				
+				sql = "SELECT * FROM reservation WHERE r_num= " + r_num;
+			} else {
+				sql = "SELECT * FROM reservation WHERE mem_num = " + mem_num + " AND r_num= " + r_num;
+			}
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			// SQL문 실행
