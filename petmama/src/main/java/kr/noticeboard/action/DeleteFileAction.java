@@ -12,6 +12,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import kr.board.dao.BoardDAO;
 import kr.board.vo.BoardVO;
 import kr.controller.Action;
+import kr.noticeboard.dao.NoticeBoardDAO;
+import kr.noticeboard.vo.NoticeBoardVO;
 import kr.util.FileUtil;
 
 public class DeleteFileAction implements Action{
@@ -22,23 +24,26 @@ public class DeleteFileAction implements Action{
 		
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer)session.getAttribute("user_num");
+		Integer user_auth = (Integer)session.getAttribute("user_auth");
 		
 		if(user_num == null) {
 			mapAjax.put("result", "logout");
+		}else if(user_auth != 9) {
+				mapAjax.put("result", "wrongAccess");
 		}else {
 			request.setCharacterEncoding("utf-8");
 			
-			int board_num = Integer.parseInt(request.getParameter("board_num"));
+			int notice_num = Integer.parseInt(request.getParameter("notice_num"));
 			
-			BoardDAO dao = BoardDAO.getInstance();
-			BoardVO db_board = dao.getBoard(board_num);
+			NoticeBoardDAO dao = NoticeBoardDAO.getInstance();
+			NoticeBoardVO db_board = dao.getNoticeBoard(notice_num);
 			
 			if(user_num!=db_board.getMem_num()) {
 				mapAjax.put("result", "wrongAccess");
 			}else {
-				dao.deleteFile(board_num);
+				dao.deleteNoticeFile(notice_num);
 				
-				FileUtil.removeFile(request, db_board.getFilename());
+				FileUtil.removeFile(request, db_board.getNotice_filename());
 				
 				mapAjax.put("result", "success");
 			}

@@ -9,6 +9,8 @@ import com.oreilly.servlet.MultipartRequest;
 import kr.board.dao.BoardDAO;
 import kr.board.vo.BoardVO;
 import kr.controller.Action;
+import kr.noticeboard.dao.NoticeBoardDAO;
+import kr.noticeboard.vo.NoticeBoardVO;
 import kr.util.FileUtil;
 
 public class UpdateAction implements Action{
@@ -17,18 +19,23 @@ public class UpdateAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer)session.getAttribute("user_num");
+		Integer user_auth = (Integer)session.getAttribute("user_auth");
 		
 		if(user_num == null) {
 			return "redirect:/member/loginForm.do";
 		}
+		if(user_auth != 9) {//관리자로 로그인하지 않은 경우
+			return "/WEB-INF/views/common/notice.jsp";
+		}
 		
 		MultipartRequest multi = FileUtil.createFile(request);
-		int board_num = Integer.parseInt(multi.getParameter("board_num"));
-		String filename = multi.getFilesystemName("filename");
+		int notice_num = Integer.parseInt(multi.getParameter("notice_num"));
+		String filename = multi.getFilesystemName("notice_filename");
 		
-		BoardDAO dao = BoardDAO.getInstance();
+		NoticeBoardDAO dao = NoticeBoardDAO.getInstance();
+		
 		//수정 전 데이터 반환
-		BoardVO db_board = dao.getBoard(board_num);
+		NoticeBoardVO db_board = dao.getNoticeBoard(notice_num);
 		
 		if(user_num != db_board.getMem_num()) {
 			//로그인한 회원번호와 작성자 회원번호가 불일치
@@ -37,20 +44,21 @@ public class UpdateAction implements Action{
 		}
 		
 		//로그인한 회원번호와 작성자 회원번호가 일치
-		BoardVO board = new BoardVO();
-		board.setBoard_num(board_num);
-		board.setTitle(multi.getParameter("title"));
-		board.setContent(multi.getParameter("content"));
-		board.setIp(request.getRemoteAddr());
-		board.setFilename(filename);
+		NoticeBoardVO board = new NoticeBoardVO();
+		board.setNotice_num(notice_num);
+		board.setNotice_title(multi.getParameter("notice_title"));
+		board.setNotice_content(multi.getParameter("notice_content"));
+		board.setNotice_ip(request.getRemoteAddr());
+		board.setNotice_status(Integer.parseInt(multi.getParameter("notice_status")));
+		board.setNotice_filename(filename);
 		
-		dao.updateBoard(board);
+		dao.updateNoticeBoard(board);
 		
 		if(filename!=null) {//새 파일로 교체할 때 원래 파일 제거
-			FileUtil.removeFile(request, db_board.getFilename());
+			FileUtil.removeFile(request, db_board.getNotice_filename());
 		}
 		
-		return "redirect:/board/detail.do?board_num=" + board_num;
+		return "redirect:/noticeboard/noticedetail.do?notice_num=" + notice_num;
 	}
 
 }

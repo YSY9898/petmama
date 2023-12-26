@@ -91,9 +91,9 @@ public class NoticeBoardDAO {
 			conn = DBUtil.getConnection();
 			if(keyword!=null && !"".equals(keyword)) { 
 				//검색 처리
-				if(keyfield.equals("1")) sub_sql += "WHERE title LIKE ?";
+				if(keyfield.equals("1")) sub_sql += "WHERE notice_title LIKE ?";
 				else if(keyfield.equals("2")) sub_sql += "WHERE mem_nickname LIKE ?";
-				else if(keyfield.equals("3")) sub_sql += "WHERE content LIKE ?";	
+				else if(keyfield.equals("3")) sub_sql += "WHERE notice_content LIKE ?";	
 			}
 			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM notice_board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) " + sub_sql + " ORDER BY notice_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
 			pstmt = conn.prepareStatement(sql);
@@ -133,7 +133,7 @@ public class NoticeBoardDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "SELECT * FROM notice_board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) LEFT JOIN pet_detail USING(mem_num) WHERE notice_num = ?";
+			sql = "SELECT * FROM notice_board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) LEFT OUTER JOIN pet_detail USING(mem_num) WHERE notice_num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, notice_num);
 			rs = pstmt.executeQuery();
@@ -166,11 +166,83 @@ public class NoticeBoardDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "UPDATE notice_board SET hit=hit+1 WHERE notice_num=?";
+			sql = "UPDATE notice_board SET notice_hit=notice_hit+1 WHERE notice_num=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, notice_num);
 			pstmt.executeUpdate();
+			
 		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	//글 수정
+	public void updateNoticeBoard(NoticeBoardVO board)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		String sub_sql = "";
+		int cnt = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			if(board.getNotice_filename()!=null) {
+				sub_sql += ",notice_filename=?";
+			}
+			sql = "UPDATE notice_board SET notice_title=?,notice_content=?,notice_modify_date=SYSDATE,notice_ip=?,notice_status=?" + sub_sql + " WHERE notice_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(++cnt, board.getNotice_title());
+			pstmt.setString(++cnt, board.getNotice_content());
+			pstmt.setString(++cnt, board.getNotice_ip());
+			pstmt.setInt(++cnt, board.getNotice_status());
+			if(board.getNotice_filename()!=null) {
+				pstmt.setString(++cnt, board.getNotice_filename());
+			}
+			pstmt.setInt(++cnt, board.getNotice_num());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	//파일 삭제
+	public void deleteNoticeFile(int notice_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "UPDATE notice_board SET notice_filename='' WHERE notice_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, notice_num);
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	//글 삭제
+	public void deleteNoticeBoard(int notice_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();			
+			
+			sql = "DELETE FROM notice_board WHERE notice_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, notice_num);
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			conn.rollback();
 			throw new Exception(e);
 		}finally {
 			DBUtil.executeClose(null, pstmt, conn);

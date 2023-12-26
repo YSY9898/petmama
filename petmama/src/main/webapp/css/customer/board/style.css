@@ -234,7 +234,7 @@ form#mre_form{
 	width: 100%;
 	height: 10px;
 }
-textarea#content {
+textarea#content, #notice_content {
     height: 500px;
 }
 .write-btn{

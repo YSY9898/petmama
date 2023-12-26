@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import kr.board.dao.BoardDAO;
 import kr.board.vo.BoardVO;
 import kr.controller.Action;
+import kr.noticeboard.dao.NoticeBoardDAO;
+import kr.noticeboard.vo.NoticeBoardVO;
 import kr.util.FileUtil;
 
 public class DeleteAction implements Action{
@@ -20,22 +22,25 @@ public class DeleteAction implements Action{
 		if(user_num == null) {
 			return "redirect:/member/loginForm.do";
 		}
-		
-		int board_num = Integer.parseInt(request.getParameter("board_num"));
-		
-		BoardDAO dao = BoardDAO.getInstance();
-		BoardVO db_board = dao.getBoard(board_num);
-		
-		if(user_num != db_board.getMem_num() && user_auth != 9) {
+		if(user_auth != 9) {//관리자로 로그인하지 않은 경우
 			return "/WEB-INF/views/common/notice.jsp";
 		}
 		
-		dao.deleteBoard(board_num);
+		int notice_num = Integer.parseInt(request.getParameter("notice_num"));
 		
-		FileUtil.removeFile(request, db_board.getFilename());
+		NoticeBoardDAO dao = NoticeBoardDAO.getInstance();
+		NoticeBoardVO db_board = dao.getNoticeBoard(notice_num);
+		
+		if(user_num != db_board.getMem_num() || user_auth != 9) {
+			return "/WEB-INF/views/common/notice.jsp";
+		}
+		
+		dao.deleteNoticeBoard(notice_num);
+		
+		//FileUtil.removeFile(request, db_board.getNotice_filename());
 		
 		request.setAttribute("notice_msg", "게시글을 삭제하였습니다.");
-		request.setAttribute("notice_url", request.getContextPath()+"/board/list.do");
+		request.setAttribute("notice_url", request.getContextPath()+"/noticeboard/noticelist.do");
 		
 		return "/WEB-INF/views/common/alert_singleView.jsp";
 	}

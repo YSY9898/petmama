@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import kr.board.dao.BoardDAO;
 import kr.board.vo.BoardVO;
 import kr.controller.Action;
+import kr.noticeboard.dao.NoticeBoardDAO;
+import kr.noticeboard.vo.NoticeBoardVO;
 import kr.util.StringUtil;
 
 public class DetailAction implements Action{
@@ -13,22 +15,23 @@ public class DetailAction implements Action{
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//글번호 반환
-		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		int notice_num = Integer.parseInt(request.getParameter("notice_num"));
 		
-		BoardDAO dao = BoardDAO.getInstance();
+		NoticeBoardDAO dao = NoticeBoardDAO.getInstance();
+		
 		//조회수 증가
-		dao.updateReadcount(board_num);
+		dao.upNoticeBoardcount(notice_num);
 		
-		BoardVO board = dao.getBoard(board_num);
+		NoticeBoardVO board = dao.getNoticeBoard(notice_num);
 		
 		//HTML을 허용하지 않음
-		board.setTitle(StringUtil.useNoHtml(board.getTitle()));
+		board.setNotice_title(StringUtil.useNoHtml(board.getNotice_title()));
 		//HTML을 허용하지 않으면서 줄바꿈 처리
-		board.setContent(StringUtil.useBrNoHtml(board.getContent()));
+		board.setNotice_content(StringUtil.useBrNoHtml(board.getNotice_content()));
 		
 		request.setAttribute("board", board);
 		
-		return "/WEB-INF/views/board/detail.jsp";
+		return "/WEB-INF/views/noticeboard/detail.jsp";
 	}
 
 }

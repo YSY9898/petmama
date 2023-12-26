@@ -14,32 +14,41 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="board_main">
 		<div class="main_msg">
-			<span class="main_msg_title">게시글 수정</span><br>
-			<span class="main_msg_detail">작성한 게시글을 수정합니다.</span>
+			<span class="main_msg_title">공지 게시글 수정</span><br>
+			<span class="main_msg_detail">공지 게시글을 수정합니다.</span>
 		</div>
 	</div>
 	<div class="main-margin">
-		<form id="update_form" action="update.do" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="board_num" value="${board.board_num}">
+		<form id="update_form" action="noticeupdate.do" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="notice_num" value="${board.notice_num}">
+			<div class="notice_select">
+			  <label>&lt;전체 공지 게시 여부&gt;</label>
+				<input type="radio" name="notice_status" value="1" id="status1" <c:if test="${board.notice_status == 1}">checked</c:if>>전체 공지
+				<input type="radio" name="notice_status" value="2" id="status2" <c:if test="${board.notice_status == 2}">checked</c:if>>미공지                   
+			</div>
 			<div class="row mb-3">
 				<label for="title" class="col-sm-2 col-form-label">제목</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" name="title" id="title" value="${board.title}">
+					<input type="text" class="form-control" name="notice_title" id="notice_title" value="${board.notice_title}">
 				</div>
 			</div>
 			<div class="row mb-3">
 				<label for="content" class="col-sm-2 col-form-label">내용</label>
 				<div class="col-sm-10">
-					<textarea class="form-control write-textarea-height" name="content" id="content">${board.content}</textarea>
+					<textarea class="form-control write-textarea-height" name="notice_content" id="notice_content">${board.notice_content}</textarea>
 				</div>
 			</div>
 			<div class="row mb-3">
 				<div class="col-sm-2 col-form-label">파일</div>
 				<div class="col-sm-10">
-					<input type="file" name="filename" id="filename"  accept="image/gif,image/png,image/jpeg">
-					<c:if test="${!empty board.filename}">
+					<div class="col-sm-4 float-left" style="text-align:center">
+						<img src="${pageContext.request.contextPath}/upload/${board.notice_filename}" data-img="${item.photo1}" width="200" height="200">
+					</div>
+					<div class="float-right">
+						<input type="file" name="notice_filename" id="notice_filename"  accept="image/gif,image/png,image/jpeg">
+					<c:if test="${!empty board.notice_filename}">
 						<div id="file_detail">
-							(${board.filename})파일이 등록되어 있습니다.
+							(${board.notice_filename})파일이 등록되어 있습니다.
 							<input type="button" value="삭제" id="file_del">
 							<script type="text/javascript">
 								$(function(){
@@ -47,9 +56,9 @@
 										let choice = confirm('삭제하시겠습니까?');
 										if(choice){
 											$.ajax({
-												url:'deleteFile.do',
+												url:'noticedeleteFile.do',
 												type:'post',
-												data:{board_num:${board.board_num}},
+												data:{notice_num:${board.notice_num}},
 												dataType:'json',
 												success:function(param){
 													if(param.result == 'logout'){
@@ -73,11 +82,12 @@
 							</script>
 						</div>
 					</c:if>
+					</div>
 				</div>
 			</div>
 			<div class="write-btn">
 				<input type="submit" value="수정" class="list-btn">
-				<input type="button" value="목록" class="list-btn" onclick="location.href='list.do'">
+				<input type="button" value="목록" class="list-btn" onclick="location.href='noticelist.do'">
 			</div>
 		</form>
 	</div>
