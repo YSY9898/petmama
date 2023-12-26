@@ -43,17 +43,17 @@ $(function(){
 			<h2>펫시터 지원하기</h2>
 		</div>
 		<div class="main">
-			<section class="head_section">
+			<div class="head_section">
 				<p>1.기본 정보</p>
 				<div class="main_section">
-					<article class="article">
+					<div class="article">
 						<div class="article_content">
-							<p>이름</p>
 							<div style="margin-top: 28px;">
+								<label for="sis_name">이름</label>
 								<input type="text" name="sis_name" id="sis_name" maxlength="10" class="input-check" placeholder="실명 입력">
 							</div>
 						</div>
-					</article>
+					</div>
 					<article class="article">
 						<div class="article_content">
 							<p>돌봄 유형</p>
@@ -66,8 +66,8 @@ $(function(){
 					</article>
 					<article class="article">
 						<div class="article_content">
-							<p>전화번호</p>
 							<div style="margin-top: 28px;" class="select">
+								<label for="sis_phone">전화번호</label>
 								<input type="text" name="sis_phone" id="sis_phone" maxlength="15" class="input-check" placeholder="예)01012345678">
 							</div>
 						</div>
@@ -76,6 +76,7 @@ $(function(){
 						<div class="article_content">
 							<p>이메일</p>
 							<div style="margin-top: 28px;" class="select">
+								<label for="sis_email">이메일</label>
 								<input type="email" name="sis_email" id="sis_email" maxlength="50" class="input-check" placeholder="example@google.com">
 							</div>
 						</div>
@@ -84,15 +85,18 @@ $(function(){
 						<div class="article_content">
 							<p>우편번호</p>
 							<div style="margin-top: 28px;" class="select">
+								<label for="zipcode">우편번호</label>
 								<input type="text" name="zipcode" id="zipcode"  maxlength="5" autocomplete="off" class="input-check" placeholder="우편번호">
 								<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
+								<label for="address1">주소</label>
 								<input type="text" name="address1" id="address1" maxlength="30" class="input-check" placeholder="도로명 또는 지번을 입력하세요.">
+								<label for="address2">나머지 주소</label>
 								<input type="text" name="address2" id="address2" maxlength="30" class="input-check" placeholder="상세 주소를 입력하세요.">
 							</div>
 						</div>
 					</article>
 				</div>
-			</section>
+			</div>
 		</div>
 		
 		<div class="main">
@@ -101,24 +105,24 @@ $(function(){
 				<div class="main_section">
 					<article class="article">
 						<div class="article_content">
-							<p>프로필 사진</p>
 							<div style="margin-top: 28px;">
+								<label for="photo1">프로필 사진</label>
 								<input type="file" name="photo1" id="photo1" class="input-check" accept="image/gif,image/png,image/jpeg">
 							</div>
 						</div>
 					</article>
 					<article class="article">
 						<div class="article_content">
-							<p>배경 사진</p>
 							<div style="margin-top: 28px;">
+								<label for="photo2">배경 사진</label>
 								<input type="file" name="photo2" id="photo2" class="input-check" accept="image/gif,image/png,image/jpeg">
 							</div>
 						</div>
 					</article>
 					<article class="article">
 						<div class="article_content">
-							<p>자신을 소개하는 문장을 작성해주세요.</p>
 							<div style="margin-top: 28px;">
+								<label for="title">소개하는 문장</label>
 								<input type="text" name="title" id="title" class="input-check" maxlength="90"
 								placeholder="예시)업계 1등 펫시터와 함께해요.">
 							</div>
@@ -126,8 +130,8 @@ $(function(){
 					</article>
 					<article class="article">
 						<div class="article_content">
-							<p>자신의 경력을 태그로 작성해주세요.</p>
 							<div style="margin-top: 28px;">
+								<label for="tag">태그</label>
 								<input type="text" name="tag" id="tag" class="input-check" maxlength="90"
 								placeholder="예시)#개훌륭 출현 #세나개 출현 #동물농장 출현 #클리커트레이너">
 							</div>
@@ -135,8 +139,8 @@ $(function(){
 					</article>
 				</div>
 				<article class="article">
-						<div class="article_content">
-							<div>
+						<div class="article_content" style="justify-content : center;">
+							<div style="margin: 0 auto;">
 								<input type="submit" value="등록" style="width: 485px;text-align:center;">
 								<input type="button" value="홈으로" style="width: 485px;text-align:center;" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 							</div>

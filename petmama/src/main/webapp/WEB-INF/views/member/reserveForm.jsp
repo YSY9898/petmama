@@ -20,9 +20,11 @@
 	<input type="hidden" name="fee" value="${fee}">
 	<input type="hidden" name="endtime" value="${endtime}">
 	<div class="application">
+		<!-- 
 		<div class="main">
 			<h2>펫시터 예약하기</h2>
 		</div>
+		-->
 		<div class="main">
 			<section class="head_section">
 				<p>예약 정보</p>
@@ -65,11 +67,20 @@
 							</p>
 						</div>
 					</article>
+					
+					<article class="article">
+						<div class="article_content">
+							<input type="submit" style="width:380px;" value="등록">
+							<input type="button" style="width:380px;" value="취소">
+						</div>
+					</article>
+					
 				</div>
+				
+				
 			</section>
 			
-			<input type="submit" value="등록">
-			<input type="button" value="취소">
+			
 		</div>
 	</div>
 </form>
