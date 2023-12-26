@@ -35,10 +35,12 @@
 									        <span style="width:${(PSlist.rating/5*100)/2}%"></span>
 								         </div>
 									     <p class="rating_number">${PSlist.rating}</p>
-								    </div>   
+								    </div>  
+								   
 									<div class="rate_reviewNum">
-										<p>후기</p>
+										 <!--<p>후기</p>-->
 									</div>
+									
 								</div>
 								
 							</a>

@@ -68,14 +68,11 @@ window.onload=function(){
 			</thead>
 			<tbody>
 			<c:forEach var="board" items="${list}">
-				<c:if test="${board.notice_status == 1}">
+				<c:if test="${board.notice_status == 2}">
 					<tr>
 						<td><b>공지사항</b></td>
 						<td class="title"><b><a href="noticedetail.do?notice_num=${board.notice_num}">${board.notice_title}</a></b></td>
-						<td><b>
-							<c:if test="${empty board.mem_nickname}">${board.mem_id}</c:if>
-							<c:if test="${!empty board.mem_nickname}">${board.mem_nickname}</c:if>
-						</b></td>
+						<td><b>관리자</b></td>
 						<td><b>${board.notice_reg_date}</b></td>
 						<td><b>${board.notice_hit}</b></td>
 					</tr>
@@ -90,7 +87,7 @@ window.onload=function(){
 						<c:if test="${!empty board.mem_nickname}">${board.mem_nickname}</c:if>
 					</td>
 					<td>${board.notice_reg_date}</td>
-					<td>${board.notice_hit}</td>
+					<td>${board.notice_hit}${boardno.notice_status}</td>
 				</tr>
 			</c:forEach>
 			</tbody>

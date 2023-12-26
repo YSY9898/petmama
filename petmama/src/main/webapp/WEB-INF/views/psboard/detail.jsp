@@ -306,7 +306,10 @@
 									<img style="width: 12px; height: 12px; margin-right: 4px;" 
 									src="${pageContext.request.contextPath}/images/petsitter/one star.png">
 									<p class="rating">${ps.rating}</p>
-									<p class="review_num">리뷰 수</p> <!-- 아직 미구현 -->
+									<!-- 미구현 -->
+									<!-- 
+									<p class="review_num">리뷰 수</p> 
+									-->
 								</div>
 							</div>
 							
@@ -375,7 +378,7 @@
 							<!-- 달력&시간 -->
 							<div class="time-picker">
 							<div class="input-wrapper">
-								예약시간 : <input type="text" id="time" name="time" value="12:00:00"
+								예약시작시간 : <input type="text" id="time" name="time" value="12:00:00"
 									readonly />
 							</div>
 							<!-- swiper 시작 -->

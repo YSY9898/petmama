@@ -21,10 +21,11 @@
 	<div class="main-margin">
 		<form id="update_form" action="noticeupdate.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="notice_num" value="${board.notice_num}">
+			<div class="row mb-3">
 			<div class="notice_select">
 			  <label>&lt;전체 공지 게시 여부&gt;</label>
-				<input type="radio" name="notice_status" value="1" id="status1" <c:if test="${board.notice_status == 1}">checked</c:if>>전체 공지
-				<input type="radio" name="notice_status" value="2" id="status2" <c:if test="${board.notice_status == 2}">checked</c:if>>미공지                   
+				<input type="radio" name="notice_status" value="1" id="status1" <c:if test="${board.notice_status == 1}">checked</c:if>>미공지   
+				<input type="radio" name="notice_status" value="2" id="status2" <c:if test="${board.notice_status == 2}">checked</c:if>>전체 공지                
 			</div>
 			<div class="row mb-3">
 				<label for="title" class="col-sm-2 col-form-label">제목</label>
@@ -80,12 +81,13 @@
 					</c:if>
 					</div>
 				</div>
-				</form>
 			</div>
-		<div class="write-btn">
-			<input type="submit" value="수정" class="list-btn">
-			<input type="button" value="목록" class="list-btn" onclick="location.href='noticelist.do'">
-		</div>
+			<div class="write-btn">
+				<input type="submit" value="수정" class="list-btn">
+				<input type="button" value="목록" class="list-btn" onclick="location.href='noticelist.do'">
+			</div>
+		</form>
+	</div>
 </div>
 </body>
 </html>
