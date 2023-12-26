@@ -375,7 +375,7 @@
 							<!-- 달력&시간 -->
 							<div class="time-picker">
 							<div class="input-wrapper">
-								예약시간 : <input type="text" id="time" name="time" value="12:00:00"
+								예약시작시간 : <input type="text" id="time" name="time" value="12:00:00"
 									readonly />
 							</div>
 							<!-- swiper 시작 -->
