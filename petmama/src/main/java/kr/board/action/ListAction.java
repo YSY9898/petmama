@@ -30,13 +30,13 @@ public class ListAction implements Action{
 		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,20,10,"list.do");
 		
 		List<BoardVO> list = null;
-		if(count > 0) {
-			list = dao.getListBoard(page.getStartRow(), page.getEndRow(), keyfield, keyword);
-		}
 		List<NoticeBoardVO> listno = null;
 		if(count > 0) {
-			listno = daono.getNoticeListBoard(page.getStartRow(), page.getEndRow(), keyfield, keyword);
+			list = dao.getListBoard(page.getStartRow(), page.getEndRow(), keyfield, keyword);
+			listno = daono.getNoticeListBoard(page.getStartRow(), page.getEndRow(), keyfield, keyword, 1);//notice_status가 2인 것 표시
 		}
+		
+		System.out.println(list);
 		
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);

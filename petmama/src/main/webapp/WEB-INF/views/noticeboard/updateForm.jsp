@@ -41,11 +41,7 @@
 			<div class="row mb-3">
 				<div class="col-sm-2 col-form-label">파일</div>
 				<div class="col-sm-10">
-					<div class="col-sm-4 float-left" style="text-align:center">
-						<img src="${pageContext.request.contextPath}/upload/${board.notice_filename}" data-img="${item.photo1}" width="200" height="200">
-					</div>
-					<div class="float-right">
-						<input type="file" name="notice_filename" id="notice_filename"  accept="image/gif,image/png,image/jpeg">
+					<input type="file" name="notice_filename" id="notice_filename"  accept="image/gif,image/png,image/jpeg">
 					<c:if test="${!empty board.notice_filename}">
 						<div id="file_detail">
 							(${board.notice_filename})파일이 등록되어 있습니다.
@@ -84,13 +80,12 @@
 					</c:if>
 					</div>
 				</div>
+				</form>
 			</div>
-			<div class="write-btn">
-				<input type="submit" value="수정" class="list-btn">
-				<input type="button" value="목록" class="list-btn" onclick="location.href='noticelist.do'">
-			</div>
-		</form>
-	</div>
+		<div class="write-btn">
+			<input type="submit" value="수정" class="list-btn">
+			<input type="button" value="목록" class="list-btn" onclick="location.href='noticelist.do'">
+		</div>
 </div>
 </body>
 </html>

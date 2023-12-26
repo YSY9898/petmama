@@ -173,6 +173,7 @@ public class MemberDAO {
 				member.setPet_name(rs.getString("pet_name"));
 				member.setPet_age(rs.getInt("pet_age"));
 				member.setPet_photo(rs.getString("pet_photo"));
+				member.setPet_note(rs.getString("pet_note"));
 			}
 		}catch(Exception e) {
 			throw new Exception(e);

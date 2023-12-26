@@ -7,30 +7,29 @@
 <title>회원정보 수정</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-	$(function(){
-		
-		//회원정보 수정 유효성 체크
-		$('#modify_form').submit(function(){
-			let items = document.querySelectorAll('.input-check');
-			for(let i =0;i<items.length;i++){
-				if(items[i].value.trim()==''){
-					let label = document.querySelector('label[for="'+items[i].id+'"]')
-					alert(label.textContext + ' 항목은 필수 입력');
-					items[i].value='';
-					items[i].focus();
-					return false;
-				}//end of if
-				
-				if(items[i].id== 'zipcode'&& !/^[0-9]{5}$/.test($('#zipcode').val())){
-					alert('우편번호를 입력하세요(숫자 5자리)');
-					$('#zipcode').val('').focus();
-					return false;
-				}
-				
-			}//end of for
-		});//end of submit
-		
-	});
+$(function(){
+	//회원정보 수정 유효성 체크
+	$('#modify_form').submit(function(){
+		let items = document.querySelectorAll('.input-check');
+		for(let i =0;i<items.length;i++){
+			if(items[i].value.trim()==''){
+				let label = document.querySelector('label[for="'+items[i].id+'"]')
+				alert(label.textContext + ' 항목은 필수 입력');
+				items[i].value='';
+				items[i].focus();
+				return false;
+			}//end of if
+			
+			if(items[i].id== 'zipcode'&& !/^[0-9]{5}$/.test($('#zipcode').val())){
+				alert('우편번호를 입력하세요(숫자 5자리)');
+				$('#zipcode').val('').focus();
+				return false;
+			}
+			
+		}//end of for
+	});//end of submit
+	
+});
 
 </script>
 </head>
@@ -113,12 +112,12 @@
 			<div>
 				<label for="mem_email">희망 반려생활</label>
 				<br>
-					<input type="radio" name="pet_note" value="3" 
-						id="note3" <c:if test="${member.pet_note == 3}"></c:if>>산책
+				<input type="radio" name="pet_note" value="3" 
+						id="note3" <c:if test="${member.pet_note == 3}">checked</c:if>>산책
 				<input type="radio" name="pet_note" value="4" 
-						id="note4" <c:if test="${member.pet_note == 4}"></c:if>>돌봄
+						id="note4" <c:if test="${member.pet_note == 4}">checked</c:if>>돌봄
 				<input type="radio" name="pet_note" value="5" 
-						id="note5" <c:if test="${member.pet_note == 5}"></c:if>>둘 다
+						id="note5" <c:if test="${member.pet_note == 5}">checked</c:if>>둘 다
 			</div>	
 			<br>
 			<div class="align-center">

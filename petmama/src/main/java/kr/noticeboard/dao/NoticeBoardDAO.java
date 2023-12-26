@@ -47,7 +47,7 @@ public class NoticeBoardDAO {
 	}
 	
 	//전체 레코드수/검색 레코드수
-	public int getNoticeBoardCount(String keyfield,String keyword) throws Exception{
+	public int getNoticeBoardCount(String keyfield,String keyword, int notice_status) throws Exception{
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -59,13 +59,14 @@ public class NoticeBoardDAO {
 			conn = DBUtil.getConnection();
 			if(keyword!=null && !"".equals(keyword)) {
 				//검색 처리
-				if(keyfield.equals("1")) sub_sql += "WHERE notice_title LIKE ?";
-				else if(keyfield.equals("2")) sub_sql += "WHERE mem_nickname LIKE ?";
-				else if(keyfield.equals("3")) sub_sql += "WHERE notice_content LIKE ?";
+				if(keyfield.equals("1")) sub_sql += "AND notice_title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql += "AND mem_nickname LIKE ?";
+				else if(keyfield.equals("3")) sub_sql += "AND notice_content LIKE ?";
 			}
-			sql = "SELECT COUNT(*) FROM notice_board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) " + sub_sql;
+			sql = "SELECT COUNT(*) FROM notice_board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) WHERE notice_status > ? " + sub_sql;
 			pstmt = conn.prepareStatement(sql);
-			if(keyword!=null && !"".equals(keyword)) pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(1, notice_status);
+			if(keyword!=null && !"".equals(keyword)) pstmt.setString(2, "%"+keyword+"%");
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				count = rs.getInt(1);
@@ -78,7 +79,7 @@ public class NoticeBoardDAO {
 		return count;
 	}
 	//전체 글/검색 글 목록
-	public List<NoticeBoardVO> getNoticeListBoard(int start,int end,String keyfield,String keyword)throws Exception{
+	public List<NoticeBoardVO> getNoticeListBoard(int start,int end,String keyfield,String keyword,int notice_status)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -91,12 +92,13 @@ public class NoticeBoardDAO {
 			conn = DBUtil.getConnection();
 			if(keyword!=null && !"".equals(keyword)) { 
 				//검색 처리
-				if(keyfield.equals("1")) sub_sql += "WHERE notice_title LIKE ?";
-				else if(keyfield.equals("2")) sub_sql += "WHERE mem_nickname LIKE ?";
-				else if(keyfield.equals("3")) sub_sql += "WHERE notice_content LIKE ?";	
+				if(keyfield.equals("1")) sub_sql += "AND notice_title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql += "AND mem_nickname LIKE ?";
+				else if(keyfield.equals("3")) sub_sql += "AND notice_content LIKE ?";
 			}
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM notice_board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) " + sub_sql + " ORDER BY notice_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM notice_board JOIN member USING(mem_num) LEFT OUTER JOIN member_detail USING(mem_num) WHERE notice_status > ? " + sub_sql + " ORDER BY notice_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(++cnt, notice_status);
 			if(keyword!=null && !"".equals(keyword)) {
 				pstmt.setString(++cnt, "%"+keyword+"%");
 			}

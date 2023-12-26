@@ -180,7 +180,7 @@
     <div class="col col-lg-5 text-end">
 	    <br><br><br><br><br>
 	      <h2 class="fw-bold">편리한 예약 방식</h2>
-	      <h2 class="fw-bold">펫시팅 후기</h2>
+	      <h2 class="fw-bold">시간별/날짜별 선택</h2>
     </div>
     <div class="col">
       <img src="${pageContext.request.contextPath}/images/pic2.png">
