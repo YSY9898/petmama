@@ -12,9 +12,9 @@
 		let idChecked=0; //0은 중복체크 미실행 또는 중복, 1은 미중복
 	//아이디 중복체크
 	$('#id_check').click(function(){
-		if(!/^[A-Za-z0-9]{4,12}$/.test($('#id').val())){
+		if(!/^[A-Za-z0-9]{4,12}$/.test($('#mem_id').val())){
 			alert('영문 또는 숫자 사용 최소 4자 ~ 최대 12자를 사용하세요');
-			$('#id').val('').focus();
+			$('#mem_id').val('').focus();
 			return false;
 			}
 			
@@ -22,7 +22,7 @@
 			$.ajax({
 				url:'checkDuplicatedId.do',
 				type:'post',
-				data:{mem_id:$('#id').val()},
+				data:{id:$('#mem_id').val()},
 				dataType:'json',
 				success:function(param){
 					if(param.result == 'idNotFound'){
@@ -31,7 +31,7 @@
 					}else if(param.result == 'idDuplicated'){
 						idChecked = 0; //중복
 						$('#message_id').css('color','red').text('중복된 ID');
-						$('#id').val('').focus();
+						$('#mem_id').val('').focus();
 					}else{
 						idChecked = 0;
 						alert('아이디 중복 체크 오류 발생');
