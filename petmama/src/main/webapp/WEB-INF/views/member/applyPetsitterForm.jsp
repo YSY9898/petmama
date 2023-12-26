@@ -86,8 +86,12 @@ $(function(){
 							<p>우편번호</p>
 							<div style="margin-top: 28px;" class="select">
 								<label for="zipcode">우편번호</label>
-								<input type="text" name="zipcode" id="zipcode"  maxlength="5" autocomplete="off" class="input-check" placeholder="우편번호">
-								<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
+								<br>
+								<input type="text" name="zipcode" id="zipcode"  maxlength="5" autocomplete="off"
+								style = "width:300px;"class="input-check" placeholder="우편번호">
+								<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"
+								style = "width:200px;" class="btn">
+								<br>
 								<label for="address1">주소</label>
 								<input type="text" name="address1" id="address1" maxlength="30" class="input-check" placeholder="도로명 또는 지번을 입력하세요.">
 								<label for="address2">나머지 주소</label>
