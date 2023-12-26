@@ -23,14 +23,14 @@ public class ListAction implements Action{
 		String keyword = request.getParameter("keyword");
 		
 		NoticeBoardDAO dao = NoticeBoardDAO.getInstance();
-		int count = dao.getNoticeBoardCount(keyfield, keyword);
+		int count = dao.getNoticeBoardCount(keyfield, keyword,0);//notice_status가 1,2인 것 모두 표시
 		
 		//페이지 처리
 		PageUtil page = new PageUtil(keyfield,keyword,Integer.parseInt(pageNum),count,20,10,"noticelist.do");
 		
 		List<NoticeBoardVO> list = null;
 		if(count > 0) {
-			list = dao.getNoticeListBoard(page.getStartRow(), page.getEndRow(), keyfield, keyword);
+			list = dao.getNoticeListBoard(page.getStartRow(), page.getEndRow(), keyfield, keyword, 0);//notice_status가 1,2인 것 모두 표시
 		}	
 		
 		request.setAttribute("count", count);

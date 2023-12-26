@@ -68,15 +68,13 @@ window.onload=function(){
 			</thead>
 			<tbody>
 			<c:forEach var="boardno" items="${noticelist}">
-				<c:if test="${boardno.notice_status == 1}">
-					<tr>
-						<td><b>공지사항</b></td>
-						<td class="title"><b><a href="${pageContext.request.contextPath}/noticeboard/noticedetail.do?notice_num=${boardno.notice_num}">${boardno.notice_title}</a></b></td>
-						<td><b>관리자</b></td>	
-						<td><b>${boardno.notice_reg_date}</b></td>
-						<td><b>${boardno.notice_hit}</b></td>
-					</tr>
-				</c:if>
+				<tr>
+					<td><b>공지사항</b></td>
+					<td class="title"><b><a href="${pageContext.request.contextPath}/noticeboard/noticedetail.do?notice_num=${boardno.notice_num}">${boardno.notice_title}</a></b></td>
+					<td><b>관리자</b></td>	
+					<td><b>${boardno.notice_reg_date}</b></td>
+					<td><b>${boardno.notice_hit}</b></td>
+				</tr>
 			</c:forEach>
 			<c:forEach var="board" items="${list}">
 				<tr>
