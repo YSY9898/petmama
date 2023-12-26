@@ -21,7 +21,7 @@ public class ModifyPasswordAction implements Action{
 		//전송된 데이터 인코딩 처리
 		request.setCharacterEncoding("utf-8");
 		//전송된 데이터 반환
-		String id = request.getParameter("id");//아이디
+		String id = request.getParameter("mem_id");//아이디
 		String origin_passwd= request.getParameter("origin_passwd");//현재 비밀번호
 		String passwd = request.getParameter("passwd"); //새비밀번호
 		
