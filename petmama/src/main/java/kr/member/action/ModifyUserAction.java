@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import kr.controller.Action;
 import kr.member.dao.MemberDAO;
 import kr.member.vo.MemberVO;
-import kr.pet.dao.PetDAO;
 import kr.pet.vo.PetVO;
 
 public class ModifyUserAction implements Action{
@@ -45,6 +44,7 @@ public class ModifyUserAction implements Action{
 		
 		MemberDAO dao = MemberDAO.getInstance();
 		dao.updateMember(member, pet);
+		
 		//jsp 경로 반환
 		return "/WEB-INF/views/member/modifyUser.jsp";
 }

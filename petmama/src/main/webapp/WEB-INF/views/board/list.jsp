@@ -89,7 +89,7 @@ window.onload=function(){
 					<td>${board.reg_date}</td>
 					<td>${board.hit}</td>
 				</tr>
-				</c:forEach>
+			</c:forEach>
 			</tbody>
 		</table>
 	</c:if>
