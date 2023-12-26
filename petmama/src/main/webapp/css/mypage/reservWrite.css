@@ -44,8 +44,7 @@ a:hover {
 .petsitter_intro {
 	text-align: center;
 	height: 100px;
-	/* padding-top: 25px; */
-	/* padding-left: 25px; */
+	margin-bottom:5px;
 	z-index: 10;
 	height: 192px;
 }
@@ -99,6 +98,7 @@ a.btn_bxctrl3 {
 	position: relative;
 	margin-top: 10px;
 	margin-left: 10px;
+	margin-bottom : 10px;
 }
 
 a.btn_bxctrl .stit {

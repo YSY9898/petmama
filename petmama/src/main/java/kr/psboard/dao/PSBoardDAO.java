@@ -81,6 +81,8 @@ public class PSBoardDAO {
 			
 			if(rs.next()) {
 				vo = new PSBoardVO();
+				//펫시터 번호
+				vo.setSis_num(rs.getInt("sis_num"));
 				//이름
 				vo.setName(rs.getString("sis_name"));
 				//펫시터 소개 제목
@@ -93,6 +95,8 @@ public class PSBoardDAO {
 				vo.setField(rs.getString("sis_field"));
 				//경력, 자격
 				vo.setCareer_image(rs.getString("sis_career_image"));
+				//연락처
+				vo.setSis_phone(rs.getString("sis_phone"));
 				//리뷰수
 				//리뷰
 				//프로필 사진

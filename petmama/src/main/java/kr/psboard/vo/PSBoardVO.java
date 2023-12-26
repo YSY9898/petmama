@@ -10,6 +10,7 @@ public class PSBoardVO {
 	private String field;			//전문 분야
 	private String career_image;	//경력, 자격
 	private int review_num;			//후기수
+	private String sis_phone;		//펫시터 전화번호
 	private String photo1;			//펫시터 프로필 사진
 	private String photo2;			//펫시터 소개 사진1
 	private String photo3;			//펫시터 소개 사진2
@@ -116,5 +117,10 @@ public class PSBoardVO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	public String getSis_phone() {
+		return sis_phone;
+	}
+	public void setSis_phone(String sis_phone) {
+		this.sis_phone = sis_phone;
+	}
 }

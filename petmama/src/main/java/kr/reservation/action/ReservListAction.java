@@ -17,7 +17,6 @@ import kr.util.PageUtil;
 
 public class ReservListAction implements Action{
 
-	@SuppressWarnings("null")
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String pageNum = request.getParameter("pageNum"); //처음 호출할때 pageNum이 없어서 null일때 1표시

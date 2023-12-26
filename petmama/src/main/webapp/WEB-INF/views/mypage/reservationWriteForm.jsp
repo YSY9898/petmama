@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -29,9 +29,9 @@
 					</h4>
 
 					<div class="bxc_btns">
-						<a href="#;" class="btn_bxctrl2 open"> <span class="stit">
+						<a href="/petmama/PSboard/detail.do?sis_num=${list2[status.index].sis_num}" target="_blank" class="btn_bxctrl2 open"> <span class="stit">
 								프로필보기</span>
-						</a> <a href="#;" class="btn_bxctrl2 open"> <span class="stit">
+						</a> <a href="tel:${list2[status.index].sis_phone}" class="btn_bxctrl2 open"> <span class="stit">
 								연락하기</span>
 						</a>
 					</div>
@@ -45,50 +45,59 @@
 				<div class="cnt">
 					<div class="row first">
 						<div class="txt">
-							<p>2월 1일(화)${reservation.r_start}</p>
+							<fmt:parseDate value="${reservation.r_start}" var="registered"
+								pattern="yyyy-MM-dd HH:mm:ss" />
 							<p>
-								<c:if test="${reservation.sis_work == 1}">
+								<fmt:formatDate value="${registered}" pattern="M월 dd일" />
+							</p>
+							<p></p>
+
+							<c:if test="${reservation.sis_work == 1}">
 										산책 
 										</c:if>
-								<c:if test="${reservation.sis_work == 2}">
+							<c:if test="${reservation.sis_work == 2}">
 										돌봄 
 										</c:if>
-								<c:if test="${reservation.sis_work == 3}">
+							<c:if test="${reservation.sis_work == 3}">
 										산책&돌봄 
 										</c:if>
 
-								<c:if test="${reservation.fee == 1}">
+							<c:if test="${reservation.fee == 1}">
 										&nbsp;종일
 										</c:if>
 
-								<c:if test="${reservation.fee == 2}">
+							<c:if test="${reservation.fee == 2}">
 										&nbsp;30분
 										</c:if>
 
-								<c:if test="${reservation.fee == 3}">
+							<c:if test="${reservation.fee == 3}">
 										&nbsp;60분
 										</c:if>
 
-								<c:if test="${reservation.fee == 4}">
+							<c:if test="${reservation.fee == 4}">
 										&nbsp;120분
 										</c:if>
 							<p>예약상태</p>
 						</div>
 						<div class="bx_right">
-							<p>${reservation.r_start}</p>
-							<font color="blue">27,000원</font>
+							<p>
+								<fmt:formatDate value="${registered}" pattern="HH:mm:ss" />
+							</p>
+							<p>
+								<font color="blue">27,000원</font>
+							</p>
 							<p>
 								<c:if test="${reservation.r_condition == 0}">
 									<font color="blue">예약대기중</font>
 								</c:if>
 								<c:if test="${reservation.r_condition == 1}">
-									 <font color="blue">예약확정</font>
+									<font color="blue">예약확정</font>
 								</c:if>
 								<c:if test="${reservation.r_condition == 2}">
 									<font color="blue">예약취소</font>
 								</c:if>
 								<c:if test="${reservation.r_condition == 3}">
-									 <font color="blue">펫시터 예약취소</font>
+									<font color="blue">펫시터 예약취소</font>
 								</c:if>
 
 							</p>
@@ -103,7 +112,8 @@
 							</a>
 
 								<h4>
-									<strong>[${list3[status.index].pet_name} (${list3[status.index].pet_age}세)]</strong><br>
+									<strong>[${list3[status.index].pet_name}
+										(${list3[status.index].pet_age}세)]</strong><br>
 								</h4>
 							</span>
 						</div>
@@ -122,9 +132,9 @@
 				</div>
 				<div class="bxc_btn2">
 					<a href="#;" class="btn_bxctrl3 open"> <span class="stit">
-							예약변경  </span>
+							예약변경 </span>
 					</a> <a href="#;" class="btn_bxctrl3 open"> <span class="stit">
-							예약취소  </span>
+							예약취소 </span>
 					</a>
 				</div>
 			</div>

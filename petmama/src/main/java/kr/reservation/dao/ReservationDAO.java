@@ -74,7 +74,6 @@ public class ReservationDAO {
 			}
 			// SQL문 작성
 			sql = "SELECT COUNT(*) FROM reservation JOIN member USING(mem_num) WHERE mem_num = " + mem_num + " " + sub_sql;
-			System.out.println(sql);
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			// SQL문 실행
@@ -105,13 +104,13 @@ public class ReservationDAO {
 			conn = DBUtil.getConnection();
 
 			if (keyfield.equals("ing")) {
-				sub_sql += "WHERE r_start >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_condition IN(0,1)";
+				sub_sql += " r_start >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end >= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_condition IN(0,1)";
 			} else if (keyfield.equals("after")) {
-				sub_sql += "WHERE (r_start <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')) OR r_condition IN(2,3)";
+				sub_sql += " (r_start <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AND r_end <= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')) OR r_condition IN(2,3)";
 			}
 			// SQL문 작성
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM reservation JOIN member USING(mem_num) " + sub_sql
-					+ " ORDER BY r_num DESC)a) WHERE rnum >= ? AND rnum <= ? AND mem_num = " + mem_num;
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM reservation JOIN member USING(mem_num) WHERE mem_num =" + mem_num + " AND " + sub_sql
+					+ " ORDER BY r_num DESC)a) WHERE rnum >= ? AND rnum <= ? AND mem_num = " + mem_num + " AND " + sub_sql;
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 
