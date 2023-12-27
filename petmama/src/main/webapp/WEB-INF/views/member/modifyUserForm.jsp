@@ -122,7 +122,10 @@ $(function(){
 			<br>
 			<div class="align-center">
 				<input type="submit" value="수정" class="btn btn-primary">
-				<input type="button" value="홈으로" onclick="${pageContext.request.contextPath}/main/main.do" class="btn btn-primary">
+				<a href="${pageContext.request.contextPath}/main/main.do"><input
+									type="button" value="홈으로" class="btn btn-primary"
+									>
+									</a>
 			</div>
 			<br><br><br><br>
 		</form>

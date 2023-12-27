@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
 <!-- Bootstrap CSS -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 		let idChecked=0; //0은 중복체크 미실행 또는 중복, 1은 미중복
@@ -85,170 +86,197 @@
 		
 	});
 
-</script> 
+</script>
 </head>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- header 시작 -->
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <!-- header 끝 -->
 </body>
-<body>  
-<div class="page-main">
-	<div class="content-main">
-	<div class="container d-flex justify-content-center">
-		   <div class="col-8 col8md-4">
-			<form id="register_form" accept-charset="UTF-8" role="form" action="registerUser.do" method="post">
-			 <h2>회원가입</h2>
-			  <br>
-				<h4 class="fw-bold">회원정보</h4>
-				
-				<br>
-				
-				<div class="form-group">
-				
-				<div class="form-floating mb-3">
-					<input type="text" name="mem_id" id="mem_id" maxlength="12" 
-						autocomplete="off" class="input-check form-control rounded-3 bg-body-tertiary border-0"
-						placeholder="ID">	
-				 	<label for="mem_id">ID</label>	
-				
-					<span class="input-group-btn">
-      	 			<button class="btn btn-primary" type="button" id="id_check">ID중복체크</button>
-     				<span id="message_id"></span>
-     				</span>
-					
-					
-					<div class="form-notice">*영문 또는 숫자(4자~12자)</div>				
-				</div>
-				
-				<div class="form-floating mb-3">
-					<input type="text" name="mem_name" id="mem_name" maxlength="12" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="이름">
-					<label for="mem_name">이름</label>
-				</div>	
-						
-				<div class="form-floating mb-3">
-					<input type="text" name="mem_nickname" id="mem_nickname" maxlength="12" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="닉네임">
-					<label for="mem_nickname">닉네임</label>
-				</div>	
-				
-				<div class="form-floating mb-3">
-					<input type="password" name="mem_pw" id="mem_pw" maxlength="12" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="password">
-					<label for="mem_pw">비밀번호</label>
-				</div>	
-				
-				<br><hr><br>
-				
-				<div class="form-floating mb-3">
-					<input type="text" name="mem_cell" id="mem_cell" maxlength="15" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="phone">
-					<label for="mem_cell">전화번호</label>
-				</div>	
-				
-				<div class="form-floating mb-3">
-					<input type="text" name="mem_email" id="mem_email" maxlength="30" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="name@example.com">
-					<label for="mem_email">이메일</label>
-				</div>
-				
-				<br><hr><br>
-				
-				<div class="form-floating mb-3">
-					<input type="text" name="mem_zipcode" id="zipcode" maxlength="5" autocomplete="off" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="우편번호">
-					<label for="zipcode">우편번호</label>
-					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" class="btn btn-primary">
-				</div>
+<body>
+	<div class="page-main">
+		<div class="content-main">
+			<div class="container d-flex justify-content-center">
+				<div class="col-8 col8md-4">
+					<form id="register_form" accept-charset="UTF-8" role="form"
+						action="registerUser.do" method="post">
+						<h2>회원가입</h2>
+						<br>
+						<h4 class="fw-bold">회원정보</h4>
 
-				<div class="form-floating mb-3">
-					<input type="text" name="mem_address1" id="address1" maxlength="30" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="주소">
-					<label for="address1">주소</label>
-				</div>	
-				
-				<div class="form-floating mb-3">
-					<input type="text" name="mem_address2" id="address2" maxlength="30" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="mem_address2">
-					<label for="address2">나머지 주소</label>
-				</div>	
-				
-				<br>
-				
-				<div class="alert alert-secondary">
-					※위 방법으로 인증이 불가능할 경우, 고객센터로 연락 주시면 회원가입을 도와드리겠습니다.<br>
-					*메일 문의 및 전화 문의는 하단에 명시된 고객센터 정보를 확인해 주세요.
-				</div>
-				</div>	
-				
-				<br><br><br>
-				<hr>
-				<br><br><br>
-					
-				<h4 class="fw-bold">펫 정보</h4>
-				
-				<br><br>
-				
-				<div class="form-group">
-				<div class="form-floating mb-3">
-					<input type="text" name="pet_name" id="pet_name" maxlength="12" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="펫 이름">
-					<label for="pet_name">펫 이름</label>
-				</div>	
-						
-				<div class="form-floating mb-3">
-					<input type="text" name="pet_age" id="pet_age" maxlength="10" 
-						class="input-check form-control rounded-3 bg-body-tertiary border-0" placeholder="펫 나이">
-					<label for="pet_age">펫 나이</label>
-				</div>	
-				
-				<div class="form-floating mb-3">
-					<input type="file" name="pet_photo" id="pet_photo" 
-					accept="image/gif,image/png,image/jpeg" class="input-check form-control rounded-3 bg-body-tertiary border-0"
-					placeholder="image">
-					<label for="pet_photo">펫 사진</label>
-				</div>	
-				
-				<br>
-				
-				<div>
-					<label for="mem_email">희망 반려생활</label>
-					<br>
-						<input type="radio" name="pet_note" value="3" 
-							id="note3" <c:if test="${member.pet_note == 3}"></c:if>>산책
-					<input type="radio" name="pet_note" value="4" 
-							id="note4" <c:if test="${member.pet_note == 4}"></c:if>>돌봄
-					<input type="radio" name="pet_note" value="5" 
-							id="note5" <c:if test="${member.pet_note == 5}"></c:if>>둘 다
-				</div>
-			
-				</div>	
-					
-					<br><br><br>
-				
-				<div class="form-group">
-				 	<div class="align-center">
-				<input type="submit" value="등록" class="btn btn-primary" >
-				<input type="button" value="홈으로" class="btn btn-primary" 
-					onclick="${pageContext.request.contextPath}/main/main.do">
-				<br><br><br>
-					</div>
-	            </div>	
-					
+						<br>
+
+						<div class="form-group">
+
+							<div class="form-floating mb-3">
+								<input type="text" name="mem_id" id="mem_id" maxlength="12"
+									autocomplete="off"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="ID"> <label for="mem_id">ID</label> <span
+									class="input-group-btn">
+									<button class="btn btn-primary" type="button" id="id_check">ID중복체크</button>
+									<span id="message_id"></span>
+								</span>
+
+
+								<div class="form-notice">*영문 또는 숫자(4자~12자)</div>
+							</div>
+
+							<div class="form-floating mb-3">
+								<input type="text" name="mem_name" id="mem_name" maxlength="12"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="이름"> <label for="mem_name">이름</label>
+							</div>
+
+							<div class="form-floating mb-3">
+								<input type="text" name="mem_nickname" id="mem_nickname"
+									maxlength="12"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="닉네임"> <label for="mem_nickname">닉네임</label>
+							</div>
+
+							<div class="form-floating mb-3">
+								<input type="password" name="mem_pw" id="mem_pw" maxlength="12"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="password"> <label for="mem_pw">비밀번호</label>
+							</div>
+
+							<br>
+							<hr>
+							<br>
+
+							<div class="form-floating mb-3">
+								<input type="text" name="mem_cell" id="mem_cell" maxlength="15"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="phone"> <label for="mem_cell">전화번호</label>
+							</div>
+
+							<div class="form-floating mb-3">
+								<input type="text" name="mem_email" id="mem_email"
+									maxlength="30"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="name@example.com"> <label for="mem_email">이메일</label>
+							</div>
+
+							<br>
+							<hr>
+							<br>
+
+							<div class="form-floating mb-3">
+								<input type="text" name="mem_zipcode" id="zipcode" maxlength="5"
+									autocomplete="off"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="우편번호"> <label for="zipcode">우편번호</label> <input
+									type="button" onclick="execDaumPostcode()" value="우편번호 찾기"
+									class="btn btn-primary">
+							</div>
+
+							<div class="form-floating mb-3">
+								<input type="text" name="mem_address1" id="address1"
+									maxlength="30"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="주소"> <label for="address1">주소</label>
+							</div>
+
+							<div class="form-floating mb-3">
+								<input type="text" name="mem_address2" id="address2"
+									maxlength="30"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="mem_address2"> <label for="address2">나머지
+									주소</label>
+							</div>
+
+							<br>
+
+							<div class="alert alert-secondary">
+								※위 방법으로 인증이 불가능할 경우, 고객센터로 연락 주시면 회원가입을 도와드리겠습니다.<br> *메일
+								문의 및 전화 문의는 하단에 명시된 고객센터 정보를 확인해 주세요.
+							</div>
+						</div>
+
+						<br>
+						<br>
+						<br>
+						<hr>
+						<br>
+						<br>
+						<br>
+
+						<h4 class="fw-bold">펫 정보</h4>
+
+						<br>
+						<br>
+
+						<div class="form-group">
+							<div class="form-floating mb-3">
+								<input type="text" name="pet_name" id="pet_name" maxlength="12"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="펫 이름"> <label for="pet_name">펫 이름</label>
+							</div>
+
+							<div class="form-floating mb-3">
+								<input type="text" name="pet_age" id="pet_age" maxlength="10"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="펫 나이"> <label for="pet_age">펫 나이</label>
+							</div>
+
+							<div class="form-floating mb-3">
+								<input type="file" name="pet_photo" id="pet_photo"
+									accept="image/gif,image/png,image/jpeg"
+									class="input-check form-control rounded-3 bg-body-tertiary border-0"
+									placeholder="image"> <label for="pet_photo">펫
+									사진</label>
+							</div>
+
+							<br>
+
+							<div>
+								<label for="mem_email">희망 반려생활</label> <br> <input
+									type="radio" name="pet_note" value="3" id="note3"
+									<c:if test="${member.pet_note == 3}"></c:if>>산책 <input
+									type="radio" name="pet_note" value="4" id="note4"
+									<c:if test="${member.pet_note == 4}"></c:if>>돌봄 <input
+									type="radio" name="pet_note" value="5" id="note5"
+									<c:if test="${member.pet_note == 5}"></c:if>>둘 다
+							</div>
+
+						</div>
+
+						<br>
+						<br>
+						<br>
+
+						<div class="form-group">
+							<div class="align-center">
+								<input type="submit" value="등록" class="btn btn-primary">
+								<a href="${pageContext.request.contextPath}/main/main.do"><input
+									type="button" value="홈으로" class="btn btn-primary"
+									>
+									</a>
+								<br>
+								<br>
+								<br>
+							</div>
+						</div>
+
 					</form>
-			
-					</div>
-	            </div>
-		
-<!-- 우편번호 검색 시작 -->
-	<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
-<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
-<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
-</div>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
+				</div>
+			</div>
+
+			<!-- 우편번호 검색 시작 -->
+			<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
+			<div id="layer"
+				style="display: none; position: fixed; overflow: hidden; z-index: 1; -webkit-overflow-scrolling: touch;">
+				<img src="//t1.daumcdn.net/postcode/resource/images/close.png"
+					id="btnCloseLayer"
+					style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1"
+					onclick="closeDaumPostcode()" alt="닫기 버튼">
+			</div>
+
+			<script
+				src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+			<script>
     // 우편번호 찾기 화면을 넣을 element
     var element_layer = document.getElementById('layer');
 
@@ -338,9 +366,9 @@
         element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
     }
 </script>
-<!-- 우편번호 검색 끝 -->	
-				
+			<!-- 우편번호 검색 끝 -->
+
+		</div>
 	</div>
-</div>
 </body>
 </html>
