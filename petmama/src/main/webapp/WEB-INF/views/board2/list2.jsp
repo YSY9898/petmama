@@ -28,7 +28,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<div class="container-fluid bg-info bg-opacity-50"
-		style="padding: 100px 20px;">
+		style="padding: 100px 20px; height: 300px;">
 		<h3 class="fw-bold text-center text-white text-center">PetMama
 			후기게시판 글쓰기</h3>
 		<br>
