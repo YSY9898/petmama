@@ -120,7 +120,7 @@ public class PetsitterDAO {
 		return sis_work;
 	}
 	
-	//관리자 - 전체 지원글 수
+	//관리자 - 전체 지원자 수
 	public int getApplyCount(String keyfield, String keyword) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -139,7 +139,7 @@ public class PetsitterDAO {
 				else if(keyfield.equals("3")) sub_sql += "WHERE sis_condition LIKE ?";
 			}
 			//SQL문 작성
-			sql = "SELECT COUNT(*) FROM petsitter JOIN petsitter_detail USING(mem_num) " + sub_sql;
+			sql = "SELECT COUNT(*) FROM petsitter_detail " + sub_sql;
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			
@@ -183,7 +183,7 @@ public class PetsitterDAO {
 			}
 			
 			//SQL문 작성
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM petsitter JOIN petsitter_detail USING(mem_num) " + sub_sql + " ORDER BY sis_apply_date DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM petsitter_detail " + sub_sql + " ORDER BY sis_apply_date DESC)a) WHERE rnum >= ? AND rnum <= ?";
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			//?에 데이터 바인딩
@@ -213,7 +213,7 @@ public class PetsitterDAO {
 				vo.setSis_address1(rs.getString("sis_address1"));
 				vo.setSis_address2(rs.getString("sis_address2"));
 				vo.setSis_apply_date(rs.getDate("sis_apply_date"));
-				//vo.setSis_accept_date(rs.getDate("sis_accept_date"));
+				vo.setSis_accept_date(rs.getDate("sis_accept_date"));
 				//vo.setSis_mdate(rs.getDate("sis_mdate"));
 				vo.setTitle(rs.getString("sis_title"));
 				vo.setTag(rs.getString("sis_tag"));
@@ -240,7 +240,7 @@ public class PetsitterDAO {
 			conn = DBUtil.getConnection();
 		
 			//SQL문 작성
-			sql = "SELECT * FROM petsitter a JOIN petsitter_detail USING(mem_num) WHERE a.sis_num=?";
+			sql = "SELECT * FROM petsitter_detail WHERE a.sis_num=?";
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			//?에 데이터 바인딩

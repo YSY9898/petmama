@@ -35,14 +35,13 @@
 			<tr>
 				<td><a href="sitterAdminDetail.do?sis_num=${list.sis_num}">${list.sis_num}</a></td>
 				<td>${list.sis_name}</td>
-				<td>${list.sis_condition}
 				<td>
 					<c:if test="${list.sis_condition == 0}">대기</c:if>
 					<c:if test="${list.sis_condition == 1}">시터회원</c:if>
 					<c:if test="${list.sis_condition == 2}">정지회원</c:if>
 					<c:if test="${list.sis_condition == 3}">탈퇴회원</c:if>
 				</td>
-				<td>${list.sis_accept_date}</td>
+				<td>${list.sis_apply_date}</td>
 			</tr>	
 			</c:forEach>
 		</table>
